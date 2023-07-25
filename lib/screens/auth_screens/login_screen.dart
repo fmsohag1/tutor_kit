@@ -17,7 +17,7 @@ class LoginScreen extends StatelessWidget {
             radius: 60,
             backgroundColor: textfieldColor,
               child: Image.asset(icTutor,width: 65,)),
-          Text(txtTutorkit,style: TextStyle(fontFamily: roboto_bold,fontSize: 25),),
+          Text(txtTutorkit,style: TextStyle(fontFamily: roboto_bold,fontSize: 25,color: Colors.black45),),
           SizedBox(height: 20,),
           Padding(
             padding: const EdgeInsets.all(12.0),
@@ -30,7 +30,7 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(txtforgetPassword,style: TextStyle(color: Colors.blue),)
+                    Text(txtforgetPassword,style: TextStyle(color: Colors.blue,fontFamily: kalpurush),)
                   ],
                 ),
                 SizedBox(height: 20,),
@@ -39,11 +39,11 @@ class LoginScreen extends StatelessWidget {
                RichText(text: TextSpan(children: [
                  TextSpan(
                    text: txtDontAcc,
-                   style: TextStyle(fontSize: 16,color: Colors.black)
+                   style: TextStyle(fontSize: 16,color: Colors.black,fontFamily: kalpurush)
                  ),
                  TextSpan(
                    text:txtAccount,
-                     style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: roboto_bold)
+                     style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)
                  )
                ]))
               ],

@@ -18,7 +18,7 @@ class CustomButton extends StatelessWidget {
         child: Container(
           height: 55,
           width: double.infinity,
-          child: Center(child: Text(txtLogin,style: TextStyle(fontFamily: roboto_bold,color: bgColor,fontSize: 18,letterSpacing: 1),)),
+          child: Center(child: Text(txtLogin,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),)),
         ),
       ),
     );

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/consts.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -16,6 +15,7 @@ class CustomTextField extends StatelessWidget {
       keyboardType: type,
       decoration: InputDecoration(
         hintText: hint,
+        hintStyle: TextStyle(fontFamily: kalpurush),
         prefixIcon: Icon(preffixIcon,size: 25,),
         border: InputBorder.none,
         filled: true,
@@ -53,6 +53,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
       keyboardType: widget.type,
       decoration: InputDecoration(
           hintText: widget.hint,
+          hintStyle: TextStyle(fontFamily: kalpurush),
           prefixIcon: Icon(widget.preffixIcon,size: 25,),
           suffixIcon: GestureDetector(
             onTap: (){

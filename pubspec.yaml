@@ -92,6 +92,9 @@ flutter:
      - family: Roboto-Bold
        fonts:
          - asset: assets/fonts/Roboto-Bold.ttf
+     - family: Kalpurush
+       fonts:
+         - asset: assets/fonts/Kalpurush.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
