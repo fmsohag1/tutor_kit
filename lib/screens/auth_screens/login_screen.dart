@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -37,25 +39,27 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20,),
-                   CustomButton(onPress: (){}, text: txtLogin),
+                   CustomButton(onPress: (){}, text: txtLogin,color: buttonColor,),
                     SizedBox(height: 20,),
-                   RichText(text: TextSpan(children: [
-                     TextSpan(
-                       text: txtDontAcc,
-                       style: TextStyle(fontSize: 16,color: Colors.black,fontFamily: kalpurush)
-                     ),
-                     TextSpan(
-                       text:txtAccount,
-                         style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)
+                     Row(
+                       mainAxisAlignment: MainAxisAlignment.center,
+                       children: [
+                         Text(txtDontAcc,
+                         style: TextStyle(fontSize: 16,color: Colors.black,fontFamily: kalpurush)
+                         ),
+                         GestureDetector(
+                           onTap: (){
+                             Get.to(()=>ChooseScreen());
+                           },
+                             child: Text(txtAccount,style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)))
+                       ],
                      )
+                     
                    ]))
                   ],
                 ),
               )
-            ],
           ),
-        ),
-      ),
     );
   }
 }
