@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/guardian_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/teacher_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
 class ChooseScreen extends StatelessWidget {
@@ -32,7 +33,9 @@ class ChooseScreen extends StatelessWidget {
                   Get.to(()=>GaurdianScreen());
                 }, text: txtGaurdian,color: Colors.black26,),
                 SizedBox(height: 5,),
-                CustomButton(onPress: (){}, text: txtTeacher,color: Colors.black26,),
+                CustomButton(onPress: (){
+                  Get.to(()=>TeacherScreen());
+                }, text: txtTeacher,color: Colors.black26,),
               ],
             ),
           ),

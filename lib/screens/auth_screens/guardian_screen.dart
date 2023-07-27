@@ -16,7 +16,6 @@ class GaurdianScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        backgroundColor: Colors.transparent,
         title: Text(txtGaurdian,style: TextStyle(fontFamily: kalpurush,fontSize: 20),),
       ),
       body: Center(

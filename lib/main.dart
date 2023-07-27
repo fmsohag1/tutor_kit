@@ -19,7 +19,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: roboto_regular,
         useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          backgroundColor: bgColor,
+        )
       ),
+
       home: LoginScreen(),
     );
   }
