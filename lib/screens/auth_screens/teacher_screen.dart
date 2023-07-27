@@ -44,7 +44,7 @@ class TeacherScreen extends StatelessWidget {
                     SizedBox(height: 10,),
                     CustomButton(onPress: (){}, text: txtNext, color: buttonColor),
                     SizedBox(height: 20,),
-                    Row(
+                    /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(txtHaveAccount,
@@ -56,7 +56,7 @@ class TeacherScreen extends StatelessWidget {
                             },
                             child: Text(txtLogin,style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)))
                       ],
-                    )
+                    )*/
                   ],
                 ),
               )
