@@ -42,7 +42,7 @@ class TeacherScreen extends StatelessWidget {
                     SizedBox(height: 5,),
                     CustomTextField(hint: txtConfirmPassword, obsecure: true, preffixIcon: Icons.verified_user_outlined, type: TextInputType.visiblePassword),
                     SizedBox(height: 10,),
-                    CustomButton(onPress: (){}, text: txtGaurdianSignUp, color: buttonColor),
+                    CustomButton(onPress: (){}, text: txtNext, color: buttonColor),
                     SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

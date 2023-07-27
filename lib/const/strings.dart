@@ -14,3 +14,4 @@ const txtEmail="ইমেইল";
 const txtConfirmPassword="পাসওয়ার্ড নিশ্চিত করুন";
 const txtGaurdianSignUp="নিবন্ধন করুন";
 const txtHaveAccount="অ্যাকাউন্ট আছে? ";
+const txtNext="পরবর্তী";
