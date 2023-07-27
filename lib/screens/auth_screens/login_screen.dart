@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/home_screen/home_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -39,7 +40,9 @@ class LoginScreen extends StatelessWidget {
                       ],
                     ),
                     SizedBox(height: 20,),
-                   CustomButton(onPress: (){}, text: txtLogin,color: buttonColor,),
+                   CustomButton(onPress: (){
+                     Get.to(()=>HomeScreen());
+                   }, text: txtLogin,color: buttonColor,),
                     SizedBox(height: 20,),
                      Row(
                        mainAxisAlignment: MainAxisAlignment.center,
