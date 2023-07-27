@@ -34,6 +34,7 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
+//for suffix icon text_field
 class CustomTextField2 extends StatefulWidget {
   final String hint;
   final IconData preffixIcon;

@@ -42,7 +42,9 @@ class TeacherScreen extends StatelessWidget {
                     SizedBox(height: 5,),
                     CustomTextField(hint: txtConfirmPassword, obsecure: true, preffixIcon: Icons.verified_user_outlined, type: TextInputType.visiblePassword),
                     SizedBox(height: 10,),
-                    CustomButton(onPress: (){}, text: txtNext, color: buttonColor),
+                    CustomButton(onPress: (){
+                      Get.to(()=>TeacherScreenInfo());
+                    }, text: txtNext, color: buttonColor),
                     SizedBox(height: 20,),
                     /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -68,3 +70,32 @@ class TeacherScreen extends StatelessWidget {
     );
   }
 }
+
+
+class TeacherScreenInfo extends StatelessWidget {
+  const TeacherScreenInfo({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.genderless, type: TextInputType.text),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtAge, obsecure: false, preffixIcon: FontAwesome.person, type: TextInputType.phone),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtInstitute, obsecure: false, preffixIcon: Icons.school, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtDepartment, obsecure: false, preffixIcon: Icons.school, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtClass, obsecure: false, preffixIcon: Icons.class_, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtSubject, obsecure: false, preffixIcon: Icons.subject, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+        ],
+      )),
+    );
+  }
+}
+
