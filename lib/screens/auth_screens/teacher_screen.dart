@@ -78,28 +78,22 @@ class TeacherScreenInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.genderless, type: TextInputType.text),
-            SizedBox(height: 5,),
-            CustomTextField(hint: txtAge, obsecure: false, preffixIcon: FontAwesome.person, type: TextInputType.phone),
-            SizedBox(height: 5,),
-            CustomTextField(hint: txtInstitute, obsecure: false, preffixIcon: Icons.school, type: TextInputType.emailAddress),
-            SizedBox(height: 5,),
-            CustomTextField(hint: txtDepartment, obsecure: false, preffixIcon: Icons.school, type: TextInputType.emailAddress),
-            SizedBox(height: 5,),
-            CustomTextField(hint: txtClass, obsecure: false, preffixIcon: Icons.class_, type: TextInputType.emailAddress),
-            SizedBox(height: 5,),
-            CustomTextField(hint: txtSubject, obsecure: false, preffixIcon: Icons.subject, type: TextInputType.emailAddress),
-            SizedBox(height: 20,),
-            CustomButton(onPress: (){
-
-            }, text: "Done", color: buttonColor,)
-          ],
-        ),
+      body: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtAge, obsecure: false, preffixIcon: FontAwesome.people_group, type: TextInputType.phone),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtInstitute, obsecure: false, preffixIcon: Icons.school_outlined, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtDepartment, obsecure: false, preffixIcon: Icons.local_fire_department_outlined, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtClass, obsecure: false, preffixIcon: Icons.class_outlined, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+          CustomTextField(hint: txtSubject, obsecure: false, preffixIcon: Icons.subtitles_outlined, type: TextInputType.emailAddress),
+          SizedBox(height: 5,),
+        ],
       )),
     );
   }
