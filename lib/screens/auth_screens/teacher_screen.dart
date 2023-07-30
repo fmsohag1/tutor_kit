@@ -146,17 +146,17 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                     });
                   },
                   child: Container(
-                    height: 60,
-                    width: 60,
+                    height: 70,
+                    width: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: isMaleSelected == true ? Colors.redAccent : Colors.grey[400]
+                      borderRadius: BorderRadius.circular(15),
+                      color: isMaleSelected == true ? Colors.redAccent : buttonColor
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person),
-                        Text("Male"),
+                        Icon(Icons.person,color: Colors.white,),
+                        Text("পুরুষ",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
                       ],
                     ),
                   ),
@@ -169,17 +169,17 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                     });
                   },
                   child: Container(
-                    height: 60,
-                    width: 60,
+                    height: 70,
+                    width: 100,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: isFemaleSelected == true ? Colors.redAccent : Colors.grey[400]
+                        borderRadius: BorderRadius.circular(15),
+                        color: isFemaleSelected == true ? Colors.redAccent : buttonColor
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.person_2),
-                        Text("Female"),
+                        Icon(Icons.person_2,color: Colors.white,),
+                        Text("মহিলা",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
                       ],
                     ),
                   ),
@@ -188,7 +188,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
             ),
             // CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
             SizedBox(
-              height: 5,
+              height: 10,
             ),
             CustomTextField(
                 hint: txtBirthYear,
@@ -230,7 +230,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
             SizedBox(
               height: 5,
             ),
-            CustomButton(onPress: (){}, text: "Done", color: buttonColor)
+            CustomButton(onPress: (){}, text: txtGaurdianSignUp, color: buttonColor)
           ],
         ),
       )),

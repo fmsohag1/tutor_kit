@@ -21,3 +21,6 @@ const txtInstitute="শিক্ষা প্রতিষ্ঠান";
 const txtDepartment="বিভাগ";
 const txtClass="শ্রেণি";
 const txtSubject="বিষয়";
+const txtHome="হোম";
+const txtPost="পোস্ট করুন";
+const txtProfile="প্রোফাইল";
