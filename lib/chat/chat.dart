@@ -1,0 +1,1 @@
+// icon & text color golu thik koriyen

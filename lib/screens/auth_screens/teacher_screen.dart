@@ -230,6 +230,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
             SizedBox(
               height: 5,
             ),
+            CustomButton(onPress: (){}, text: "Done", color: buttonColor)
           ],
         ),
       )),
