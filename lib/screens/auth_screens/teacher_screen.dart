@@ -132,106 +132,108 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
       body: Center(
           child: Padding(
         padding: EdgeInsets.all(12),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      isMaleSelected = true;
-                      isFemaleSelected = false;
-                    });
-                  },
-                  child: Container(
-                    height: 70,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: isMaleSelected == true ? Colors.redAccent : buttonColor
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.person,color: Colors.white,),
-                        Text("পুরুষ",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
-                      ],
-                    ),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: (){
-                    setState(() {
-                      isMaleSelected = false;
-                      isFemaleSelected = true;
-                    });
-                  },
-                  child: Container(
-                    height: 70,
-                    width: 100,
-                    decoration: BoxDecoration(
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        isMaleSelected = true;
+                        isFemaleSelected = false;
+                      });
+                    },
+                    child: Container(
+                      height: 70,
+                      width: 100,
+                      decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: isFemaleSelected == true ? Colors.redAccent : buttonColor
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.person_2,color: Colors.white,),
-                        Text("মহিলা",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
-                      ],
+                        color: isMaleSelected == true ? Colors.redAccent : buttonColor
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.person,color: Colors.white,),
+                          Text("পুরুষ",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            // CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
-            SizedBox(
-              height: 10,
-            ),
-            CustomTextField(
-                hint: txtBirthYear,
-                obsecure: false,
-                preffixIcon: FontAwesome.calendar,
-                type: TextInputType.phone),
-            SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-                hint: txtInstitute,
-                obsecure: false,
-                preffixIcon: Icons.school_outlined,
-                type: TextInputType.emailAddress),
-            SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-                hint: txtDepartment,
-                obsecure: false,
-                preffixIcon: FontAwesome.book_open,
-                type: TextInputType.emailAddress),
-            SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-                hint: txtClass,
-                obsecure: false,
-                preffixIcon: Icons.class_outlined,
-                type: TextInputType.emailAddress),
-            SizedBox(
-              height: 5,
-            ),
-            CustomTextField(
-                hint: txtSubject,
-                obsecure: false,
-                preffixIcon: Icons.subtitles_outlined,
-                type: TextInputType.emailAddress),
-            SizedBox(
-              height: 5,
-            ),
-            CustomButton(onPress: (){}, text: txtGaurdianSignUp, color: buttonColor)
-          ],
+                  GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        isMaleSelected = false;
+                        isFemaleSelected = true;
+                      });
+                    },
+                    child: Container(
+                      height: 70,
+                      width: 100,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          color: isFemaleSelected == true ? Colors.redAccent : buttonColor
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.person_2,color: Colors.white,),
+                          Text("মহিলা",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
+              SizedBox(
+                height: 10,
+              ),
+              CustomTextField(
+                  hint: txtBirthYear,
+                  obsecure: false,
+                  preffixIcon: FontAwesome.calendar,
+                  type: TextInputType.phone),
+              SizedBox(
+                height: 5,
+              ),
+              CustomTextField(
+                  hint: txtInstitute,
+                  obsecure: false,
+                  preffixIcon: Icons.school_outlined,
+                  type: TextInputType.emailAddress),
+              SizedBox(
+                height: 5,
+              ),
+              CustomTextField(
+                  hint: txtDepartment,
+                  obsecure: false,
+                  preffixIcon: FontAwesome.book_open,
+                  type: TextInputType.emailAddress),
+              SizedBox(
+                height: 5,
+              ),
+              CustomTextField(
+                  hint: txtClass,
+                  obsecure: false,
+                  preffixIcon: Icons.class_outlined,
+                  type: TextInputType.emailAddress),
+              SizedBox(
+                height: 5,
+              ),
+              CustomTextField(
+                  hint: txtSubject,
+                  obsecure: false,
+                  preffixIcon: Icons.subtitles_outlined,
+                  type: TextInputType.emailAddress),
+              SizedBox(
+                height: 5,
+              ),
+              CustomButton(onPress: (){}, text: txtGaurdianSignUp, color: buttonColor)
+            ],
+          ),
         ),
       )),
     );

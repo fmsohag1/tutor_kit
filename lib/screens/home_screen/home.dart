@@ -29,18 +29,24 @@ class Home extends StatelessWidget {
         ],
       ),
       bottomNavigationBar: Obx(()=>
-          BottomNavigationBar(
-            currentIndex: currentNavIndex.value,
-            backgroundColor: Colors.grey[600],
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: Colors.lightGreen,
-            unselectedItemColor: bgColor,
-            selectedLabelStyle: TextStyle(fontFamily: kalpurush),
-            unselectedLabelStyle: TextStyle(fontFamily: kalpurush),
-            items: navbarItem,
-            onTap: (value){
-              currentNavIndex.value=value;
-            },
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(15),
+              child: BottomNavigationBar(
+                currentIndex: currentNavIndex.value,
+                backgroundColor: Colors.grey[600],
+                type: BottomNavigationBarType.fixed,
+                selectedItemColor: Colors.lightGreen,
+                unselectedItemColor: bgColor,
+                selectedLabelStyle: TextStyle(fontFamily: kalpurush,),
+                unselectedLabelStyle: TextStyle(fontFamily: kalpurush),
+                items: navbarItem,
+                onTap: (value){
+                  currentNavIndex.value=value;
+                },
+              ),
+            ),
           ),
       ),
     );
