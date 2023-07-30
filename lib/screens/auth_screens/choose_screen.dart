@@ -15,7 +15,7 @@ class ChooseScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.only(right: 15,left: 15),
         child: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
             color: textfieldColor,
             image: DecorationImage(image: AssetImage(icTutorGrey,),scale: 3,)
@@ -24,17 +24,17 @@ class ChooseScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
                   child: Text(txtChooseText,style: TextStyle(fontFamily: kalpurush,fontSize: 18,),textAlign: TextAlign.justify,),
                 ),
-                SizedBox(height: 20,),
+                const SizedBox(height: 20,),
                 CustomButton(onPress: (){
-                  Get.to(()=>GaurdianScreen());
+                  Get.to(()=>const GaurdianScreen());
                 }, text: txtGaurdian,color: Colors.black26,),
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
                 CustomButton(onPress: (){
-                  Get.to(()=>TeacherScreen());
+                  Get.to(()=>const TeacherScreen());
                 }, text: txtTeacher,color: Colors.black26,),
               ],
             ),

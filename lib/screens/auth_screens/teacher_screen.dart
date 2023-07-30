@@ -16,7 +16,10 @@ class TeacherScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        title: Text(txtTeacher,style: TextStyle(fontFamily: kalpurush,fontSize: 20),),
+        title: const Text(
+          txtTeacher,
+          style: TextStyle(fontFamily: kalpurush, fontSize: 20),
+        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -26,26 +29,69 @@ class TeacherScreen extends StatelessWidget {
               CircleAvatar(
                   radius: 50,
                   backgroundColor: textfieldColor,
-                  child: Image.asset(icTutor,width: 55,)),
-              Text(txtTutorkit,style: TextStyle(fontFamily: roboto_bold,fontSize: 22,color: Colors.black45),),
+                  child: Image.asset(
+                    icTutor,
+                    width: 55,
+                  )),
+              const Text(
+                txtTutorkit,
+                style: TextStyle(
+                    fontFamily: roboto_bold,
+                    fontSize: 22,
+                    color: Colors.black45),
+              ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    CustomTextField(hint: txtName, obsecure: false, preffixIcon: OctIcons.person_16, type: TextInputType.text),
-                    SizedBox(height: 5,),
-                    CustomTextField(hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
-                    SizedBox(height: 5,),
-                    CustomTextField(hint: txtEmail, obsecure: false, preffixIcon: Icons.email_outlined, type: TextInputType.emailAddress),
-                    SizedBox(height: 5,),
-                    CustomTextField2(hint: txtPassword, preffixIcon: Icons.lock_open_outlined, type: TextInputType.visiblePassword),
-                    SizedBox(height: 5,),
-                    CustomTextField(hint: txtConfirmPassword, obsecure: true, preffixIcon: Icons.verified_user_outlined, type: TextInputType.visiblePassword),
-                    SizedBox(height: 10,),
-                    CustomButton(onPress: (){
-                      Get.to(()=>TeacherScreenInfo());
-                    }, text: txtNext, color: buttonColor),
-                    SizedBox(height: 20,),
+                    const CustomTextField(
+                        hint: txtName,
+                        obsecure: false,
+                        preffixIcon: OctIcons.person_16,
+                        type: TextInputType.text),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const CustomTextField(
+                        hint: txtMobileNo,
+                        obsecure: false,
+                        preffixIcon: Icons.phone_android_outlined,
+                        type: TextInputType.phone),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const CustomTextField(
+                        hint: txtEmail,
+                        obsecure: false,
+                        preffixIcon: Icons.email_outlined,
+                        type: TextInputType.emailAddress),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const CustomTextField2(
+                        hint: txtPassword,
+                        preffixIcon: Icons.lock_open_outlined,
+                        type: TextInputType.visiblePassword),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    const CustomTextField(
+                        hint: txtConfirmPassword,
+                        obsecure: true,
+                        preffixIcon: Icons.verified_user_outlined,
+                        type: TextInputType.visiblePassword),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    CustomButton(
+                        onPress: () {
+                          Get.to(() => const TeacherScreenInfo());
+                        },
+                        text: txtNext,
+                        color: buttonColor),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     /*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -66,36 +112,127 @@ class TeacherScreen extends StatelessWidget {
           ),
         ),
       ),
-
     );
   }
 }
 
-
-class TeacherScreenInfo extends StatelessWidget {
+class TeacherScreenInfo extends StatefulWidget {
   const TeacherScreenInfo({super.key});
 
   @override
+  State<TeacherScreenInfo> createState() => _TeacherScreenInfoState();
+}
+
+class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
+  bool isMaleSelected = false;
+  bool isFemaleSelected = false;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
-          SizedBox(height: 5,),
-          CustomTextField(hint: txtAge, obsecure: false, preffixIcon: FontAwesome.people_group, type: TextInputType.phone),
-          SizedBox(height: 5,),
-          CustomTextField(hint: txtInstitute, obsecure: false, preffixIcon: Icons.school_outlined, type: TextInputType.emailAddress),
-          SizedBox(height: 5,),
-          CustomTextField(hint: txtDepartment, obsecure: false, preffixIcon: Icons.local_fire_department_outlined, type: TextInputType.emailAddress),
-          SizedBox(height: 5,),
-          CustomTextField(hint: txtClass, obsecure: false, preffixIcon: Icons.class_outlined, type: TextInputType.emailAddress),
-          SizedBox(height: 5,),
-          CustomTextField(hint: txtSubject, obsecure: false, preffixIcon: Icons.subtitles_outlined, type: TextInputType.emailAddress),
-          SizedBox(height: 5,),
-        ],
+      body: Center(
+          child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      isMaleSelected = true;
+                      isFemaleSelected = false;
+                    });
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: isMaleSelected == true ? Colors.redAccent : Colors.grey[400]
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person),
+                        Text("Male"),
+                      ],
+                    ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: (){
+                    setState(() {
+                      isMaleSelected = false;
+                      isFemaleSelected = true;
+                    });
+                  },
+                  child: Container(
+                    height: 60,
+                    width: 60,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: isFemaleSelected == true ? Colors.redAccent : Colors.grey[400]
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.person_2),
+                        Text("Female"),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            // CustomTextField(hint: txtGender, obsecure: false, preffixIcon: FontAwesome.venus, type: TextInputType.text),
+            SizedBox(
+              height: 5,
+            ),
+            CustomTextField(
+                hint: txtBirthYear,
+                obsecure: false,
+                preffixIcon: FontAwesome.calendar,
+                type: TextInputType.phone),
+            SizedBox(
+              height: 5,
+            ),
+            CustomTextField(
+                hint: txtInstitute,
+                obsecure: false,
+                preffixIcon: Icons.school_outlined,
+                type: TextInputType.emailAddress),
+            SizedBox(
+              height: 5,
+            ),
+            CustomTextField(
+                hint: txtDepartment,
+                obsecure: false,
+                preffixIcon: FontAwesome.book_open,
+                type: TextInputType.emailAddress),
+            SizedBox(
+              height: 5,
+            ),
+            CustomTextField(
+                hint: txtClass,
+                obsecure: false,
+                preffixIcon: Icons.class_outlined,
+                type: TextInputType.emailAddress),
+            SizedBox(
+              height: 5,
+            ),
+            CustomTextField(
+                hint: txtSubject,
+                obsecure: false,
+                preffixIcon: Icons.subtitles_outlined,
+                type: TextInputType.emailAddress),
+            SizedBox(
+              height: 5,
+            ),
+          ],
+        ),
       )),
     );
   }
 }
-

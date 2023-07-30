@@ -15,18 +15,18 @@ class CustomTextField extends StatelessWidget {
       keyboardType: type,
       decoration: InputDecoration(
         hintText: hint,
-        hintStyle: TextStyle(fontFamily: kalpurush),
+        hintStyle: const TextStyle(fontFamily: kalpurush),
         prefixIcon: Icon(preffixIcon,size: 25,),
         border: InputBorder.none,
         filled: true,
         fillColor: textfieldColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: bgColor),
+          borderSide: const BorderSide(color: bgColor),
         ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: const BorderSide(color: bgColor),
           )
 
       ),
@@ -54,7 +54,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
       keyboardType: widget.type,
       decoration: InputDecoration(
           hintText: widget.hint,
-          hintStyle: TextStyle(fontFamily: kalpurush),
+          hintStyle: const TextStyle(fontFamily: kalpurush),
           prefixIcon: Icon(widget.preffixIcon,size: 25,),
           suffixIcon: GestureDetector(
             onTap: (){
@@ -68,11 +68,11 @@ class _CustomTextField2State extends State<CustomTextField2> {
           fillColor: textfieldColor,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: const BorderSide(color: bgColor),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: const BorderSide(color: bgColor),
           )
 
       ),
