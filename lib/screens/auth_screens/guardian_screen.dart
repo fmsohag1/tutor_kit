@@ -44,7 +44,7 @@ class GaurdianScreen extends StatelessWidget {
                       Get.to(()=>Home());
                     }, text: txtGaurdianSignUp, color: buttonColor),
                     SizedBox(height: 20,),
-                    Row(
+                   /* Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(txtHaveAccount,
@@ -56,7 +56,7 @@ class GaurdianScreen extends StatelessWidget {
                             },
                             child: Text(txtLogin,style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)))
                       ],
-                    )
+                    )*/
                   ],
                 ),
               )
