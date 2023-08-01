@@ -1,10 +1,13 @@
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
+import 'package:tutor_kit/screens/controller/user_controller.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
-import 'package:tutor_kit/widgets/custom_textfield.dart';
+
 
 
 class OtpScreen extends StatefulWidget {
@@ -15,8 +18,7 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-
-
+  
 
   @override
   Widget build(BuildContext context) {
@@ -58,21 +60,16 @@ class _OtpScreenState extends State<OtpScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(height: 20,),
               CircleAvatar(
                   radius: 60,
                   backgroundColor: textfieldColor,
                   child: Image.asset(icTutor,width: 65,)),
-              Text(
-                "Verification",
-                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-              ),
               SizedBox(
                 height: 10,
               ),
               Text(
-                "Enter the verification code",
-                style: TextStyle(fontSize: 20),
+                txtOtpText,
+                style: TextStyle(fontSize: 18,fontFamily: kalpurush),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -90,20 +87,31 @@ class _OtpScreenState extends State<OtpScreen> {
               SizedBox(
                 height: 20,
               ),
-              CustomButton(onPress: (){}, text: "Verify", color: buttonColor),
+              CustomButton(onPress: (){
+                Get.to(()=>ChooseScreen());
+              }, text: txtVerify, color: buttonColor),
               SizedBox(height: 10,),
               Row(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  GestureDetector(
-                      onTap: () {
-                      },
-                      child: Text(
-                        "Edit phone number?",
-                        style: TextStyle(color: Colors.blue),
-                      )),
+                  Text("এই কোডের মেয়াদ শেষ হবে ",style: TextStyle(fontFamily: kalpurush),),
+                  TweenAnimationBuilder(tween: Tween(begin: 30.0,end: 0), duration: Duration(seconds: 30), builder: (context,value,child){
+                    return Text("00:${value.toInt()}",style: TextStyle(color: Colors.redAccent),);
+                  }),
+                  Text(" সেকেন্ড",style: TextStyle(fontFamily: kalpurush),),
                 ],
-              )
+              ),
+              SizedBox(height: 10,),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  side: BorderSide(color: Colors.orange)
+                ),
+                  child: Container(
+                    height: 26,
+                      width: 130,
+                      child: Center(child: Text("আবার OTP পাঠান",style: TextStyle(fontFamily: kalpurush,fontSize: 16)))))
+
             ],
           ),
         ),

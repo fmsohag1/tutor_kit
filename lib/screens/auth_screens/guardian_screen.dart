@@ -38,10 +38,7 @@ class GaurdianScreen extends StatelessWidget {
                     CustomTextField(hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
                     SizedBox(height: 5,),
                     CustomTextField(hint: txtEmail, obsecure: false, preffixIcon: Icons.email_outlined, type: TextInputType.emailAddress),
-                    SizedBox(height: 5,),
-                    CustomTextField2(hint: txtPassword, preffixIcon: Icons.lock_open_outlined, type: TextInputType.visiblePassword),
-                    SizedBox(height: 5,),
-                    CustomTextField(hint: txtConfirmPassword, obsecure: true, preffixIcon: Icons.verified_user_outlined, type: TextInputType.visiblePassword),
+
                     SizedBox(height: 10,),
                     CustomButton(onPress: (){
                       Get.to(()=>Home());

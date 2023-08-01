@@ -27,4 +27,6 @@ const txtProfile="প্রোফাইল";
 const txtMale="পুরুষ";
 const txtFemale="মহিলা";
 const txtPhoneText="মোবাইল নাম্বার দিয়ে এগিয়ে যান";
+const txtOtpText="আমাদের পাঠানো OTP দিয়ে আপনার মোবাইল নাম্বার যাচাই করুন ।";
 const txtSubmit="সাবমিট করুন";
+const txtVerify="যাচাই করুন";

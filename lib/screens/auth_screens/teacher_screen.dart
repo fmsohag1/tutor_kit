@@ -66,21 +66,6 @@ class TeacherScreen extends StatelessWidget {
                         preffixIcon: Icons.email_outlined,
                         type: TextInputType.emailAddress),
                     const SizedBox(
-                      height: 5,
-                    ),
-                    const CustomTextField2(
-                        hint: txtPassword,
-                        preffixIcon: Icons.lock_open_outlined,
-                        type: TextInputType.visiblePassword),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    const CustomTextField(
-                        hint: txtConfirmPassword,
-                        obsecure: true,
-                        preffixIcon: Icons.verified_user_outlined,
-                        type: TextInputType.visiblePassword),
-                    const SizedBox(
                       height: 10,
                     ),
                     CustomButton(
