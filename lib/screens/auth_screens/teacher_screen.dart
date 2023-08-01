@@ -151,13 +151,13 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                       width: 100,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
-                        color: isMaleSelected == true ? Colors.redAccent : buttonColor
+                        color: isMaleSelected == true ? Colors.green : buttonColor
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.person,color: Colors.white,),
-                          Text("পুরুষ",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
+                          Text(txtMale,style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
                         ],
                       ),
                     ),
@@ -174,13 +174,13 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                       width: 100,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
-                          color: isFemaleSelected == true ? Colors.redAccent : buttonColor
+                          color: isFemaleSelected == true ? Colors.green : buttonColor
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Icons.person_2,color: Colors.white,),
-                          Text("মহিলা",style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
+                          Text(txtFemale,style: TextStyle(color: Colors.white,fontFamily: kalpurush),),
                         ],
                       ),
                     ),

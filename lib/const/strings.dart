@@ -24,3 +24,7 @@ const txtSubject="বিষয়";
 const txtHome="হোম";
 const txtPost="পোস্ট করুন";
 const txtProfile="প্রোফাইল";
+const txtMale="পুরুষ";
+const txtFemale="মহিলা";
+const txtPhoneText="মোবাইল নাম্বার দিয়ে এগিয়ে যান";
+const txtSubmit="সাবমিট করুন";
