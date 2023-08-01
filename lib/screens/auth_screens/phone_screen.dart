@@ -32,7 +32,6 @@ class _PhoneScreenState extends State<PhoneScreen> {
                   radius: 60,
                   backgroundColor: textfieldColor,
                   child: Image.asset(icTutor,width: 65,)),
-              Text(txtTutorkit,style: TextStyle(fontFamily: roboto_bold,fontSize: 25,color: Colors.black45),),
               SizedBox(height: 20,),
               Text(txtPhoneText,style: TextStyle(fontFamily: kalpurush,fontSize: 18),),
               SizedBox(height: 10,),
