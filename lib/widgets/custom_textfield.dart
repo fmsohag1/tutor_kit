@@ -6,11 +6,13 @@ class CustomTextField extends StatelessWidget {
   final IconData preffixIcon;
   final bool obsecure;
   final TextInputType type;
-  const CustomTextField({super.key, required this.hint, required this.obsecure, required this.preffixIcon, required this.type});
+  final TextEditingController controller;
+  const CustomTextField({super.key, required this.hint, required this.obsecure, required this.preffixIcon, required this.type, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: controller,
       obscureText: obsecure,
       keyboardType: type,
       decoration: InputDecoration(
@@ -39,7 +41,8 @@ class CustomTextField2 extends StatefulWidget {
   final String hint;
   final IconData preffixIcon;
   final TextInputType type;
-  const CustomTextField2({super.key, required this.hint, required this.preffixIcon, required this.type});
+  final TextEditingController controller;
+  const CustomTextField2({super.key, required this.hint, required this.preffixIcon, required this.type, required this.controller,});
 
   @override
   State<CustomTextField2> createState() => _CustomTextField2State();
@@ -50,6 +53,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
   bool visible=true;
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.controller,
       obscureText: visible,
       keyboardType: widget.type,
       decoration: InputDecoration(

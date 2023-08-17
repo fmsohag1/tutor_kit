@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/colors.dart';
 import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
+import 'package:tutor_kit/screens/controller/signup_controller.dart';
 import 'package:tutor_kit/screens/home_screen/home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
@@ -14,6 +15,7 @@ class GaurdianScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller=Get.put(SignUpController());
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -33,11 +35,11 @@ class GaurdianScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    CustomTextField(hint: txtName, obsecure: false, preffixIcon: OctIcons.person_16, type: TextInputType.text),
+                    CustomTextField(controller:controller.name,hint: txtName, obsecure: false, preffixIcon: OctIcons.person_16, type: TextInputType.text),
                     SizedBox(height: 5,),
-                    CustomTextField(hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
+                    CustomTextField(controller: controller.phoneNo,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
                     SizedBox(height: 5,),
-                    CustomTextField(hint: txtEmail, obsecure: false, preffixIcon: Icons.email_outlined, type: TextInputType.emailAddress),
+                    CustomTextField(controller: controller.email,hint: txtEmail, obsecure: false, preffixIcon: Icons.email_outlined, type: TextInputType.emailAddress),
 
                     SizedBox(height: 10,),
                     CustomButton(onPress: (){

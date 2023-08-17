@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/colors.dart';
 import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
+import 'package:tutor_kit/screens/controller/signup_controller.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -13,6 +14,7 @@ class TeacherScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var controller=Get.put(SignUpController());
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -44,15 +46,17 @@ class TeacherScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Column(
                   children: [
-                    const CustomTextField(
+                     CustomTextField(
+                      controller: controller.name,
                         hint: txtName,
                         obsecure: false,
                         preffixIcon: OctIcons.person_16,
                         type: TextInputType.text),
-                    const SizedBox(
+                     SizedBox(
                       height: 5,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: controller.phoneNo,
                         hint: txtMobileNo,
                         obsecure: false,
                         preffixIcon: Icons.phone_android_outlined,
@@ -60,7 +64,8 @@ class TeacherScreen extends StatelessWidget {
                     const SizedBox(
                       height: 5,
                     ),
-                    const CustomTextField(
+                    CustomTextField(
+                      controller: controller.email,
                         hint: txtEmail,
                         obsecure: false,
                         preffixIcon: Icons.email_outlined,
@@ -111,8 +116,10 @@ class TeacherScreenInfo extends StatefulWidget {
 class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
   bool isMaleSelected = false;
   bool isFemaleSelected = false;
+
   @override
   Widget build(BuildContext context) {
+    var controller=Get.put(SignUpController());
     return Scaffold(
       body: Center(
           child: Padding(
@@ -177,6 +184,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                 height: 10,
               ),
               CustomTextField(
+                controller: controller.dop,
                   hint: txtBirthYear,
                   obsecure: false,
                   preffixIcon: FontAwesome.calendar,
@@ -185,6 +193,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                 height: 5,
               ),
               CustomTextField(
+                controller: controller.institute,
                   hint: txtInstitute,
                   obsecure: false,
                   preffixIcon: Icons.school_outlined,
@@ -193,6 +202,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                 height: 5,
               ),
               CustomTextField(
+                controller: controller.department,
                   hint: txtDepartment,
                   obsecure: false,
                   preffixIcon: FontAwesome.book_open,
@@ -201,6 +211,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                 height: 5,
               ),
               CustomTextField(
+                controller: controller.Class,
                   hint: txtClass,
                   obsecure: false,
                   preffixIcon: Icons.class_outlined,
@@ -209,6 +220,7 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
                 height: 5,
               ),
               CustomTextField(
+                controller: controller.subject,
                   hint: txtSubject,
                   obsecure: false,
                   preffixIcon: Icons.subtitles_outlined,

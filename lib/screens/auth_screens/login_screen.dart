@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
@@ -9,6 +10,7 @@ import 'package:tutor_kit/widgets/custom_textfield.dart';
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
   @override
+
   Widget build(BuildContext context) {
     return  Scaffold(
       //resizeToAvoidBottomInset: false,
@@ -66,3 +68,4 @@ class LoginScreen extends StatelessWidget {
     );
   }
 }
+*/

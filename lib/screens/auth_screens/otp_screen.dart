@@ -81,14 +81,14 @@ class _OtpScreenState extends State<OtpScreen> {
                 submittedPinTheme: submittedPinTheme,
                 length: 6,
                 showCursor: true,
-                onChanged: (value){
+                onSubmitted: (value){
                 },
+
               ),
               SizedBox(
                 height: 20,
               ),
               CustomButton(onPress: (){
-                Get.to(()=>ChooseScreen());
               }, text: txtVerify, color: buttonColor),
               SizedBox(height: 10,),
               Row(

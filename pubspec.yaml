@@ -39,7 +39,8 @@ dependencies:
   get: ^4.6.5
   firebase_core: ^2.15.0
   firebase_auth: ^4.7.2
-  pinput: ^2.3.0
+  pinput: ^3.0.0
+  flutterfire_cli: ^0.2.7
 
 dev_dependencies:
   flutter_test:
