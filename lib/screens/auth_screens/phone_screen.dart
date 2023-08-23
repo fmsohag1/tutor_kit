@@ -52,7 +52,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   }
 
   void _userLogin() async {
-    String mobile = phoneController.text;
+    String mobile = "+88"+phoneController.text;
     if (mobile == "") {
       Get.snackbar(
         "Please enter the mobile number!",
@@ -92,8 +92,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
               SizedBox(height: 10,),
               CustomTextField(controller: phoneController,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
               SizedBox(height: 10,),
-              // CustomButton(onPress: _userLogin, text: txtSubmit, color: buttonColor),
-              ElevatedButton(onPressed: _userLogin, child: Text("Send Code"))
+              CustomButton(onPress: _userLogin, text: txtSubmit, color: buttonColor),
+              // ElevatedButton(onPressed: _userLogin, child: Text("Send Code")),
             ],
           ),
         ),
