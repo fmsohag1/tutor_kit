@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:pinput/pinput.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
@@ -22,6 +23,8 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
 
+  final box = GetStorage();
+
   String? otpCode;
   final String verificationId = Get.arguments[0];
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -37,7 +40,10 @@ class _OtpScreenState extends State<OtpScreen> {
           verificationId: verificationId, smsCode: userOtp);
       User? user = (await auth.signInWithCredential(creds)).user;
       if (user != null) {
-        Get.to(Home());
+        Get.to(()=>Home());
+        print(user.uid);
+        print(user.phoneNumber);
+        box.write("userPhone", user.phoneNumber);
       }
     } on FirebaseAuthException catch (e) {
       Get.snackbar(

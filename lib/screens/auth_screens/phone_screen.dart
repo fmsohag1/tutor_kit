@@ -2,6 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
@@ -16,9 +17,9 @@ class PhoneScreen extends StatefulWidget {
   State<PhoneScreen> createState() => _PhoneScreenState();
 }
 class _PhoneScreenState extends State<PhoneScreen> {
-
   // var controller=Get.put(SignUpController());
 
+final box = GetStorage();
 
 
   //auth start
@@ -57,7 +58,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
       Get.snackbar(
         "Please enter the mobile number!",
         "Failed",
-        colorText: Colors.white,
+        colorText: Colors.black,
       );
     } else {
       signInWithPhoneNumber(mobile);
