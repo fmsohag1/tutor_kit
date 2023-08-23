@@ -11,12 +11,14 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    return TextField(
       controller: controller,
       obscureText: obsecure,
       keyboardType: type,
       decoration: InputDecoration(
-        hintText: hint,
+        labelText: hint,
+        labelStyle: TextStyle(fontFamily: kalpurush),
+        hintText: "01*********",
         hintStyle: TextStyle(fontFamily: kalpurush),
         prefixIcon: Icon(preffixIcon,size: 25,),
         border: InputBorder.none,

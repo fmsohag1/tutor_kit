@@ -8,6 +8,7 @@ import 'package:tutor_kit/screens/controller/authentication_repository.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  print("connected");
   runApp(const MyApp());
 }
 
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: PhoneScreen(),
+      home: PhoneScreen()
     );
   }
 }

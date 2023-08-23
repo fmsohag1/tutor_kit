@@ -1,4 +1,5 @@
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
@@ -8,9 +9,11 @@ import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
 import 'package:tutor_kit/screens/controller/user_controller.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
+import '../home_screen/home.dart';
 
 
-class OtpScreen extends StatefulWidget {
+
+class OtpScreen extends StatefulWidget { 
   const OtpScreen({Key? key}) : super(key: key);
 
   @override
@@ -18,7 +21,44 @@ class OtpScreen extends StatefulWidget {
 }
 
 class _OtpScreenState extends State<OtpScreen> {
-  
+
+  String? otpCode;
+  final String verificationId = Get.arguments[0];
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  // verify otp
+
+  void verifyOtp(
+      String verificationId,
+      String userOtp,
+      ) async {
+    try {
+      PhoneAuthCredential creds = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: userOtp);
+      User? user = (await auth.signInWithCredential(creds)).user;
+      if (user != null) {
+        Get.to(Home());
+      }
+    } on FirebaseAuthException catch (e) {
+      Get.snackbar(
+        e.message.toString(),
+        "Failed",
+        colorText: Colors.white,
+      );
+    }
+  }
+
+  void _login() {
+    if (otpCode != null) {
+      verifyOtp(verificationId, otpCode!);
+    } else {
+      Get.snackbar(
+        "Enter 6-Digit code",
+        "Failed",
+        colorText: Colors.white,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,21 +121,23 @@ class _OtpScreenState extends State<OtpScreen> {
                 submittedPinTheme: submittedPinTheme,
                 length: 6,
                 showCursor: true,
-                onSubmitted: (value){
+                onCompleted: (value){
+                  setState(() {
+                    otpCode = value;
+                  });
                 },
 
               ),
               SizedBox(
                 height: 20,
               ),
-              CustomButton(onPress: (){
-              }, text: txtVerify, color: buttonColor),
+              CustomButton(onPress: _login, text: txtVerify, color: buttonColor),
               SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("এই কোডের মেয়াদ শেষ হবে ",style: TextStyle(fontFamily: kalpurush),),
-                  TweenAnimationBuilder(tween: Tween(begin: 30.0,end: 0), duration: Duration(seconds: 30), builder: (context,value,child){
+                  TweenAnimationBuilder(tween: Tween(begin: 60.0,end: 0), duration: Duration(seconds: 60), builder: (context,value,child){
                     return Text("00:${value.toInt()}",style: TextStyle(color: Colors.redAccent),);
                   }),
                   Text(" সেকেন্ড",style: TextStyle(fontFamily: kalpurush),),

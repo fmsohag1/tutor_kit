@@ -16,8 +16,63 @@ class PhoneScreen extends StatefulWidget {
   State<PhoneScreen> createState() => _PhoneScreenState();
 }
 class _PhoneScreenState extends State<PhoneScreen> {
+
+  // var controller=Get.put(SignUpController());
+
+
+
+  //auth start
+  final TextEditingController phoneController = TextEditingController();
+
+  Future<void> signInWithPhoneNumber(String phoneNumber) async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+
+    await auth.verifyPhoneNumber(
+      phoneNumber: phoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await auth.signInWithCredential(credential);
+        // authentication successful, do something
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        // authentication failed, do something
+      },
+      codeSent: (String verificationId, int? resendToken) async {
+        // code sent to phone number, save verificationId for later use
+        String smsCode = ''; // get sms code from user
+        PhoneAuthCredential credential = PhoneAuthProvider.credential(
+          verificationId: verificationId,
+          smsCode: smsCode,
+        );
+        Get.to(OtpScreen(), arguments: [verificationId]);
+        await auth.signInWithCredential(credential);
+        // authentication successful, do something
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {},
+    );
+  }
+
+  void _userLogin() async {
+    String mobile = phoneController.text;
+    if (mobile == "") {
+      Get.snackbar(
+        "Please enter the mobile number!",
+        "Failed",
+        colorText: Colors.white,
+      );
+    } else {
+      signInWithPhoneNumber(mobile);
+    }
+  }
+
   @override
-  var controller=Get.put(SignUpController());
+  void dispose() {
+    phoneController.dispose();
+    super.dispose();
+  }
+
+  //auth end
+
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
@@ -35,10 +90,10 @@ class _PhoneScreenState extends State<PhoneScreen> {
               SizedBox(height: 20,),
               Text(txtPhoneText,style: TextStyle(fontFamily: kalpurush,fontSize: 18),),
               SizedBox(height: 10,),
-              CustomTextField(controller: controller.phoneNo,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
+              CustomTextField(controller: phoneController,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
               SizedBox(height: 10,),
-              CustomButton(onPress: (){
-              }, text: txtSubmit, color: buttonColor)
+              // CustomButton(onPress: _userLogin, text: txtSubmit, color: buttonColor),
+              ElevatedButton(onPressed: _userLogin, child: Text("Send Code"))
             ],
           ),
         ),
