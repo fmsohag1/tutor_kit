@@ -1,10 +1,11 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/colors.dart';
 import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
 import 'package:tutor_kit/screens/controller/signup_controller.dart';
-import 'package:tutor_kit/screens/home_screen/home.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -15,7 +16,7 @@ class GaurdianScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var controller=Get.put(SignUpController());
+    //var controller=Get.put(SignUpController());
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
@@ -46,7 +47,7 @@ class GaurdianScreen extends StatelessWidget {
                       Get.to(()=>Home());
                     }, text: txtGaurdianSignUp, color: buttonColor),
                     SizedBox(height: 20,),
-                   /* Row(
+ Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(txtHaveAccount,
@@ -58,7 +59,8 @@ class GaurdianScreen extends StatelessWidget {
                             },
                             child: Text(txtLogin,style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)))
                       ],
-                    )*/
+                    )
+
                   ],
                 ),
               )
@@ -70,3 +72,4 @@ class GaurdianScreen extends StatelessWidget {
     );
   }
 }
+*/

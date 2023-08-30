@@ -3,14 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
 import 'package:pinput/pinput.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
-import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
-import 'package:tutor_kit/screens/controller/user_controller.dart';
+import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
-import '../home_screen/home.dart';
+import '../home_screen/guardian_home.dart';
 
 //
 
@@ -29,6 +28,7 @@ class _OtpScreenState extends State<OtpScreen> {
   final String verificationId = Get.arguments[0];
   FirebaseAuth auth = FirebaseAuth.instance;
 
+
   // verify otp
 
   void verifyOtp(
@@ -40,7 +40,12 @@ class _OtpScreenState extends State<OtpScreen> {
           verificationId: verificationId, smsCode: userOtp);
       User? user = (await auth.signInWithCredential(creds)).user;
       if (user != null) {
-        Get.to(()=>Home());
+        if(box.read('user')=='gd'){
+          Get.to(()=>GuardianHome());
+        }else{
+          Get.to(()=>TeacherHome());
+        }
+
         print(user.uid);
         print(user.phoneNumber);
         box.write("userPhone", user.phoneNumber);
@@ -49,6 +54,7 @@ class _OtpScreenState extends State<OtpScreen> {
       Get.snackbar(
         e.message.toString(),
         "Failed",
+        backgroundColor: Colors.black12,
         colorText: Colors.white,
       );
     }

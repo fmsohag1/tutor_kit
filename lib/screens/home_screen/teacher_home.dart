@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:tutor_kit/screens/home_screen/home_screen.dart';
 import 'package:tutor_kit/screens/home_screen/post_screen.dart';
 import 'package:tutor_kit/screens/home_screen/profile_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher_homescreen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher_profile.dart';
 
 import '../../const/consts.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class TeacherHome extends StatelessWidget {
+  const TeacherHome({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,9 +20,8 @@ class Home extends StatelessWidget {
       BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined),label: txtProfile),
     ];
     var navBody=[
-      HomeScreen(),
-      PostScreen(),
-      ProfileScreen()
+      TeacherHomeScreen(),
+      TeacherProfile()
     ];
     return Scaffold(
       body: Column(

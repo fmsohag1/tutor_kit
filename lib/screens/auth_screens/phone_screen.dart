@@ -1,13 +1,9 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
-import 'package:tutor_kit/screens/controller/authentication_repository.dart';
-import 'package:tutor_kit/screens/controller/signup_controller.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -105,5 +101,3 @@ final box = GetStorage();
     );
   }
 }
-
-

@@ -1,3 +1,4 @@
+/*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:icons_plus/icons_plus.dart';
@@ -82,7 +83,8 @@ class TeacherScreen extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    /*Row(
+                    */
+/*Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(txtHaveAccount,
@@ -94,7 +96,8 @@ class TeacherScreen extends StatelessWidget {
                             },
                             child: Text(txtLogin,style: TextStyle(fontSize: 16,color: Colors.blue,fontFamily: kalpurush,fontWeight: FontWeight.bold)))
                       ],
-                    )*/
+                    )*//*
+
                   ],
                 ),
               )
@@ -236,3 +239,4 @@ class _TeacherScreenInfoState extends State<TeacherScreenInfo> {
     );
   }
 }
+*/
