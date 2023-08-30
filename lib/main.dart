@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
 import 'package:tutor_kit/screens/controller/authentication_repository.dart';
+import 'package:tutor_kit/screens/home_screen/home.dart';
 import 'package:tutor_kit/screens/home_screen/home_screen.dart';
 
 void main() async{
@@ -44,7 +46,7 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: isExist != null ? HomeScreen() : PhoneScreen()
+      home: isExist != null ? Home() : ChooseScreen()
     );
   }
 }

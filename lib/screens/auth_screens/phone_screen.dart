@@ -94,6 +94,9 @@ final box = GetStorage();
               CustomTextField(controller: phoneController,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
               SizedBox(height: 10,),
               CustomButton(onPress: _userLogin, text: txtSubmit, color: buttonColor),
+              ElevatedButton(onPressed: (){
+                print(box.read("user"));
+              }, child: Text("data"))
               // ElevatedButton(onPressed: _userLogin, child: Text("Send Code")),
             ],
           ),
