@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
-import 'package:tutor_kit/screens/home_screen/home_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
+import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,6 +34,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     final isExist = box.read("userPhone");
+    final _user = box.read("user");
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
 
@@ -43,7 +47,7 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: isExist != null ? HomeScreen() : PhoneScreen()
+      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : ChooseScreen(),
     );
   }
 }

@@ -43,7 +43,6 @@ dependencies:
   flutterfire_cli: ^0.2.7
   get_storage: ^2.1.1
   cloud_firestore: ^4.9.0
-  ##yyyyy
 
 dev_dependencies:
   flutter_test:

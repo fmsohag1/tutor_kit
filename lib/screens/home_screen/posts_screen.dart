@@ -2,8 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-class HomeScreen extends StatelessWidget {
-   HomeScreen({super.key});
+class PostsScreen extends StatelessWidget {
+  PostsScreen({super.key});
 
   final postsRef = FirebaseFirestore.instance.collection("posts");
 

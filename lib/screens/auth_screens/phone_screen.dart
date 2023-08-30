@@ -50,7 +50,7 @@ final box = GetStorage();
 
   void _userLogin() async {
     String mobile = "+88"+phoneController.text;
-    if (mobile == "") {
+    if (mobile == "+88") {
       Get.snackbar(
         "Please enter the mobile number!",
         "Failed",

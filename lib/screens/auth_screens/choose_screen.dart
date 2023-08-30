@@ -1,4 +1,4 @@
-/*
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -68,7 +68,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                     Get.snackbar("Warning", "Select Tutor or Guardian");
                   }
                 });
-              }, child: Text("Login With Tutor"))
+              }, child: Text("Login with Phone"))
             ],
           ),
         ),
@@ -76,4 +76,3 @@ class _ChooseScreenState extends State<ChooseScreen> {
     );
   }
 }
-*/

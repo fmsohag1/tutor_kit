@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
-class PostScreen extends StatelessWidget {
-  PostScreen({super.key});
+class AddPostScreen extends StatelessWidget {
+  AddPostScreen({super.key});
   final TextEditingController genderController = TextEditingController();
   final TextEditingController classController = TextEditingController();
   final TextEditingController salaryController = TextEditingController();

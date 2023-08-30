@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
-import 'package:tutor_kit/screens/home_screen/home_screen.dart';
-import 'package:tutor_kit/screens/home_screen/post_screen.dart';
+import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/add_postscreen.dart';
 import 'package:tutor_kit/screens/home_screen/profile_screen.dart';
 
 import '../../const/consts.dart';
@@ -13,13 +13,12 @@ class GuardianHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var currentNavIndex=0.obs;
     var navbarItem=[
-      BottomNavigationBarItem(icon: Icon(Icons.home),label: txtHome),
+      //BottomNavigationBarItem(icon: Icon(Icons.home),label: txtHome),
       BottomNavigationBarItem(icon: CircleAvatar(radius:20,backgroundColor:bgColor,foregroundColor: Colors.yellow[800],child: Icon(Icons.add)),label: ""),
       BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined),label: txtProfile),
     ];
     var navBody=[
-      HomeScreen(),
-      PostScreen(),
+      AddPostScreen(),
       ProfileScreen()
     ];
     return Scaffold(

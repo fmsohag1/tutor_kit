@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
-import 'package:tutor_kit/screens/home_screen/home_screen.dart';
+import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
