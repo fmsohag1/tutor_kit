@@ -31,14 +31,16 @@ class TeacherHome extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(()=>
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 10,right: 10),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(15),
               child: BottomNavigationBar(
+                showUnselectedLabels: false,
+                showSelectedLabels: false,
                 currentIndex: currentNavIndex.value,
-                backgroundColor: Colors.grey[600],
+                backgroundColor: buttonColor,
                 type: BottomNavigationBarType.fixed,
-                selectedItemColor: Colors.lightGreen,
+                selectedItemColor: Colors.orangeAccent,
                 unselectedItemColor: bgColor,
                 selectedLabelStyle: TextStyle(fontFamily: kalpurush,),
                 unselectedLabelStyle: TextStyle(fontFamily: kalpurush),

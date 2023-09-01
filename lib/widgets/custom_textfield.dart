@@ -1,25 +1,29 @@
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tutor_kit/const/consts.dart';
 
 class CustomTextField extends StatelessWidget {
+  final String? label;
   final String hint;
   final IconData preffixIcon;
-  final bool obsecure;
   final TextInputType type;
   final TextEditingController controller;
-  const CustomTextField({super.key, required this.hint, required this.obsecure, required this.preffixIcon, required this.type, required this.controller});
+  final int? max;
+  const CustomTextField({super.key, this.label, required this.preffixIcon, required this.type, required this.controller, required this.hint,this.max});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      maxLength: max,
       controller: controller,
-      obscureText: obsecure,
       keyboardType: type,
       decoration: InputDecoration(
-        labelText: hint,
+        labelText: label,
         labelStyle: TextStyle(fontFamily: kalpurush),
-        hintText: "01*********",
-        hintStyle: TextStyle(fontFamily: kalpurush),
+        hintText: hint,
+        hintStyle: TextStyle(fontFamily: kalpurush,color: Colors.grey),
         prefixIcon: Icon(preffixIcon,size: 25,),
         border: InputBorder.none,
         filled: true,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
@@ -11,7 +12,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     return Scaffold(
-      appBar: AppBar(
+      backgroundColor: bgColor,
+      /*appBar: AppBar(
         actions: [
           Text("Logout"),
           IconButton(onPressed: (){
@@ -19,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
             box.remove("userPhone");
           }, icon: Icon(Icons.logout))
         ],
-      ),
+      ),*/
       body: Center(
         child: Text("Profile Screen"),
       ),

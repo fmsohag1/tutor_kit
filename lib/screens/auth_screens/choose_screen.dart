@@ -19,6 +19,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   final box = GetStorage();
   bool isGuardian = false;
   bool isTutor = false;
+  bool isLoading=false;
   // bool? isGuardianSelected;
   @override
   Widget build(BuildContext context) {
@@ -43,7 +44,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   isTutor = false;
                 });
                 // Get.to(()=>const GaurdianScreen());
-              }, text: txtGaurdian,color: isGuardian ? Colors.green : Colors.black26,),
+              }, text: Text(txtGaurdian,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),),color: isGuardian ? Colors.green : Colors.black26,),
               const SizedBox(height: 5,),
               CustomButton(onPress: (){
                 setState(() {
@@ -51,24 +52,30 @@ class _ChooseScreenState extends State<ChooseScreen> {
                   isTutor = true;
                 });
                 // Get.to(()=>const TeacherScreen());
-              }, text: txtTeacher,color: isTutor ? Colors.green : Colors.black26,),
+              }, text: Text(txtTeacher,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),),color: isTutor ? Colors.green : Colors.black26,),
               SizedBox(height: 20,),
-              ElevatedButton(onPressed: (){
-                setState(() {
-                  if(isGuardian || isTutor == true){
-                    Get.to(()=>PhoneScreen(),);
-                    if(isGuardian == true){
-                      box.write("user", "gd");
+              SizedBox(
+                width: 100,
+                child: ElevatedButton(onPressed: (){
+                  setState(() {
+
+                    if(isGuardian || isTutor == true){
+                      isLoading=true;
+                      Get.to(()=>PhoneScreen(),);
+                      if(isGuardian == true){
+                        box.write("user", "gd");
+                      }
+                      if(isTutor == true) {
+                        box.write("user", "tt");
+                      }
                     }
-                    if(isTutor == true) {
-                      box.write("user", "tt");
+                    else {
+                      Get.snackbar("সতর্কতা", "অভিবাবক অথবা শিক্ষক বাচাই করুন ।",);
                     }
-                  }
-                  else {
-                    Get.snackbar("Warning", "Select Tutor or Guardian");
-                  }
-                });
-              }, child: Text("Login with Phone"))
+
+                  });
+                }, child: isLoading?CircularProgressIndicator(color: Colors.purpleAccent,):Text("➜",style: TextStyle(fontSize: 22),),style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.orange.shade200))),
+              ),
             ],
           ),
         ),

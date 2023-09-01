@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -16,6 +17,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
   // var controller=Get.put(SignUpController());
 
 final box = GetStorage();
+bool isLoading=false;
 
 
   //auth start
@@ -52,12 +54,15 @@ final box = GetStorage();
     String mobile = "+88"+phoneController.text;
     if (mobile == "+88") {
       Get.snackbar(
-        "Please enter the mobile number!",
-        "Failed",
+        "সতর্কতা",
+        "মোবাইল নাম্বার লিখুন!",
         colorText: Colors.black,
       );
-    } else {
+    }
+    else {
+
       signInWithPhoneNumber(mobile);
+
     }
   }
 
@@ -86,13 +91,13 @@ final box = GetStorage();
                   child: Image.asset(icTutor,width: 65,)),
               SizedBox(height: 20,),
               Text(txtPhoneText,style: TextStyle(fontFamily: kalpurush,fontSize: 18),),
+              SizedBox(height: 20,),
+              CustomTextField(controller: phoneController,hint: "01xxxxxxxxx", preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone,label: txtMobileNo,max: 11,),
               SizedBox(height: 10,),
-              CustomTextField(controller: phoneController,hint: txtMobileNo, obsecure: false, preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone),
-              SizedBox(height: 10,),
-              CustomButton(onPress: _userLogin, text: txtSubmit, color: buttonColor),
-              ElevatedButton(onPressed: (){
+              CustomButton(onPress: _userLogin, text: isLoading?CircularProgressIndicator(color: Colors.orangeAccent,):Text(txtSubmit,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),), color: buttonColor),
+              /*ElevatedButton(onPressed: (){
                 print(box.read("user"));
-              }, child: Text("data"))
+              }, child: Text("data"))*/
               // ElevatedButton(onPressed: _userLogin, child: Text("Send Code")),
             ],
           ),

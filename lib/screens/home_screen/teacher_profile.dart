@@ -12,7 +12,7 @@ class TeacherProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar :AppBar(
+      /*appBar :AppBar(
         actions: [
           Text("Logout"),
           IconButton(onPressed: (){
@@ -20,7 +20,7 @@ class TeacherProfile extends StatelessWidget {
             box.remove("userPhone");
           }, icon: Icon(Icons.logout))
         ],
-      ),
+      ),*/
       body: Center(
         child: Text("Techer Profile"),
       ),

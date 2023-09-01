@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
+import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
 class AddPostScreen extends StatelessWidget {
@@ -13,81 +15,59 @@ class AddPostScreen extends StatelessWidget {
   final TextEditingController subjectController = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: bgColor,
       body: Center(
           child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: genderController,
-              decoration: InputDecoration(
-                  hintText: "Gender",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            TextField(
-              controller: classController,
-              decoration: InputDecoration(
-                  hintText: "Class", fillColor: Colors.blue[200], filled: true),
-            ),
-            TextField(
-              controller: salaryController,
-              decoration: InputDecoration(
-                  hintText: "Salary",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            TextField(
-              controller: dayPerWeekController,
-              decoration: InputDecoration(
-                  hintText: "Day/Week",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            TextField(
-              keyboardType: TextInputType.number,
-              controller: locationController,
-              decoration: InputDecoration(
-                  hintText: "Location",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            TextField(
-              controller: curriculumController,
-              decoration: InputDecoration(
-                  hintText: "Curriculum",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            TextField(
-              controller: subjectController,
-              decoration: InputDecoration(
-                  hintText: "Subjects",
-                  fillColor: Colors.blue[200],
-                  filled: true),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-                onPressed: () {
-                  CrudDb().addPost(
-                      genderController.text,
-                      classController.text,
-                      salaryController.text,
-                      dayPerWeekController.text,
-                      locationController.text,
-                      curriculumController.text,
-                      subjectController.text);
-                },
-                child: Text("Post"))
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextField(preffixIcon: Icons.male_outlined, type: TextInputType.text, controller: genderController, hint: "Gender"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.clear_all_outlined, type: TextInputType.text, controller: classController, hint: "Class"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.currency_rupee_outlined, type: TextInputType.text, controller: salaryController, hint: "Salary"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.timelapse_outlined, type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.location_on_rounded, type: TextInputType.text, controller: locationController, hint: "Location"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.sell_outlined, type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
+              SizedBox(height: 5,),
+              CustomTextField(preffixIcon: Icons.book_outlined, type: TextInputType.text, controller: subjectController, hint: "Subjects"),
+              SizedBox(
+                height: 20,
+              ),
+              /*ElevatedButton(
+                  onPressed: () {
+                    CrudDb().addPost(
+                        genderController.text,
+                        classController.text,
+                        salaryController.text,
+                        dayPerWeekController.text,
+                        locationController.text,
+                        curriculumController.text,
+                        subjectController.text);
+                  },
+                  child: Text("Post")),*/
+              CustomButton(onPress: (){
+                CrudDb().addPost(
+                    genderController.text,
+                    classController.text,
+                    salaryController.text,
+                    dayPerWeekController.text,
+                    locationController.text,
+                    curriculumController.text,
+                    subjectController.text);
+              }, text: Text(txtPost,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),), color: buttonColor)
+            ],
+          ),
         ),
       )),
-      floatingActionButton: FloatingActionButton(onPressed: (){
+      /*floatingActionButton: FloatingActionButton(onPressed: (){
         CrudDb().readPost();
-      }),
+      }),*/
     );
   }
 }

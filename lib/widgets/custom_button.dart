@@ -2,7 +2,7 @@ import '../const/consts.dart';
 
 class CustomButton extends StatelessWidget {
   final Function() onPress;
-  final String text;
+  final Widget text;
   final Color color;
   const CustomButton({super.key, required this.onPress, required this.text, required this.color});
 
@@ -19,7 +19,7 @@ class CustomButton extends StatelessWidget {
         child: Container(
           height: 55,
           width: double.infinity,
-          child: Center(child: Text(text,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),)),
+          child: Center(child: text),
         ),
       ),
     );

@@ -45,7 +45,6 @@ class _OtpScreenState extends State<OtpScreen> {
         }else{
           Get.to(()=>TeacherHome());
         }
-
         print(user.uid);
         print(user.phoneNumber);
         box.write("userPhone", user.phoneNumber);
@@ -143,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
               SizedBox(
                 height: 20,
               ),
-              CustomButton(onPress: _login, text: txtVerify, color: buttonColor),
+              CustomButton(onPress: _login, text: Text(txtVerify,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),), color: buttonColor),
               SizedBox(height: 10,),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,

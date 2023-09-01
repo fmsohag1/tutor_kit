@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -18,9 +19,9 @@ class CrudDb {
         'location' : location,
         'curriculum' : curriculum,
         'subjects' : subjects,
-      }).whenComplete(() => Get.snackbar("Attention", "Added Successfully"));
+      }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred");
+      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
     }
 
   }

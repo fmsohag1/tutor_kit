@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
 import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
 
       title: 'Tutor Kit',
       theme: ThemeData(
-        fontFamily: roboto_regular,
+        fontFamily: kalpurush,
         useMaterial3: true,
         appBarTheme: AppBarTheme(
           backgroundColor: bgColor,
