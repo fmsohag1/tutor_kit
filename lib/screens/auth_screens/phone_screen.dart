@@ -92,7 +92,7 @@ bool isLoading=false;
               SizedBox(height: 20,),
               Text(txtPhoneText,style: TextStyle(fontFamily: kalpurush,fontSize: 18),),
               SizedBox(height: 20,),
-              CustomTextField(controller: phoneController,hint: "01xxxxxxxxx", preffixIcon: Icons.phone_android_outlined, type: TextInputType.phone,label: txtMobileNo,max: 11,),
+              CustomTextField(controller: phoneController,hint: "01xxxxxxxxx", preffixIcon: Image.asset(icPhone), type: TextInputType.phone,label: txtMobileNo,max: 11,),
               SizedBox(height: 10,),
               CustomButton(onPress: _userLogin, text: isLoading?CircularProgressIndicator(color: Colors.orangeAccent,):Text(txtSubmit,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),), color: buttonColor),
               /*ElevatedButton(onPressed: (){

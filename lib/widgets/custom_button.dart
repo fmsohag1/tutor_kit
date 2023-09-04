@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
-          side: BorderSide(color: Colors.orangeAccent,width: 2),
+          side: BorderSide(color: Colors.orangeAccent,),
         ),
         color: color,
         child: Container(

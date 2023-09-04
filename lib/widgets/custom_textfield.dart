@@ -7,7 +7,7 @@ import 'package:tutor_kit/const/consts.dart';
 class CustomTextField extends StatelessWidget {
   final String? label;
   final String hint;
-  final IconData preffixIcon;
+  final Widget preffixIcon;
   final TextInputType type;
   final TextEditingController controller;
   final int? max;
@@ -15,26 +15,25 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return TextFormField(
       maxLength: max,
       controller: controller,
       keyboardType: type,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontFamily: kalpurush),
+        labelStyle: TextStyle(fontFamily: roboto_regular),
         hintText: hint,
-        hintStyle: TextStyle(fontFamily: kalpurush,color: Colors.grey),
-        prefixIcon: Icon(preffixIcon,size: 25,),
+        hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey),
+        prefixIcon: preffixIcon,
         border: InputBorder.none,
-        filled: true,
-        fillColor: textfieldColor,
+
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
-          borderSide: BorderSide(color: bgColor),
+          borderSide: BorderSide(color: Colors.grey),
         ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: BorderSide(color: Colors.grey),
           )
 
       ),

@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/screens/home_screen/add_postscreen.dart';
-import 'package:tutor_kit/screens/home_screen/profile_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_profilescreen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher_homescreen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher_profile.dart';
 
@@ -15,15 +15,16 @@ class TeacherHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var currentNavIndex=0.obs;
     var navbarItem=[
-      BottomNavigationBarItem(icon: Icon(Icons.home),label: txtHome),
+      BottomNavigationBarItem(icon: Image.asset(icHome,width: 30,),label: txtHome),
       //BottomNavigationBarItem(icon: CircleAvatar(radius:20,backgroundColor:bgColor,foregroundColor: Colors.yellow[800],child: Icon(Icons.add)),label: ""),
-      BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined),label: txtProfile),
+      BottomNavigationBarItem(icon: Image.asset(icProfile,width: 30,),label: txtProfile),
     ];
     var navBody=[
       PostsScreen(),
       TeacherProfile()
     ];
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Obx(()=>Expanded(child: navBody.elementAt(currentNavIndex.value))),
@@ -31,19 +32,23 @@ class TeacherHome extends StatelessWidget {
       ),
       bottomNavigationBar: Obx(()=>
           Padding(
-            padding: const EdgeInsets.only(left: 10,right: 10),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+            padding: const EdgeInsets.only(left: 10,right: 10,bottom: 10),
+            child: Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+                side: BorderSide(color: Colors.black)
+              ),
+              color: Colors.white,
               child: BottomNavigationBar(
                 showUnselectedLabels: false,
                 showSelectedLabels: false,
                 currentIndex: currentNavIndex.value,
-                backgroundColor: buttonColor,
+                backgroundColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: Colors.orangeAccent,
-                unselectedItemColor: bgColor,
-                selectedLabelStyle: TextStyle(fontFamily: kalpurush,),
-                unselectedLabelStyle: TextStyle(fontFamily: kalpurush),
+                unselectedItemColor: Colors.grey[600],
                 items: navbarItem,
                 onTap: (value){
                   currentNavIndex.value=value;

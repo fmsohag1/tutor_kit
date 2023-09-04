@@ -2,7 +2,7 @@
 import 'package:get/get.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/screens/home_screen/add_postscreen.dart';
-import 'package:tutor_kit/screens/home_screen/profile_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_profilescreen.dart';
 
 import '../../const/consts.dart';
 
@@ -14,14 +14,15 @@ class GuardianHome extends StatelessWidget {
     var currentNavIndex=0.obs;
     var navbarItem=[
       //BottomNavigationBarItem(icon: Icon(Icons.home),label: txtHome),
-      BottomNavigationBarItem(icon: CircleAvatar(radius:15,backgroundColor:bgColor,foregroundColor: Colors.yellow[800],child: Icon(Icons.add)),label: ""),
-      BottomNavigationBarItem(icon: Icon(Icons.person_2_outlined,size: 30,),label: txtProfile),
+      BottomNavigationBarItem(icon: Image.asset(icAdd,width: 30,),label: ""),
+      BottomNavigationBarItem(icon: Image.asset(icProfile,width: 30,),label: txtProfile),
     ];
     var navBody=[
       AddPostScreen(),
-      ProfileScreen()
+      GuardianProfile()
     ];
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Obx(()=>Expanded(child: navBody.elementAt(currentNavIndex.value))),
@@ -30,13 +31,19 @@ class GuardianHome extends StatelessWidget {
       bottomNavigationBar: Obx(()=>
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(15),
+            child: Card(
+              elevation: 0,
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(color: Colors.black)
+              ),
+              color: Colors.white,
               child: BottomNavigationBar(
                 showSelectedLabels: false,
                 showUnselectedLabels: false,
                 currentIndex: currentNavIndex.value,
-                backgroundColor: buttonColor,
+                backgroundColor: Colors.white,
                 type: BottomNavigationBarType.fixed,
                 selectedItemColor: Colors.orangeAccent,
                 unselectedItemColor: bgColor,

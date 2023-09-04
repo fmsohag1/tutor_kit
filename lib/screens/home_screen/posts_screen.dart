@@ -13,7 +13,7 @@ class PostsScreen extends StatelessWidget {
     final box = GetStorage();
     final userPhoneNumber = box.read("userPhone");
     return  Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: Colors.white,
       body: StreamBuilder(
           stream: postsRef.snapshots(),
           builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){
@@ -30,19 +30,238 @@ class PostsScreen extends StatelessWidget {
           itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index){
           return Padding(
-            padding: const EdgeInsets.only(left: 20,right: 20,top: 8),
+            padding: const EdgeInsets.only(left: 15,right: 15,top: 8),
             child: Card(
+              elevation: 0,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-                side: BorderSide(color: Colors.orange,width: 2)
+                side: BorderSide(color: Colors.black)
               ),
-              color: Colors.grey[700],
+              color: bgColor,
               child: Padding(
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.all(10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: 145,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white
+                        ),
+                        child: Row(
+                          children: [
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(color: Colors.black)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(icGender,width: 25,),
+                                )),
+                            SizedBox(width: 5,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                Text("${snapshot.data!.docs[index]["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: 145,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.white
+                        ),
+                        child: Row(
+                          children: [
+                            Card(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(color: Colors.black)
+                              ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(icClass,width: 25,),
+                                )),
+                            SizedBox(width: 5,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Class",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                Text("${snapshot.data!.docs[index]["class"]}",style: TextStyle(fontFamily: roboto_regular)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white
+                    ),
+                    child: Row(
+                      children: [
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(color: Colors.black)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(icSubjects,width: 25,),
+                            )),
+                        SizedBox(width: 5,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Subjects",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                            Text("${snapshot.data!.docs[index]["subjects"]}",style: TextStyle(fontFamily: roboto_regular)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: 150,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white
+                        ),
+                        child: Row(
+                          children: [
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(color: Colors.black)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(icDay,width: 25,),
+                                )),
+                            SizedBox(width: 5,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Day/Week",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                Text("${snapshot.data!.docs[index]["dayPerWeek"]}",style: TextStyle(fontFamily: roboto_regular)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        width: 145,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white
+                        ),
+                        child: Row(
+                          children: [
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(color: Colors.black)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(icSalary,width: 25,),
+                                )),
+                            SizedBox(width: 5,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Salary",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white
+                    ),
+                    child: Row(
+                      children: [
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(color: Colors.black)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(icLocation,width: 25,),
+                            )),
+                        SizedBox(width: 5,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                            Text("${snapshot.data!.docs[index]["location"]}",style: TextStyle(fontFamily: roboto_regular)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    padding: EdgeInsets.all(10),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Colors.white
+                    ),
+                    child: Row(
+                      children: [
+                        Card(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(100),
+                                side: BorderSide(color: Colors.black)
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Image.asset(icCurriculum,width: 25,),
+                            )),
+                        SizedBox(width: 5,),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                            Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                 /* Row(
                     children: [
                       Container(
                         decoration: BoxDecoration(
@@ -119,7 +338,7 @@ class PostsScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(6.0),
                         child: Text("Salary : ${snapshot.data!.docs[index]["salary"]}"),
-                      )),
+                      )),*/
                 ],
               ),
             ),),

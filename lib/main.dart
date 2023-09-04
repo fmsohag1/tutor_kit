@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : ChooseScreen(),
+      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : TeacherHome(),
     );
   }
 }

@@ -15,27 +15,27 @@ class AddPostScreen extends StatelessWidget {
   final TextEditingController subjectController = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: Colors.white,
       body: Center(
           child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.only(left: 15,right: 15,top: 20),
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomTextField(preffixIcon: Icons.male_outlined, type: TextInputType.text, controller: genderController, hint: "Gender"),
+              CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.clear_all_outlined, type: TextInputType.text, controller: classController, hint: "Class"),
+              CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: classController, hint: "Class"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.currency_rupee_outlined, type: TextInputType.text, controller: salaryController, hint: "Salary"),
+              CustomTextField(preffixIcon: Image.asset(icSalary25), type: TextInputType.text, controller: salaryController, hint: "Salary"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.timelapse_outlined, type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
+              CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.location_on_rounded, type: TextInputType.text, controller: locationController, hint: "Location"),
+              CustomTextField(preffixIcon: Image.asset(icLocation25), type: TextInputType.text, controller: locationController, hint: "Location"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.sell_outlined, type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
+              CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Icons.book_outlined, type: TextInputType.text, controller: subjectController, hint: "Subjects"),
+              CustomTextField(preffixIcon: Image.asset(icSubjects25), type: TextInputType.text, controller: subjectController, hint: "Subjects"),
               SizedBox(
                 height: 20,
               ),
@@ -60,7 +60,7 @@ class AddPostScreen extends StatelessWidget {
                     locationController.text,
                     curriculumController.text,
                     subjectController.text);
-              }, text: Text(txtPost,style: TextStyle(fontFamily: kalpurush,color: bgColor,fontSize: 18,letterSpacing: 1),), color: buttonColor)
+              }, text: Text(txtPost,style: TextStyle(fontFamily: kalpurush,color: buttonColor,fontSize: 18,letterSpacing: 1),), color: Colors.white)
             ],
           ),
         ),
