@@ -9,9 +9,9 @@ class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   addPost(
-      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects)async {
+      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userPhone, FieldValue timestamp)async {
     try{
-      posts.doc(_auth.currentUser!.phoneNumber).set({
+      posts.doc().set({
         'gender' : gender,
         'class' : level,
         'salary' : salary,
@@ -19,6 +19,8 @@ class CrudDb {
         'location' : location,
         'curriculum' : curriculum,
         'subjects' : subjects,
+        'userPhone' : userPhone,
+        'timestamp' : timestamp,
       }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);

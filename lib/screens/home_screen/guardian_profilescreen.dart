@@ -1,15 +1,18 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 
 import '../auth_screens/phone_screen.dart';
 
 class GuardianProfile extends StatelessWidget {
   GuardianProfile({super.key});
   final box = GetStorage();
+  var userPhone = FirebaseAuth.instance.currentUser!.phoneNumber;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +49,7 @@ class GuardianProfile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)
                   ),
                   leading: Image.asset(icPhone,width: 30,),
-                  title: Text("+8801837471759",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                  title: Text(userPhone.toString(),style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
                   tileColor: bgColor,
                   trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
@@ -61,24 +64,36 @@ class GuardianProfile extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
                 SizedBox(height: 10,),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>GuardianPostHistory());
+                  },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    leading: Image.asset(icHistory,width: 30,),
+                    title: Text("History",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                    tileColor: bgColor,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                   ),
-                  leading: Image.asset(icHistory,width: 30,),
-                  title: Text("History",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
-                  tileColor: bgColor,
-                  trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
                 SizedBox(height: 10,),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
+                GestureDetector(
+                  onTap: (){
+                    // create an alert dialog
+                    Get.offAll(()=>ChooseScreen());
+                    box.remove("userPhone");
+                  },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    leading: Image.asset(icLogout,width: 30,),
+                    title: Text("Logout",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                    tileColor: bgColor,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                   ),
-                  leading: Image.asset(icLogout,width: 30,),
-                  title: Text("Logout",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
-                  tileColor: bgColor,
-                  trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
               ],
             ),

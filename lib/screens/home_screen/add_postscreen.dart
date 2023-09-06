@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
@@ -13,6 +17,10 @@ class AddPostScreen extends StatelessWidget {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController curriculumController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
+
+  var auth = FirebaseAuth.instance;
+  // var timestamp = DateTime;
+
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -59,7 +67,10 @@ class AddPostScreen extends StatelessWidget {
                     dayPerWeekController.text,
                     locationController.text,
                     curriculumController.text,
-                    subjectController.text);
+                    subjectController.text,
+                    auth.currentUser!.phoneNumber.toString(),
+                    FieldValue.serverTimestamp(),
+                );
               }, text: Text(txtPost,style: TextStyle(fontFamily: kalpurush,color: buttonColor,fontSize: 18,letterSpacing: 1),), color: Colors.white)
             ],
           ),
@@ -68,6 +79,7 @@ class AddPostScreen extends StatelessWidget {
       /*floatingActionButton: FloatingActionButton(onPressed: (){
         CrudDb().readPost();
       }),*/
+      floatingActionButton: FloatingActionButton(onPressed: (){Get.to(()=>PostsScreen());}),
     );
   }
 }

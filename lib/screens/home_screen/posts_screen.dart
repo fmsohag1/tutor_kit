@@ -2,11 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class PostsScreen extends StatelessWidget {
   PostsScreen({super.key});
 
-  final postsRef = FirebaseFirestore.instance.collection("posts");
+  final postsRef = FirebaseFirestore.instance.collection("posts").orderBy("timestamp",descending: true);
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +30,7 @@ class PostsScreen extends StatelessWidget {
         return ListView.builder(
           itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index){
+            Timestamp timestamp = snapshot.data!.docs[index]["timestamp"];
           return Padding(
             padding: const EdgeInsets.only(left: 15,right: 15,top: 8),
             child: Card(
@@ -232,35 +234,52 @@ class PostsScreen extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 10,),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.white
-                    ),
-                    child: Row(
-                      children: [
-                        Card(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(100),
-                                side: BorderSide(color: Colors.black)
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Image.asset(icCurriculum,width: 25,),
-                            )),
-                        SizedBox(width: 5,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        // width: double.infinity,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white
+                        ),
+                        child: Row(
                           children: [
-                            Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                            Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                            Card(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(100),
+                                    side: BorderSide(color: Colors.black)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(icCurriculum,width: 25,),
+                                )),
+                            SizedBox(width: 5,),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                              ],
+                            ),
+                            // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
                           ],
-                        )
-                      ],
-                    ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        height: 65,
+                        width: 140,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.white
+                        ),
+                          child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.green))),
+                        ),
+                    ],
                   ),
+
                  /* Row(
                     children: [
                       Container(

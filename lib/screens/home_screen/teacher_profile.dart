@@ -71,14 +71,20 @@ class TeacherProfile extends StatelessWidget {
                   trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
                 SizedBox(height: 10,),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)
+                GestureDetector(
+                  onTap: (){
+                    Get.offAll(()=>ChooseScreen());
+                    box.remove("userPhone");
+                  },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)
+                    ),
+                    leading: Image.asset(icLogout,width: 30,),
+                    title: Text("Logout",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                    tileColor: bgColor,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                   ),
-                  leading: Image.asset(icLogout,width: 30,),
-                  title: Text("Logout",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
-                  tileColor: bgColor,
-                  trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
               ],
             ),
