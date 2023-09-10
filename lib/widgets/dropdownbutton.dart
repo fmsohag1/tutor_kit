@@ -9,11 +9,13 @@ class CustomDropDownButton extends StatelessWidget {
   final String? value;
   final List list;
   final Function(Object?)? onChange;
-  const CustomDropDownButton({super.key, required this.hint, required this.prefixIcon, required this.value, required this.list, this.onChange});
+  final String? Function(Object?)? validator;
+  const CustomDropDownButton({super.key, required this.hint, required this.prefixIcon, required this.value, required this.list, this.onChange, this.validator});
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+      validator: validator,
       decoration: InputDecoration(
           hintText: hint,
           hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey),

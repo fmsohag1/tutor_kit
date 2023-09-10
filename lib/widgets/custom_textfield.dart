@@ -11,15 +11,16 @@ class CustomTextField extends StatelessWidget {
   final TextInputType type;
   final TextEditingController controller;
   final int? max;
-  const CustomTextField({super.key, this.label, required this.preffixIcon, required this.type, required this.controller, required this.hint,this.max});
+  final String? Function(String?)? validator;
+  const CustomTextField({super.key, this.label, required this.preffixIcon, required this.type, required this.controller, required this.hint,this.max, this.validator});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validator,
       maxLength: max,
       controller: controller,
       keyboardType: type,
-
       style: TextStyle(fontSize: 17,fontFamily: roboto_regular),
       decoration: InputDecoration(
         labelText: label,
