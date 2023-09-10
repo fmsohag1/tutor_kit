@@ -279,9 +279,7 @@ class PostsScreen extends StatelessWidget {
                           ),
                         ),
                         Container(
-                          height: 65,
-                          width: 140,
-                            child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.grey[600]),)),
+                            child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
                           ),
                       ],
                     ),

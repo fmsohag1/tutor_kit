@@ -7,6 +7,7 @@ import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
+import 'package:tutor_kit/widgets/dropdownbutton.dart';
 
 class AddPostScreen extends StatefulWidget {
   AddPostScreen({super.key});
@@ -30,7 +31,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   final TextEditingController subjectController = TextEditingController();
 
+
   var auth = FirebaseAuth.instance;
+
+  String? chooseGender;
+  String? chooseDay;
+  String? chooseCurriculum;
+  List genderList=["Male","Female"];
+  List dayList=['1','2','3','4','5','6','7'];
+  List curriculumList=["Bangla","English"];
+
+
 
   // var timestamp = DateTime;
   Widget build(BuildContext context) {
@@ -43,17 +54,26 @@ class _AddPostScreenState extends State<AddPostScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
+              CustomDropDownButton(hint: "Gender", prefixIcon: Image.asset(icGender25), value: chooseGender, list: genderList,onChange: (newValue){
+                chooseGender=newValue as String;
+              },),
+              //CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
               SizedBox(height: 5,),
               CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: classController, hint: "Class"),
               SizedBox(height: 5,),
               CustomTextField(preffixIcon: Image.asset(icSalary25), type: TextInputType.text, controller: salaryController, hint: "Salary"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
+             CustomDropDownButton(hint: "Day/Week", prefixIcon: Image.asset(icDay25), value: chooseDay, list: dayList,onChange: (newValue){
+               chooseDay=newValue as String;
+             },),
+             // CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
               SizedBox(height: 5,),
               CustomTextField(preffixIcon: Image.asset(icLocation25), type: TextInputType.text, controller: locationController, hint: "Location"),
               SizedBox(height: 5,),
-              CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
+              CustomDropDownButton(hint: "Curriculum", prefixIcon: Image.asset(icCurriculum25), value: chooseCurriculum, list: curriculumList,onChange: (newValue){
+                chooseCurriculum=newValue as String;
+              },),
+              //CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
               SizedBox(height: 5,),
               CustomTextField(preffixIcon: Image.asset(icSubjects25), type: TextInputType.text, controller: subjectController, hint: "Subjects"),
               SizedBox(
@@ -64,12 +84,15 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
                 });
                 CrudDb().addPost(
-                    genderController.text,
+                    //genderController.text,
+                    chooseGender.toString(),
                     classController.text,
                     salaryController.text,
-                    dayPerWeekController.text,
+                    chooseDay.toString(),
+                    //dayPerWeekController.text,
                     locationController.text,
-                    curriculumController.text,
+                    chooseCurriculum.toString(),
+                    //curriculumController.text,
                     subjectController.text,
                     auth.currentUser!.phoneNumber.toString(),
                     FieldValue.serverTimestamp(),
