@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 
 class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,7 +22,7 @@ class CrudDb {
         'subjects' : subjects,
         'userPhone' : userPhone,
         'timestamp' : timestamp,
-      }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
+      }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
     }
@@ -33,5 +34,28 @@ class CrudDb {
         print(doc["salary"]);
       }
     });
+  }
+  deletePost(String docId){
+    try{
+      posts.doc(docId).delete().whenComplete(() => Get.snackbar("Attention", "Deleted Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
+    } catch (e) {
+      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+    }
+  }
+
+  updatePost(String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String docId){
+    try{
+      posts.doc(docId).update({
+        'gender' : gender,
+        'class' : level,
+        'salary' : salary,
+        'dayPerWeek' : dayPerWeek,
+        'location' : location,
+        'curriculum' : curriculum,
+        'subjects' : subjects,
+      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.off(()=>GuardianPostHistory()));
+    } catch (e) {
+      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+    }
   }
 }

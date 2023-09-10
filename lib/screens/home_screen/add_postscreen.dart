@@ -8,19 +8,31 @@ import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 
-class AddPostScreen extends StatelessWidget {
+class AddPostScreen extends StatefulWidget {
   AddPostScreen({super.key});
+
+  @override
+  State<AddPostScreen> createState() => _AddPostScreenState();
+}
+
+class _AddPostScreenState extends State<AddPostScreen> {
   final TextEditingController genderController = TextEditingController();
+
   final TextEditingController classController = TextEditingController();
+
   final TextEditingController salaryController = TextEditingController();
+
   final TextEditingController dayPerWeekController = TextEditingController();
+
   final TextEditingController locationController = TextEditingController();
+
   final TextEditingController curriculumController = TextEditingController();
+
   final TextEditingController subjectController = TextEditingController();
 
   var auth = FirebaseAuth.instance;
-  // var timestamp = DateTime;
 
+  // var timestamp = DateTime;
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
@@ -47,19 +59,10 @@ class AddPostScreen extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              /*ElevatedButton(
-                  onPressed: () {
-                    CrudDb().addPost(
-                        genderController.text,
-                        classController.text,
-                        salaryController.text,
-                        dayPerWeekController.text,
-                        locationController.text,
-                        curriculumController.text,
-                        subjectController.text);
-                  },
-                  child: Text("Post")),*/
               CustomButton(onPress: (){
+                setState(() {
+
+                });
                 CrudDb().addPost(
                     genderController.text,
                     classController.text,

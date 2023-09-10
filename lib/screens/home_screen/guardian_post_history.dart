@@ -1,18 +1,36 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/bloc/crud_db.dart';
+import 'package:tutor_kit/drafts/darft1.dart';
+import 'package:tutor_kit/screens/home_screen/update_post_screen.dart';
+import 'package:tutor_kit/widgets/custom_button.dart';
 
 import '../../const/colors.dart';
 import '../../const/images.dart';
 import '../../const/styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class GuardianPostHistory extends StatelessWidget {
+class GuardianPostHistory extends StatefulWidget {
    GuardianPostHistory({super.key});
-   final box = GetStorage();
-   var userPhone = FirebaseAuth.instance.currentUser!.phoneNumber;
 
+  @override
+  State<GuardianPostHistory> createState() => _GuardianPostHistoryState();
+}
+
+class _GuardianPostHistoryState extends State<GuardianPostHistory> {
+   final box = GetStorage();
+
+   var userPhone = FirebaseAuth.instance.currentUser!.phoneNumber;
+   final TextEditingController genderController = TextEditingController();
+   final TextEditingController classController = TextEditingController();
+   final TextEditingController salaryController = TextEditingController();
+   final TextEditingController dayPerWeekController = TextEditingController();
+   final TextEditingController locationController = TextEditingController();
+   final TextEditingController curriculumController = TextEditingController();
+   final TextEditingController subjectController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +60,7 @@ class GuardianPostHistory extends StatelessWidget {
                           elevation: 0,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10),
-                              side: BorderSide(color: Colors.black)
+                              side: const BorderSide(color: Colors.black)
                           ),
                           color: bgColor,
                           child: Padding(
@@ -54,7 +72,7 @@ class GuardianPostHistory extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       width: 145,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -65,25 +83,25 @@ class GuardianPostHistory extends StatelessWidget {
                                           Card(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(100),
-                                                  side: BorderSide(color: Colors.black)
+                                                  side: const BorderSide(color: Colors.black)
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Image.asset(icGender,width: 25,),
                                               )),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                              const Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                              Text("${snapshot.data!.docs[index]["gender"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                             ],
                                           )
                                         ],
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       width: 145,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -94,18 +112,18 @@ class GuardianPostHistory extends StatelessWidget {
                                           Card(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(100),
-                                                  side: BorderSide(color: Colors.black)
+                                                  side: const BorderSide(color: Colors.black)
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Image.asset(icClass,width: 25,),
                                               )),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Class",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["class"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                              const Text("Class",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                              Text("${snapshot.data!.docs[index]["class"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                             ],
                                           )
                                         ],
@@ -113,9 +131,9 @@ class GuardianPostHistory extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                SizedBox(height: 10,),
+                                const SizedBox(height: 10,),
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -126,29 +144,29 @@ class GuardianPostHistory extends StatelessWidget {
                                       Card(
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
+                                              side: const BorderSide(color: Colors.black)
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Image.asset(icSubjects,width: 25,),
                                           )),
-                                      SizedBox(width: 5,),
+                                      const SizedBox(width: 5,),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Subjects",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${snapshot.data!.docs[index]["subjects"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                          const Text("Subjects",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                          Text("${snapshot.data!.docs[index]["subjects"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                         ],
                                       )
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 10,),
+                                const SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       width: 150,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -159,25 +177,25 @@ class GuardianPostHistory extends StatelessWidget {
                                           Card(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(100),
-                                                  side: BorderSide(color: Colors.black)
+                                                  side: const BorderSide(color: Colors.black)
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Image.asset(icDay,width: 25,),
                                               )),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Day/Week",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["dayPerWeek"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                              const Text("Day/Week",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                              Text("${snapshot.data!.docs[index]["dayPerWeek"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                             ],
                                           )
                                         ],
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       width: 145,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -188,18 +206,18 @@ class GuardianPostHistory extends StatelessWidget {
                                           Card(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(100),
-                                                  side: BorderSide(color: Colors.black)
+                                                  side: const BorderSide(color: Colors.black)
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Image.asset(icSalary,width: 25,),
                                               )),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Salary",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                              const Text("Salary",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                              Text("${snapshot.data!.docs[index]["salary"]}",style: const TextStyle(fontFamily: roboto_regular,color: Colors.green)),
                                             ],
                                           )
                                         ],
@@ -208,9 +226,9 @@ class GuardianPostHistory extends StatelessWidget {
 
                                   ],
                                 ),
-                                SizedBox(height: 10,),
+                                const SizedBox(height: 10,),
                                 Container(
-                                  padding: EdgeInsets.all(10),
+                                  padding: const EdgeInsets.all(10),
                                   width: double.infinity,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
@@ -221,29 +239,29 @@ class GuardianPostHistory extends StatelessWidget {
                                       Card(
                                           shape: RoundedRectangleBorder(
                                               borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
+                                              side: const BorderSide(color: Colors.black)
                                           ),
                                           child: Padding(
                                             padding: const EdgeInsets.all(8.0),
                                             child: Image.asset(icLocation,width: 25,),
                                           )),
-                                      SizedBox(width: 5,),
+                                      const SizedBox(width: 5,),
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${snapshot.data!.docs[index]["location"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                          const Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                          Text("${snapshot.data!.docs[index]["location"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                         ],
                                       )
                                     ],
                                   ),
                                 ),
-                                SizedBox(height: 10,),
+                                const SizedBox(height: 10,),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       // width: double.infinity,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
@@ -254,18 +272,18 @@ class GuardianPostHistory extends StatelessWidget {
                                           Card(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius: BorderRadius.circular(100),
-                                                  side: BorderSide(color: Colors.black)
+                                                  side: const BorderSide(color: Colors.black)
                                               ),
                                               child: Padding(
                                                 padding: const EdgeInsets.all(8.0),
                                                 child: Image.asset(icCurriculum,width: 25,),
                                               )),
-                                          SizedBox(width: 5,),
+                                          const SizedBox(width: 5,),
                                           Column(
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                              const Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                              Text("${snapshot.data!.docs[index]["curriculum"]}",style: const TextStyle(fontFamily: roboto_regular)),
                                             ],
                                           ),
                                           // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
@@ -273,103 +291,38 @@ class GuardianPostHistory extends StatelessWidget {
                                       ),
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(10),
+                                      padding: const EdgeInsets.all(10),
                                       height: 65,
                                       width: 140,
                                       decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(10),
                                           color: Colors.white
                                       ),
-                                      child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.green))),
+                                      child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: const TextStyle(fontFamily: roboto_regular,color: Colors.green))),
                                     ),
                                   ],
                                 ),
-
-                                /* Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)
-                        ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Text("Gender : ${snapshot.data!.docs[index]["gender"]}",),
-                          )),
-                      SizedBox(width: 30,),
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Text("Class : ${snapshot.data!.docs[index]["class"]}"),
-                          )),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Subjects : ${snapshot.data!.docs[index]["subjects"]}"),
-                      )),
-                  SizedBox(height: 10,),
-                  Row(
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Text("Day/Week : ${snapshot.data!.docs[index]["dayPerWeek"]}"),
-                          )),
-                      SizedBox(width: 20,),
-
-                      Container(
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5)
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: Text("Curriculum : ${snapshot.data!.docs[index]["curriculum"]}"),
-                          )),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Location : ${snapshot.data!.docs[index]["location"]}"),
-                      )),
-                  SizedBox(height: 10,),
-                  Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(5)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(6.0),
-                        child: Text("Salary : ${snapshot.data!.docs[index]["salary"]}"),
-                      )),*/
+                                const SizedBox(height: 10,),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    MiniCustomButton(onPress: (){
+                                      print(snapshot.data!.docs[index].id);
+                                      // snapshot.data!.docs[index].
+                                      // FirebaseFirestore.instance.collection("posts").doc().delete();
+                                      CrudDb().deletePost(snapshot.data!.docs[index].id);
+                                    }, text: const Text("Delete",style: TextStyle(fontFamily: roboto_regular),), color: Colors.white,),
+                                    MiniCustomButton(onPress: (){
+                                      Get.to(()=>UpdatePostScreen(),arguments: [snapshot.data!.docs[index].id]);
+                                    }, text: const Text("Edit",style: TextStyle(fontFamily: roboto_regular),), color: Colors.white,),
+                                  ],
+                                )
                               ],
                             ),
                           ),),
                       );
                     });
-
-              })
+              }),
       ),
     );
   }
