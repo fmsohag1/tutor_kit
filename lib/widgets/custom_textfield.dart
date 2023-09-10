@@ -19,14 +19,15 @@ class CustomTextField extends StatelessWidget {
       maxLength: max,
       controller: controller,
       keyboardType: type,
+
+      style: TextStyle(fontSize: 17,fontFamily: roboto_regular),
       decoration: InputDecoration(
         labelText: label,
         labelStyle: TextStyle(fontFamily: roboto_regular),
         hintText: hint,
-        hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey),
+        hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,),
         prefixIcon: preffixIcon,
         border: InputBorder.none,
-
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
           borderSide: BorderSide(color: Colors.grey),

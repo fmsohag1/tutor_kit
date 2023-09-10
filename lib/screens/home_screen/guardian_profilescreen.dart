@@ -12,7 +12,7 @@ import '../auth_screens/phone_screen.dart';
 class GuardianProfile extends StatelessWidget {
   GuardianProfile({super.key});
   final box = GetStorage();
-  var userPhone = FirebaseAuth.instance.currentUser!.phoneNumber;
+  var userPhone = FirebaseAuth.instance.currentUser?.phoneNumber;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

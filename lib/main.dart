@@ -7,6 +7,7 @@ import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
 import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
 
@@ -38,7 +39,6 @@ class MyApp extends StatelessWidget {
     final _user = box.read("user");
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-
       title: 'Tutor Kit',
       theme: ThemeData(
         fontFamily: kalpurush,
@@ -48,7 +48,8 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : ChooseScreen(),
+      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : GuardianHome(),
+
     );
   }
 }
