@@ -143,7 +143,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   CrudDb().addPost(
                       //genderController.text,
                       chooseGender.toString(),
-                      chooseStudent.toString(),
                       classController.text,
                       salaryController.text,
                       chooseDay.toString(),
@@ -152,9 +151,10 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       chooseCurriculum.toString(),
                       //curriculumController.text,
                       subjectController.text,
-                      _timeOfDay.toString(),
                       auth.currentUser!.phoneNumber.toString(),
                       FieldValue.serverTimestamp(),
+                    chooseStudent.toString(),
+                    _timeOfDay.format(context).toString(),
                   );
                 }, text: Text(txtPost,style: TextStyle(fontFamily: roboto_regular,color: buttonColor,fontSize: 18,letterSpacing: 1),), color: Colors.white)
               ],

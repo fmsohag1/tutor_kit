@@ -10,20 +10,20 @@ class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   addPost(
-      String gender,String student, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects,String time, String userPhone, FieldValue timestamp)async {
+      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userPhone, FieldValue timestamp, String student, String time)async {
     try{
       posts.doc().set({
         'gender' : gender,
-        'student': student,
         'class' : level,
         'salary' : salary,
         'dayPerWeek' : dayPerWeek,
         'location' : location,
         'curriculum' : curriculum,
         'subjects' : subjects,
-        'time': time,
         'userPhone' : userPhone,
         'timestamp' : timestamp,
+        'student' : student,
+        'time' : time
       }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12,);
@@ -45,18 +45,16 @@ class CrudDb {
     }
   }
 
-  updatePost(String gender,String student, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects,String time, String docId){
+  updatePost(String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String docId){
     try{
       posts.doc(docId).update({
         'gender' : gender,
-        'student': student,
         'class' : level,
         'salary' : salary,
         'dayPerWeek' : dayPerWeek,
         'location' : location,
         'curriculum' : curriculum,
         'subjects' : subjects,
-        'time':time,
       }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.off(()=>GuardianPostHistory()));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);

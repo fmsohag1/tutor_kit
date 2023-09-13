@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -10,6 +11,7 @@ import '../auth_screens/phone_screen.dart';
 class TeacherProfile extends StatelessWidget {
    TeacherProfile({super.key});
   final box = GetStorage();
+   var userPhone = FirebaseAuth.instance.currentUser?.phoneNumber;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +48,7 @@ class TeacherProfile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10)
                   ),
                   leading: Image.asset(icPhone,width: 30,),
-                  title: Text("+8801863275190",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                  title: Text(userPhone.toString(),style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
                   tileColor: bgColor,
                   trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
