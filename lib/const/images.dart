@@ -14,7 +14,7 @@ const icSubjects="assets/icons/subjects.png";
 const icDay="assets/icons/day.png";
 const icCurriculum="assets/icons/curriculum.png";
 const icLocation="assets/icons/location.png";
-const icSalary="assets/icons/salary.png";
+const icSalary="assets/icons/taka.png";
 const icAddUser="assets/icons/add_user.png";
 const icHistory="assets/icons/history.png";
 const icNotification="assets/icons/notification.png";
@@ -26,7 +26,11 @@ const icSubjects25="assets/icons/subjects25.png";
 const icDay25="assets/icons/day25.png";
 const icCurriculum25="assets/icons/curriculum25.png";
 const icLocation25="assets/icons/location25.png";
-const icSalary25="assets/icons/salary25.png";
+const icSalary25="assets/icons/taka25.png";
+const icStudent25="assets/icons/student25.png";
+const icStudent="assets/icons/student.png";
+const icTime25="assets/icons/time25.png";
+const icTime="assets/icons/time.png";
 
 //images
 const imgBgImage="assets/images/bgImage.jpg";

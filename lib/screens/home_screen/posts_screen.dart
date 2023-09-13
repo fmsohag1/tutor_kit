@@ -194,7 +194,7 @@ class PostsScreen extends StatelessWidget {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icSalary,width: 25,),
+                                    child: Image.asset(icSalary,width: 25,color: Colors.grey[800],),
                                   )),
                               SizedBox(width: 5,),
                               Flexible(
@@ -250,7 +250,7 @@ class PostsScreen extends StatelessWidget {
                       children: [
                         Container(
                           padding: EdgeInsets.all(5),
-                          // width: double.infinity,
+                          width: 148,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: Colors.white
@@ -267,22 +267,93 @@ class PostsScreen extends StatelessWidget {
                                     child: Image.asset(icCurriculum,width: 25,),
                                   )),
                               SizedBox(width: 5,),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                  Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                ],
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                    Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                  ],
+                                ),
                               ),
                               // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
                             ],
                           ),
                         ),
                         Container(
-                            child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                          padding: EdgeInsets.all(5),
+                          width: 148,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white
                           ),
+                          child: Row(
+                            children: [
+                              Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                      side: BorderSide(color: Colors.black)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(icStudent,width: 25,),
+                                  )),
+                              SizedBox(width: 5,),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                    Text("${snapshot.data!.docs[index]["student"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                  ],
+                                ),
+                              ),
+                              // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                            ],
+                          ),
+                        ),
+
                       ],
                     ),
+                    Row(
+                     children: [
+                       Container(
+                         padding: EdgeInsets.all(5),
+                         width: 148,
+                         decoration: BoxDecoration(
+                             borderRadius: BorderRadius.circular(10),
+                             color: Colors.white
+                         ),
+                         child: Row(
+                           children: [
+                             Card(
+                                 shape: RoundedRectangleBorder(
+                                     borderRadius: BorderRadius.circular(100),
+                                     side: BorderSide(color: Colors.black)
+                                 ),
+                                 child: Padding(
+                                   padding: const EdgeInsets.all(8.0),
+                                   child: Image.asset(icTime,width: 25,),
+                                 )),
+                             SizedBox(width: 5,),
+                             Flexible(
+                               child: Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                   Text("${snapshot.data!.docs[index]["time"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                 ],
+                               ),
+                             ),
+                             // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                           ],
+                         ),
+                       ),
+                       Container(
+                            child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                          ),
+                     ],
+                   )
 
                    /* Row(
                       children: [

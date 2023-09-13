@@ -9,9 +9,15 @@ import '../../const/strings.dart';
 import '../../const/styles.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
+import '../../widgets/dropdownbutton.dart';
 
-class UpdatePostScreen extends StatelessWidget {
+class UpdatePostScreen extends StatefulWidget {
   UpdatePostScreen({super.key});
+  @override
+  State<UpdatePostScreen> createState() => _AddPostScreenState();
+}
+
+class _AddPostScreenState extends State<UpdatePostScreen> {
   var docId = Get.arguments[0];
 
   final TextEditingController genderController = TextEditingController();
@@ -22,7 +28,24 @@ class UpdatePostScreen extends StatelessWidget {
   final TextEditingController curriculumController = TextEditingController();
   final TextEditingController subjectController = TextEditingController();
 
+  String? chooseStudent;
+  List studentList=['1','2','3','4','5'];
+  bool isTime=false;
 
+  TimeOfDay _timeOfDay=TimeOfDay(hour: 8,minute: 30);
+
+  void _showTimePicker() {
+    showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+
+    ).then((value) {
+      setState(() {
+        _timeOfDay = value!;
+        isTime = true;
+      });
+    });
+  }
   @override
   Widget build(BuildContext context) {
     CollectionReference posts = FirebaseFirestore.instance.collection("posts");
@@ -46,6 +69,10 @@ class UpdatePostScreen extends StatelessWidget {
                         children: [
                           CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController..text = "${data["gender"]}", hint: "Gender"),
                           SizedBox(height: 5,),
+                          CustomDropDownButton(hint: 'No of Students', prefixIcon: Image.asset(icStudent25), value: chooseStudent, list: studentList,onChange: (newValue){
+                            chooseStudent=newValue as String;
+                          },),
+                          SizedBox(height: 5,),
                           CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: classController..text = "${data["class"]}", hint: "Class"),
                           SizedBox(height: 5,),
                           CustomTextField(preffixIcon: Image.asset(icSalary25), type: TextInputType.text, controller: salaryController..text = "${data["salary"]}", hint: "Salary"),
@@ -57,11 +84,32 @@ class UpdatePostScreen extends StatelessWidget {
                           CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController..text = "${data["curriculum"]}", hint: "Curriculum"),
                           SizedBox(height: 5,),
                           CustomTextField(preffixIcon: Image.asset(icSubjects25), type: TextInputType.text, controller: subjectController..text = "${data["subjects"]}", hint: "Subjects"),
+                          GestureDetector(
+                            onTap: _showTimePicker,
+                            child: Container(
+                                height: 65,
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(color: Colors.grey),
+                                    color: Colors.white
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(width: 10,),
+                                    Image.asset(icTime25),
+                                    SizedBox(width: 12,),
+                                    isTime?Text(_timeOfDay.format(context).toString(),style: TextStyle(fontSize: 17),):Text("Select Time",style: TextStyle(fontFamily: roboto_regular,fontSize: 17,color: Colors.grey),),
+
+                                  ],
+                                )
+                            ),
+                          ),
                           SizedBox(
                             height: 20,
                           ),
                           CustomButton(onPress: (){
-                            CrudDb().updatePost(genderController.text, classController.text, salaryController.text, dayPerWeekController.text, locationController.text, curriculumController.text, subjectController.text, docId);
+                            CrudDb().updatePost(genderController.text,chooseStudent.toString(), classController.text, salaryController.text, dayPerWeekController.text, locationController.text, curriculumController.text, subjectController.text,_timeOfDay.toString(), docId);
                             // );
                           }, text: Text("Update",style: TextStyle(fontFamily: kalpurush,color: buttonColor,fontSize: 18,letterSpacing: 1),), color: Colors.white)
                         ],

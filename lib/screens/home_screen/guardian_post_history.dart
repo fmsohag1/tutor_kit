@@ -212,7 +212,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
-                                                  child: Image.asset(icSalary,width: 25,),
+                                                  child: Image.asset(icSalary,width: 25,color: Colors.grey[800],),
                                                 )),
                                             const SizedBox(width: 5,),
                                             Flexible(

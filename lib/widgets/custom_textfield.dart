@@ -24,7 +24,7 @@ class CustomTextField extends StatelessWidget {
       style: TextStyle(fontSize: 17,fontFamily: roboto_regular),
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(fontFamily: roboto_regular),
+        labelStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey),
         hintText: hint,
         hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,),
         prefixIcon: preffixIcon,

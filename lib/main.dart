@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tutor Kit',
       theme: ThemeData(
-        fontFamily: kalpurush,
+        fontFamily: roboto_regular,
         useMaterial3: true,
         appBarTheme: AppBarTheme(
           backgroundColor: bgColor,
