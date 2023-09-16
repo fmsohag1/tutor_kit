@@ -1,11 +1,6 @@
 
 import 'package:get/get.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
-import 'package:tutor_kit/screens/home_screen/add_postscreen.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_profilescreen.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_homescreen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher_profile.dart';
 
 import '../../const/consts.dart';
@@ -59,9 +54,6 @@ class TeacherHome extends StatelessWidget {
             ),
           ),
       ),
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        Get.to(()=>GuardianHome());
-      }),
     );
   }
 }

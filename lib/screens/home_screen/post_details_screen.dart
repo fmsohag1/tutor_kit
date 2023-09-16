@@ -21,6 +21,7 @@ class PostDetailesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     CollectionReference posts = FirebaseFirestore.instance.collection("posts");
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: FutureBuilder<DocumentSnapshot>(
@@ -36,12 +37,12 @@ class PostDetailesScreen extends StatelessWidget {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   Timestamp timestamp = data["timestamp"];
                   return Padding(
-                    padding: const EdgeInsets.only(left: 15,right: 15,top: 8),
+                    padding: const EdgeInsets.only(left: 10,right: 10,top: 8),
                     child: Card(
                       elevation: 0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10),
-                          side: BorderSide(color: Colors.black)
+                          //side: BorderSide(color: Colors.black)
                       ),
                       color: bgColor,
                       child: Padding(
@@ -54,7 +55,7 @@ class PostDetailesScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.all(5),
-                                  width: 145,
+                                  width: MediaQuery.of(context).size.width*0.410,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white
@@ -71,21 +72,19 @@ class PostDetailesScreen extends StatelessWidget {
                                             child: Image.asset(icGender,width: 25,),
                                           )),
                                       SizedBox(width: 5,),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                            Text("${data["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                          ],
-                                        ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                          Text("${data["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                        ],
                                       )
                                     ],
                                   ),
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(5),
-                                  width: 145,
+                                  width: MediaQuery.of(context).size.width*0.410,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white
@@ -154,7 +153,7 @@ class PostDetailesScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.all(5),
-                                  width: 150,
+                                  width: MediaQuery.of(context).size.width*0.410,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white
@@ -183,7 +182,7 @@ class PostDetailesScreen extends StatelessWidget {
                                 ),
                                 Container(
                                   padding: EdgeInsets.all(5),
-                                  width: 145,
+                                  width: MediaQuery.of(context).size.width*0.410,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white
@@ -235,14 +234,12 @@ class PostDetailesScreen extends StatelessWidget {
                                         child: Image.asset(icLocation,width: 25,),
                                       )),
                                   SizedBox(width: 5,),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                        Text("${data["location"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                      ],
-                                    ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                      Text("${data["location"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                    ],
                                   )
                                 ],
                               ),
@@ -253,7 +250,77 @@ class PostDetailesScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.all(5),
+                                  width: MediaQuery.of(context).size.width*0.410,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(100),
+                                              side: BorderSide(color: Colors.black)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image.asset(icStudent,width: 25,),
+                                          )),
+                                      SizedBox(width: 5,),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                          Text("${data["student"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                        ],
+                                      ),
+                                      // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                    ],
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(5),
+                                  width: MediaQuery.of(context).size.width*0.410,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(100),
+                                              side: BorderSide(color: Colors.black)
+                                          ),
+                                          child: Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: Image.asset(icTime,width: 25,),
+                                          )),
+                                      SizedBox(width: 5,),
+                                      Flexible(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                            Text("${data["time"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                          ],
+                                        ),
+                                      ),
+                                      // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                    ],
+                                  ),
+                                ),
+
+                              ],
+                            ),
+                            SizedBox(height: 5,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Container(
+                                  padding: EdgeInsets.all(5),
                                   // width: double.infinity,
+                                  width: MediaQuery.of(context).size.width*0.410,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: Colors.white

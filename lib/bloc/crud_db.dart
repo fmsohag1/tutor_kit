@@ -45,7 +45,7 @@ class CrudDb {
     }
   }
 
-  updatePost(String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String docId){
+  updatePost(String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects,String student,String time, String docId){
     try{
       posts.doc(docId).update({
         'gender' : gender,
@@ -55,6 +55,8 @@ class CrudDb {
         'location' : location,
         'curriculum' : curriculum,
         'subjects' : subjects,
+        'student' : student,
+        'time' : time
       }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.off(()=>GuardianPostHistory()));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);

@@ -73,7 +73,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(5),
-                                        width: 145,
+                                        width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white
@@ -102,7 +102,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                       ),
                                       Container(
                                         padding: const EdgeInsets.all(5),
-                                        width: 145,
+                                        width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white
@@ -169,7 +169,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                     children: [
                                       Container(
                                         padding: const EdgeInsets.all(5),
-                                        width: 150,
+                                        width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white
@@ -198,7 +198,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                       ),
                                       Container(
                                         padding: const EdgeInsets.all(5),
-                                        width: 145,
+                                        width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white
@@ -267,8 +267,80 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: MediaQuery.of(context).size.width*0.410,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    side: BorderSide(color: Colors.black)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Image.asset(icStudent,width: 25,),
+                                                )),
+                                            SizedBox(width: 5,),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                                  Text("${snapshot.data!.docs[index]["student"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                                ],
+                                              ),
+                                            ),
+                                            // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: MediaQuery.of(context).size.width*0.410,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    side: BorderSide(color: Colors.black)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Image.asset(icTime,width: 25,),
+                                                )),
+                                            SizedBox(width: 5,),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                                  Text("${snapshot.data!.docs[index]["time"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                                ],
+                                              ),
+                                            ),
+                                            // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                          ],
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                  SizedBox(height: 5,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
                                         padding: const EdgeInsets.all(5),
                                         // width: double.infinity,
+                                        width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white

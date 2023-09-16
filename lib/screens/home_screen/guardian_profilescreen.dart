@@ -51,7 +51,7 @@ class GuardianProfile extends StatelessWidget {
                   leading: Image.asset(icPhone,width: 30,),
                   title: Text(userPhone.toString(),style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
                   tileColor: bgColor,
-                  trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
+                  //trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
                 SizedBox(height: 10,),
                 ListTile(
