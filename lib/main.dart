@@ -13,10 +13,16 @@ import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
 
+Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message)async{
+  print("Handling a bg message : ${message.messageId}");
+}
+
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAPI().initNotifications();
+  await FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await FirebaseAPI().initNotifications();
   await GetStorage.init();
   print("connected");
   runApp(const MyApp());

@@ -10,7 +10,7 @@ class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   addPost(
-      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userPhone, FieldValue timestamp, String student, String time)async {
+      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userPhone, FieldValue timestamp, String student, String time, String deviceToken)async {
     try{
       posts.doc().set({
         'gender' : gender,
@@ -23,7 +23,8 @@ class CrudDb {
         'userPhone' : userPhone,
         'timestamp' : timestamp,
         'student' : student,
-        'time' : time
+        'time' : time,
+        'deviceToken' : deviceToken,
       }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12,);
@@ -61,5 +62,15 @@ class CrudDb {
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
     }
+  }
+
+  CollectionReference teacherRequest = FirebaseFirestore.instance.collection("teacherRequest");
+  addTeacherRequest(String mobile, String postID, String deviceToken, FieldValue timestamp){
+    teacherRequest.doc().set({
+      "mobile" : mobile,
+      "postID" : postID,
+      "deviceToken" : deviceToken,
+      "timestamp" : timestamp
+    });
   }
 }

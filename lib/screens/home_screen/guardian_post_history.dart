@@ -49,6 +49,9 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                   if(!snapshot.hasData){
                     return const Center(child: CircularProgressIndicator(),);
                   }
+                  if(snapshot.data!.docs.length==0){
+                    return const Center(child: Text("No history found"),);
+                  }
                   // final data = snapshot.requireData;
                   return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
@@ -338,9 +341,9 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Container(
-                                        padding: const EdgeInsets.all(5),
-                                        // width: double.infinity,
-                                        width: MediaQuery.of(context).size.width*0.410,
+                                        padding: EdgeInsets.all(5),
+                                        width: 148,
+                                        // width: MediaQuery.of(context).size.width*0.410,
                                         decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(10),
                                             color: Colors.white
@@ -350,30 +353,101 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                             Card(
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius: BorderRadius.circular(100),
-                                                    side: const BorderSide(color: Colors.black)
+                                                    side: BorderSide(color: Colors.black)
                                                 ),
                                                 child: Padding(
                                                   padding: const EdgeInsets.all(8.0),
                                                   child: Image.asset(icCurriculum,width: 25,),
                                                 )),
-                                            const SizedBox(width: 5,),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                const Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                                Text("${snapshot.data!.docs[index]["curriculum"]}",style: const TextStyle(fontFamily: roboto_regular)),
-                                              ],
+                                            SizedBox(width: 5,),
+                                            Flexible(
+                                              child:Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                                  Text("${snapshot.data!.docs[index]["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),],
+                                              ),
                                             ),
                                             // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
                                           ],
                                         ),
                                       ),
                                       Container(
-                                        child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: const TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey))),
+                                        padding: EdgeInsets.all(5),
+                                        width: 148,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    side: BorderSide(color: Colors.black)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Image.asset(icStudent,width: 25,),
+                                                )),
+                                            SizedBox(width: 5,),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                                  Text("${snapshot.data!.docs[index]["student"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                                ],
+                                              ),
+                                            ),
+                                            // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(height: 10,),
+                                  const SizedBox(height: 5,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Container(
+                                        padding: EdgeInsets.all(5),
+                                        width: 148,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Colors.white
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Card(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(100),
+                                                    side: BorderSide(color: Colors.black)
+                                                ),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.all(8.0),
+                                                  child: Image.asset(icTime,width: 25,),
+                                                )),
+                                            SizedBox(width: 5,),
+                                            Flexible(
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                                  Text("${snapshot.data!.docs[index]["time"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                                ],
+                                              ),
+                                            ),
+                                            // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                          ],
+                                        ),
+                                      ),
+                                      Container(
+                                        child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                                      ),
+                                    ],
+                                  ),
+                                  const SizedBox(height: 5,),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [

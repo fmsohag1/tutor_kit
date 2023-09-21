@@ -30,6 +30,9 @@ class PostsScreen extends StatelessWidget {
           if(!snapshot.hasData){
             return const Center(child: CircularProgressIndicator(),);
           }
+          if(snapshot.data!.docs.length==0){
+            return const Center(child: Text("No posts available"),);
+          }
           // final data = snapshot.requireData;
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,

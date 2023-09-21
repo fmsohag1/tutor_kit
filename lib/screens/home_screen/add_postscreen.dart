@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
@@ -69,6 +71,25 @@ class _AddPostScreenState extends State<AddPostScreen> {
         isTime = true;
       });
     });
+  }
+  String? deviceToken;
+
+  void getToken()async{
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        deviceToken = token;
+        if (kDebugMode) {
+          print('DeviceToken : $deviceToken');
+        }
+      });
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getToken();
   }
 
   @override
@@ -154,7 +175,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
                     prefixIcon: Image.asset(icDay25),
                     value: chooseDay,
                     list: dayList,
-                    onChange: (newValue) {},
+                    onChange: (newValue) {
+                      chooseDay = newValue as String;
+                    },
                   ),
                   // CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
                   SizedBox(
@@ -243,6 +266,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           FieldValue.serverTimestamp(),
                           chooseStudent.toString(),
                           _timeOfDay.format(context).toString(),
+                          deviceToken.toString(),
                         );
                       },
                       text: Text(

@@ -1,21 +1,142 @@
+
+import 'dart:convert';
+import 'dart:core';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:tutor_kit/bloc/crud_db.dart';
+import 'package:tutor_kit/screens/home_screen/teacher_offer_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
+import 'package:http/http.dart' as http;
 
 import '../../const/colors.dart';
 import '../../const/images.dart';
 import '../../const/styles.dart';
 
-class PostDetailesScreen extends StatelessWidget {
+class PostDetailesScreen extends StatefulWidget {
    PostDetailesScreen({super.key});
 
-  var docId = Get.arguments;
+  @override
+  State<PostDetailesScreen> createState() => _PostDetailesScreenState();
+}
 
+class _PostDetailesScreenState extends State<PostDetailesScreen> {
+  var docId = Get.arguments;
+  String? mtoken = "";
+  late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+  @override
+  void initState() {
+    super.initState();
+    requestPermission();
+    getToken();
+    initInfo();
+  }
+
+  initInfo(){
+    var android = const AndroidInitializationSettings('@mipmap/ic_launcher');
+    //IOS
+    final InitializationSettings initializationSettings = InitializationSettings(android: android);
+    flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse){
+      switch (notificationResponse.notificationResponseType){
+        case NotificationResponseType.selectedNotification:
+          Get.to(()=>TeacherOfferScreen());
+          print("Get.to");
+          break;
+        case NotificationResponseType.selectedNotificationAction:
+          if(notificationResponse.actionId == "id"){
+            print("Get.to");
+          }
+          break;
+      }
+    });
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async{
+      print("onMessage");
+      print("onMessage: ${message.notification?.title}/${message.notification?.body}");
+      BigTextStyleInformation bigTextStyleInformation = BigTextStyleInformation(
+        message.notification!.body.toString(),
+        htmlFormatContent: true,
+        contentTitle: message.notification!.title.toString(),
+        htmlFormatContentTitle: true,
+      );
+      AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('tutor-kit', 'tutor-kit', importance: Importance.high,
+      styleInformation: bigTextStyleInformation, priority: Priority.high, playSound: true);
+      NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
+      await flutterLocalNotificationsPlugin.show(0, message.notification?.title, message.notification?.body,notificationDetails,payload: message.data['body']);
+    });
+  }
+
+  void getToken()async{
+    await FirebaseMessaging.instance.getToken().then((token) {
+      setState(() {
+        mtoken = token;
+        print('token : $mtoken');
+      });
+    });
+  }
+
+  void requestPermission()async{
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: false,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true
+
+    );
+
+    if(settings.authorizationStatus == AuthorizationStatus.authorized){
+      print('User granted permission');
+    } else if(settings.authorizationStatus == AuthorizationStatus.provisional){
+      print('User granted provisional permission');
+    } else {
+      print('User declined or has not accepted permission');
+    }
+  }
+
+  void sendPushMessage(String token, String body, String title)async{
+    try {
+      await http.post(
+        Uri.parse('https://fcm.googleapis.com/fcm/send'),
+        headers:  {
+          'Content-Type': 'application/json',
+          'Authorization': 'key=AAAAxNs3MRQ:APA91bGmvCxjjPiL4EryQl_aCAZkvduQYna7Uy-NPTFwwdckWCy1-870TA00xsmrV8qSxvljmczhPB4bEH7wBunO-a3vRQZ0owzhZYMAOIblgMfEtBDfM2owCM0W-DS_LLH7ylRCgGGi'
+        },
+        body: jsonEncode(
+           {
+            "priority": "high",
+            'data': {
+              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+              'status': 'done',
+              'body': body,
+              'title': title
+            },
+             'notification': {
+              "title": title,
+               "body": body,
+               "android_channel_id": "tutor-kit"
+             },
+             "to": token
+          }
+        )
+      );
+    } catch (e){
+      if(kDebugMode){
+        print("error push notification");
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -355,6 +476,9 @@ class PostDetailesScreen extends StatelessWidget {
                             ),
                             SizedBox(height: 30,),
                             CustomButton(onPress: (){
+                              var auth = FirebaseAuth.instance;
+                              CrudDb().addTeacherRequest(auth.currentUser!.phoneNumber.toString(), docId, mtoken.toString(), FieldValue.serverTimestamp());
+                              sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
                               showDialog(context: context, builder: (BuildContext context){
                                 return Dialog(
                                   child: Container(
@@ -363,15 +487,19 @@ class PostDetailesScreen extends StatelessWidget {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
-                                        Text("Request Sent"),
-                                        CustomButton(onPress: (){Get.back();}, text: Text("Okay"), color: Colors.green)
-
+                                        const Text("Request Sent"),
+                                        CustomButton(onPress: (){Get.back();}, text: const Text("Okay"), color: Colors.green)
                                       ],
                                     ),
                                   ),
                                 );
                               });
-                            }, text: Text("Request Tution"), color: Colors.white)
+                            }, text: Text("Request Tution"), color: Colors.white),
+                            // ElevatedButton(onPressed: (){
+                            //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
+                            //   // await FirebaseFirestore.instance.collection(collectionPath)
+                            //   sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
+                            // }, child: Text("Send"))
                           ],
                         ),
                       ),),

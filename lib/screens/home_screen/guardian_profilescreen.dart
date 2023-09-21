@@ -5,6 +5,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/home_screen/available_teachers.dart';
+import 'package:tutor_kit/screens/home_screen/guardian_notification_screen.dart';
 import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
 
 import '../auth_screens/phone_screen.dart';
@@ -54,14 +56,34 @@ class GuardianProfile extends StatelessWidget {
                   //trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
                 SizedBox(height: 10,),
-                ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10)
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>GuardianNotificationScreen());
+                  },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    leading: Image.asset(icNotification,width: 30,),
+                    title: Text("Notification",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                    tileColor: bgColor,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                   ),
-                  leading: Image.asset(icNotification,width: 30,),
-                  title: Text("Notification",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
-                  tileColor: bgColor,
-                  trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
+                ),
+                SizedBox(height: 10,),
+                GestureDetector(
+                  onTap: (){
+                    Get.to(()=>AvailableTeacher());
+                  },
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10)
+                    ),
+                    leading: Image.asset(icHistory,width: 30,),
+                    title: Text("Available Teachers",style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                    tileColor: bgColor,
+                    trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
+                  ),
                 ),
                 SizedBox(height: 10,),
                 GestureDetector(
