@@ -46,18 +46,7 @@ class _OtpScreenState extends State<OtpScreen> {
         if(box.read('user')=='gd'){
           Get.to(()=>GuardianHome());
         }else{
-          await FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
-            if(snap.exists){
-              if(snap.data()!["name"]==null){
-                Get.to(()=>TeacherFormScreen());
-              }
-              if(snap.data()!["name"]!=null){
-                Get.to(()=>TeacherHome());
-              }
-              print(snap.data()!["name"]!=null);
-            }
-          });
-          // Get.to(()=>TeacherHome());
+          Get.to(()=>TeacherHome());
         }
         print(user.uid);
         print(user.phoneNumber);

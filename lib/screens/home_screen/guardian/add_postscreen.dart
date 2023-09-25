@@ -282,14 +282,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
         CrudDb().readPost();
       }),*/
       floatingActionButton: FloatingActionButton(onPressed: () {
-          FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
-           if(snap.data()!["name"]==null){
-             Get.to(()=>TeacherFormScreen());
-           }
-           if(snap.data()!["name"]!=null){
-             Get.to(()=>TeacherHome());
-           }
-          print(snap.data()!["name"]!=null);
+          FirebaseFirestore.instance.collection("draft").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
+            if(!snap.exists){
+
+              // if(snap.data()!["name"]==null){
+              //   print("name = null");
+              // }
+              // if(snap.data()!["name"]!=null){
+              //   print("name = not null");
+              // }
+            }
         });
         // Get.to(() => TeacherHome());
       }),
