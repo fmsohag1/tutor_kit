@@ -13,13 +13,14 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:lottie/lottie.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:tutor_kit/bloc/crud_db.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_offer_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/requested_teacher_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_offer_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:http/http.dart' as http;
 
-import '../../const/colors.dart';
-import '../../const/images.dart';
-import '../../const/styles.dart';
+import '../../../const/colors.dart';
+import '../../../const/images.dart';
+import '../../../const/styles.dart';
 
 class PostDetailesScreen extends StatefulWidget {
    PostDetailesScreen({super.key});
@@ -29,8 +30,12 @@ class PostDetailesScreen extends StatefulWidget {
 }
 
 class _PostDetailesScreenState extends State<PostDetailesScreen> {
+
+  var auth = FirebaseAuth.instance;
+
   var docId = Get.arguments;
-  String? mtoken = "";
+  String? tToken = "";
+  String? deviceToken;
   late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
   @override
@@ -48,7 +53,7 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
     flutterLocalNotificationsPlugin.initialize(initializationSettings, onDidReceiveNotificationResponse: (NotificationResponse notificationResponse){
       switch (notificationResponse.notificationResponseType){
         case NotificationResponseType.selectedNotification:
-          Get.to(()=>TeacherOfferScreen());
+          Get.to(()=>RequestedTeacherScreen());
           print("Get.to");
           break;
         case NotificationResponseType.selectedNotificationAction:
@@ -77,8 +82,8 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
   void getToken()async{
     await FirebaseMessaging.instance.getToken().then((token) {
       setState(() {
-        mtoken = token;
-        print('token : $mtoken');
+        tToken = token;
+        print('token : $tToken');
       });
     });
   }
@@ -475,26 +480,53 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                               ],
                             ),
                             SizedBox(height: 30,),
-                            CustomButton(onPress: (){
-                              var auth = FirebaseAuth.instance;
-                              CrudDb().addTeacherRequest(auth.currentUser!.phoneNumber.toString(), docId, mtoken.toString(), FieldValue.serverTimestamp());
-                              sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
-                              showDialog(context: context, builder: (BuildContext context){
-                                return Dialog(
-                                  child: Container(
-                                    height: 350,
-                                    child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
-                                        const Text("Request Sent"),
-                                        CustomButton(onPress: (){Get.back();}, text: const Text("Okay"), color: Colors.green)
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              });
-                            }, text: Text("Request Tution"), color: Colors.white),
+                            FutureBuilder<QuerySnapshot>(
+                                future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("mobile", isEqualTo: auth.currentUser!.phoneNumber.toString()).get(),
+                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
+                                  // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
+                                  if(btnSnap.connectionState == ConnectionState.done){
+                                    if(btnSnap.data!.docs.isNotEmpty){
+                                      return CustomButton(onPress: (){
+                                        Get.snackbar("Attention", "Request sent already, wait for guardian confirmation");
+                                      }, text: Text("Request Sent"), color: Colors.white);
+                                    }
+                                    if(btnSnap.data!.docs.isEmpty){
+                                      return CustomButton(onPress: ()async{
+                                        var auth = FirebaseAuth.instance;
+                                        await FirebaseFirestore.instance.collection("userInfo").where("mobile", isEqualTo: data["userPhone"]).get().then((snap) {
+                                          deviceToken = snap.docs.first["deviceToken"].toString();
+                                          print(tToken);
+                                        });
+                                        print(data["userPhone"]);
+                                        print("deviceTok: $deviceToken" );
+                                        sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
+                                        await CrudDb().addTeacherRequest(auth.currentUser!.phoneNumber.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
+                                        await showDialog(context: context, builder: (BuildContext context){
+                                          return Dialog(
+                                            child: Container(
+                                              height: 350,
+                                              child: Column(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
+                                                  const Text("Request Sent"),
+                                                  CustomButton(onPress: (){
+                                                    setState(() {
+
+                                                    });
+                                                    Get.back();
+                                                    }, text: const Text("Okay"), color: Colors.green)
+                                                ],
+                                              ),
+                                            ),
+                                          );
+                                        });
+                                      }, text: Text("Send request"), color: Colors.white);
+                                    }
+                                  }
+                                  return Center(child: CircularProgressIndicator());
+                                }
+                            ),
                             // ElevatedButton(onPressed: (){
                             //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
                             //   // await FirebaseFirestore.instance.collection(collectionPath)

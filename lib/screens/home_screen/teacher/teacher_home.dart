@@ -1,9 +1,9 @@
 
 import 'package:get/get.dart';
-import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_profile.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_profile.dart';
 
-import '../../const/consts.dart';
+import '../../../const/consts.dart';
 
 class TeacherHome extends StatelessWidget {
   const TeacherHome({super.key});

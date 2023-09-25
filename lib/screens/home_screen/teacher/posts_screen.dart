@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:tutor_kit/screens/home_screen/post_details_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
 
 class PostsScreen extends StatelessWidget {
   PostsScreen({super.key});
@@ -42,7 +44,16 @@ class PostsScreen extends StatelessWidget {
               padding: const EdgeInsets.only(left: 15,right: 15,top: 8),
               child: GestureDetector(
                 onTap: (){
-                  Get.to(()=>PostDetailesScreen(),arguments: snapshot.data!.docs[index].id);
+                  FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
+                    if(snap.data()!["name"]==null){
+                      Get.to(()=>TeacherFormScreen());
+                    } else {
+                      Get.to(()=>PostDetailesScreen(),arguments: snapshot.data!.docs[index].id);
+                    }
+                    // if(snap.data()!["name"]!=null){
+                    //   Get.to(()=>TeacherHome());
+                    // }
+                  });
                 },
                 child: Card(
                   elevation: 0,

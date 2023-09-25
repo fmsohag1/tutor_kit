@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
 import 'package:tutor_kit/widgets/dropdownbutton.dart';
@@ -72,25 +73,19 @@ class _AddPostScreenState extends State<AddPostScreen> {
       });
     });
   }
-  String? deviceToken;
+  // String? deviceToken;
+  //
+  // void getToken()async{
+  //   await FirebaseMessaging.instance.getToken().then((token) {
+  //     setState(() {
+  //       deviceToken = token;
+  //       if (kDebugMode) {
+  //         print('DeviceToken : $deviceToken');
+  //       }
+  //     });
+  //   });
+  // }
 
-  void getToken()async{
-    await FirebaseMessaging.instance.getToken().then((token) {
-      setState(() {
-        deviceToken = token;
-        if (kDebugMode) {
-          print('DeviceToken : $deviceToken');
-        }
-      });
-    });
-  }
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    getToken();
-  }
 
   @override
   // var timestamp = DateTime;
@@ -266,7 +261,6 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           FieldValue.serverTimestamp(),
                           chooseStudent.toString(),
                           _timeOfDay.format(context).toString(),
-                          deviceToken.toString(),
                         );
                       },
                       text: Text(
@@ -288,7 +282,16 @@ class _AddPostScreenState extends State<AddPostScreen> {
         CrudDb().readPost();
       }),*/
       floatingActionButton: FloatingActionButton(onPressed: () {
-        Get.to(() => TeacherHome());
+          FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
+           if(snap.data()!["name"]==null){
+             Get.to(()=>TeacherFormScreen());
+           }
+           if(snap.data()!["name"]!=null){
+             Get.to(()=>TeacherHome());
+           }
+          print(snap.data()!["name"]!=null);
+        });
+        // Get.to(() => TeacherHome());
       }),
     );
   }

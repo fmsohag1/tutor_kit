@@ -5,11 +5,11 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
-import 'package:tutor_kit/screens/home_screen/available_teachers.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_notification_screen.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/available_teachers.dart';
 
-import '../auth_screens/phone_screen.dart';
+import '../../auth_screens/phone_screen.dart';
+import 'guardian_notification_screen.dart';
+import 'guardian_post_history.dart';
 
 class GuardianProfile extends StatelessWidget {
   GuardianProfile({super.key});

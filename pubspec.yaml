@@ -103,6 +103,9 @@ flutter:
      - family: Kalpurush
        fonts:
          - asset: assets/fonts/Kalpurush.ttf
+     - family: Kohinoor
+       fonts:
+         - asset: assets/fonts/Ios-Kohinoor-font.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

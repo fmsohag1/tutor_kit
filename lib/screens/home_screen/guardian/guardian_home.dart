@@ -1,10 +1,11 @@
 
 import 'package:get/get.dart';
-import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
-import 'package:tutor_kit/screens/home_screen/add_postscreen.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_profilescreen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/teacher_list.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/add_postscreen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/guardian_profilescreen.dart';
 
-import '../../const/consts.dart';
+import '../../../const/consts.dart';
 
 class GuardianHome extends StatelessWidget {
   const GuardianHome({super.key});
@@ -13,11 +14,12 @@ class GuardianHome extends StatelessWidget {
   Widget build(BuildContext context) {
     var currentNavIndex=0.obs;
     var navbarItem=[
-      //BottomNavigationBarItem(icon: Icon(Icons.home),label: txtHome),
-      BottomNavigationBarItem(icon: Image.asset(icAdd,width: 30,),label: ""),
+      BottomNavigationBarItem(icon: Image.asset(icStudent,width: 30,),label: ""),
+      BottomNavigationBarItem(icon: Image.asset(icAdd,width: 40,),label: ""),
       BottomNavigationBarItem(icon: Image.asset(icProfile,width: 30,),label: txtProfile),
     ];
     var navBody=[
+      TeacherList(),
       AddPostScreen(),
       GuardianProfile()
     ];

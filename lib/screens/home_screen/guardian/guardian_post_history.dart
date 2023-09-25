@@ -5,12 +5,13 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/drafts/darft1.dart';
-import 'package:tutor_kit/screens/home_screen/update_post_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/requested_teacher_screen.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/update_post_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
-import '../../const/colors.dart';
-import '../../const/images.dart';
-import '../../const/styles.dart';
+import '../../../const/colors.dart';
+import '../../../const/images.dart';
+import '../../../const/styles.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class GuardianPostHistory extends StatefulWidget {
@@ -449,7 +450,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                   ),
                                   const SizedBox(height: 5,),
                                   Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       MiniCustomButton(onPress: (){
                                         print(snapshot.data!.docs[index].id);
@@ -460,6 +461,16 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                       MiniCustomButton(onPress: (){
                                         Get.to(()=>UpdatePostScreen(),arguments: [snapshot.data!.docs[index].id]);
                                       }, text: const Text("Edit",style: TextStyle(fontFamily: roboto_regular),), color: Colors.white,),
+                                      FutureBuilder<QuerySnapshot>(future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: snapshot.data!.docs.first.id.toString()).get(),
+                                          builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> reqSnap){
+                                            if(reqSnap.connectionState == ConnectionState.done){
+                                              return GestureDetector(onTap: (){
+                                                Get.to(()=>RequestedTeacherScreen(),arguments: snapshot.data!.docs.first.id.toString());
+                                              },child: CircleAvatar(child: Text(reqSnap.data!.docs.length.toString())));
+                                            }
+                                            return CircularProgressIndicator();
+                                          }
+                                      ),
                                     ],
                                   )
                                 ],

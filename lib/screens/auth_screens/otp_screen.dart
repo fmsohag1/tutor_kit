@@ -1,15 +1,18 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:pinput/pinput.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
-import '../home_screen/guardian_home.dart';
+import '../home_screen/guardian/guardian_home.dart';
+import '../home_screen/teacher/teacher_form_screens.dart';
 
 //
 
@@ -43,11 +46,53 @@ class _OtpScreenState extends State<OtpScreen> {
         if(box.read('user')=='gd'){
           Get.to(()=>GuardianHome());
         }else{
-          Get.to(()=>TeacherHome());
+          await FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
+            if(snap.exists){
+              if(snap.data()!["name"]==null){
+                Get.to(()=>TeacherFormScreen());
+              }
+              if(snap.data()!["name"]!=null){
+                Get.to(()=>TeacherHome());
+              }
+              print(snap.data()!["name"]!=null);
+            }
+          });
+          // Get.to(()=>TeacherHome());
         }
         print(user.uid);
         print(user.phoneNumber);
         box.write("userPhone", user.phoneNumber);
+
+
+        //Managing UserInfo
+        String? deviceToken;
+          await FirebaseMessaging.instance.getToken().then((token) {
+            setState(() {
+              deviceToken = token;
+              print('token : $deviceToken');
+            });
+          });
+
+        FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
+          if(!snap.exists){
+            FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).set({
+              "mobile": FirebaseAuth.instance.currentUser!.phoneNumber,
+              "deviceToken": deviceToken,
+              "timestamp": FieldValue.serverTimestamp(),
+            });
+          }
+          if(snap.exists){
+            if(snap.data()!["deviceToken"] != deviceToken){
+              FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                "deviceToken": deviceToken,
+                "timestamp": FieldValue.serverTimestamp(),
+              }).then((value) {print("New token detected");});
+            }
+          }
+        });
+
+
+
       }
     } on FirebaseAuthException catch (e) {
       Get.snackbar(

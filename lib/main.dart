@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +10,10 @@ import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_home.dart';
-import 'package:tutor_kit/screens/home_screen/guardian_post_history.dart';
-import 'package:tutor_kit/screens/home_screen/posts_screen.dart';
-import 'package:tutor_kit/screens/home_screen/teacher_home.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message)async{
   print("Handling a bg message : ${message.messageId}");
@@ -50,7 +52,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Tutor Kit',
       theme: ThemeData(
-        fontFamily: roboto_regular,
+        fontFamily: "Kohinoor",
         useMaterial3: true,
         appBarTheme: AppBarTheme(
           backgroundColor: bgColor,

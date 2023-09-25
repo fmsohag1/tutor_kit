@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/widgets/dropdownbutton.dart';
 
-import '../../bloc/crud_db.dart';
-import '../../const/colors.dart';
-import '../../const/images.dart';
-import '../../const/strings.dart';
-import '../../const/styles.dart';
-import '../../widgets/custom_button.dart';
-import '../../widgets/custom_textfield.dart';
+import '../../../bloc/crud_db.dart';
+import '../../../const/colors.dart';
+import '../../../const/images.dart';
+import '../../../const/strings.dart';
+import '../../../const/styles.dart';
+import '../../../widgets/custom_button.dart';
+import '../../../widgets/custom_textfield.dart';
 
 class UpdatePostScreen extends StatefulWidget {
   UpdatePostScreen({super.key});
