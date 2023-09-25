@@ -468,7 +468,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
                                                 Get.to(()=>RequestedTeacherScreen(),arguments: snapshot.data!.docs.first.id.toString());
                                               },child: CircleAvatar(child: Text(reqSnap.data!.docs.length.toString())));
                                             }
-                                            return CircularProgressIndicator();
+                                            return SizedBox(height: 20,width: 20,child: CircularProgressIndicator());
                                           }
                                       ),
                                     ],
