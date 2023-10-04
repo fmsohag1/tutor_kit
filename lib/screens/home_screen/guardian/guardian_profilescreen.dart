@@ -13,8 +13,7 @@ import 'guardian_post_history.dart';
 
 class GuardianProfile extends StatelessWidget {
   GuardianProfile({super.key});
-  final box = GetStorage();
-  var userPhone = FirebaseAuth.instance.currentUser?.phoneNumber;
+  var userEmail = FirebaseAuth.instance.currentUser?.email;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,7 +50,7 @@ class GuardianProfile extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10)
                   ),
                   leading: Image.asset(icPhone,width: 30,),
-                  title: Text(userPhone.toString(),style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
+                  title: Text(userEmail.toString(),style: TextStyle(fontSize: 17,fontFamily: roboto_medium),),
                   tileColor: bgColor,
                   //trailing: Icon(Icons.arrow_forward_ios_rounded,size: 20,),
                 ),
@@ -103,9 +102,11 @@ class GuardianProfile extends StatelessWidget {
                 SizedBox(height: 10,),
                 GestureDetector(
                   onTap: (){
+                    final box = GetStorage();
+                    FirebaseAuth.instance.signOut();
                     // create an alert dialog
                     Get.offAll(()=>ChooseScreen());
-                    box.remove("userPhone");
+                    box.remove("user");
                   },
                   child: ListTile(
                     shape: RoundedRectangleBorder(

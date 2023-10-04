@@ -257,7 +257,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           locationController.text,
                           chooseCurriculum.toString(),
                           subjectController.text,
-                          auth.currentUser!.phoneNumber.toString(),
+                          auth.currentUser!.email.toString(),
                           FieldValue.serverTimestamp(),
                           chooseStudent.toString(),
                           _timeOfDay.format(context).toString(),

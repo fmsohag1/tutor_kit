@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/auth_screens/guardian_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
-import 'package:tutor_kit/screens/auth_screens/teacher_screen.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 
 class ChooseScreen extends StatefulWidget {
@@ -23,6 +22,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   // bool? isGuardianSelected;
   @override
   Widget build(BuildContext context) {
+    print(box.read("user"));
     return Scaffold(
       backgroundColor: bgColor,
       body: Padding(
@@ -61,7 +61,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
 
                     if(isGuardian || isTutor == true){
                       isLoading=true;
-                      Get.to(()=>PhoneScreen(),);
+                      Get.to(()=>LoginScreen(),);
                       if(isGuardian == true){
                         box.write("user", "gd");
                       }

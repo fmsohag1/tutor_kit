@@ -24,7 +24,7 @@ class GuardianPostHistory extends StatefulWidget {
 class _GuardianPostHistoryState extends State<GuardianPostHistory> {
    final box = GetStorage();
 
-   var userPhone = FirebaseAuth.instance.currentUser!.phoneNumber;
+   var userEmail = FirebaseAuth.instance.currentUser!.email;
    final TextEditingController genderController = TextEditingController();
    final TextEditingController classController = TextEditingController();
    final TextEditingController salaryController = TextEditingController();
@@ -35,7 +35,7 @@ class _GuardianPostHistoryState extends State<GuardianPostHistory> {
 
   @override
   Widget build(BuildContext context) {
-    final postsRef = FirebaseFirestore.instance.collection("posts").orderBy("timestamp",descending: true).where("userPhone", isEqualTo: userPhone);
+    final postsRef = FirebaseFirestore.instance.collection("posts").orderBy("timestamp",descending: true).where("userEmail", isEqualTo: userEmail);
     return Scaffold(
       backgroundColor: Colors.white,
           body: SafeArea(

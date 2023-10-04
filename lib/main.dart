@@ -8,8 +8,10 @@ import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/bloc/firebase_api.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/otp_screen.dart';
 import 'package:tutor_kit/screens/auth_screens/phone_screen.dart';
+import 'package:tutor_kit/screens/auth_screens/sign_up_screen.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
@@ -20,13 +22,33 @@ Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message)async{
 }
 
 void main() async{
+
+
+
+
+
+
+
+
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await FirebaseAuth.instance;
   await FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   // await FirebaseAPI().initNotifications();
   await GetStorage.init();
   print("connected");
+
+  FirebaseAuth.instance
+      .authStateChanges()
+      .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+    }
+  });
   runApp(const MyApp());
 }
 // class App extends StatelessWidget {
@@ -59,7 +81,9 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: isExist != null ? (_user == "gd"? GuardianHome() : TeacherHome()) : ChooseScreen(),
+      home:
+      // FirebaseAuth.instance.currentUser != null ? TeacherHome() : LoginScreen(),
+      FirebaseAuth.instance.currentUser != null  ? (_user == "gd"? GuardianHome() : TeacherHome()) : ChooseScreen(),
 
     );
   }

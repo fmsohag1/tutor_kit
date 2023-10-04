@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/drafts/darft1.dart';
 
 class TeacherList extends StatelessWidget {
   const TeacherList({super.key});
@@ -26,7 +29,7 @@ class TeacherList extends StatelessWidget {
                         height: MediaQuery.of(context).size.height*0.350,
                         width: MediaQuery.of(context).size.width*0.350,
                         decoration: BoxDecoration(
-                            image: DecorationImage(image: AssetImage("assets/images/bgImage.jpg"),fit: BoxFit.cover),
+                            image: DecorationImage(image: AssetImage("assets/images/img.png"),fit: BoxFit.cover),
                             borderRadius: BorderRadius.circular(10)
                         ),
                         child: Column(
@@ -57,7 +60,7 @@ class TeacherList extends StatelessWidget {
                                         SizedBox(width: 2,),
                                         Image.asset(icGender,width: 20,color: Colors.white,),
                                         SizedBox(width: 5,),
-                                        Text("Male",style: TextStyle(color: Colors.white),)
+                                        Text(snapshot.data!.docs[index]["gender"].toString(),style: TextStyle(color: Colors.white),)
                                       ],
                                     )
                                   ],
@@ -73,6 +76,10 @@ class TeacherList extends StatelessWidget {
             }
         )
       ),
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        // Get.to(()=>DemoPage());
+      }),
     );
   }
 }

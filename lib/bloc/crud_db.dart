@@ -11,7 +11,7 @@ class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   addPost(
-      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userPhone, FieldValue timestamp, String student, String time)async {
+      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userEmail, FieldValue timestamp, String student, String time)async {
     try{
       posts.doc(_auth.currentUser!.uid).get().then((snap) {
         if(!snap.exists){
@@ -23,7 +23,7 @@ class CrudDb {
             'location' : location,
             'curriculum' : curriculum,
             'subjects' : subjects,
-            'userPhone' : userPhone,
+            'userEmail' : userEmail,
             'timestamp' : timestamp,
             'student' : student,
             'time' : time,
@@ -74,9 +74,9 @@ class CrudDb {
   }
 
   CollectionReference teacherRequest = FirebaseFirestore.instance.collection("teacherRequest");
-  addTeacherRequest(String mobile, String postID, String gToken, String tToken,FieldValue timestamp){
+  addTeacherRequest(String email, String postID, String gToken, String tToken,FieldValue timestamp){
     teacherRequest.doc().set({
-      "mobile" : mobile,
+      "email" : email,
       "postID" : postID,
       "gToken" : gToken,
       "tToken" : tToken,
@@ -96,6 +96,16 @@ class CrudDb {
       "institute": institute,
       "department": department,
       "role": role
+    });
+  }
+
+  addGuardianResponse(String tName, String postId, FieldValue timestamp,String tEmail, String gEmail){
+    FirebaseFirestore.instance.collection("guardianResponse").doc().set({
+      "tName" : tName,
+      "postId" : postId,
+      "tEmail" : tEmail,
+      "gEmail" : gEmail,
+      "timestamp" : timestamp,
     });
   }
 

@@ -481,7 +481,7 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                             ),
                             SizedBox(height: 30,),
                             FutureBuilder<QuerySnapshot>(
-                                future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("mobile", isEqualTo: auth.currentUser!.phoneNumber.toString()).get(),
+                                future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("email", isEqualTo: auth.currentUser!.email.toString()).get(),
                                 builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
                                   // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
                                   if(btnSnap.connectionState == ConnectionState.done){
@@ -493,14 +493,14 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                                     if(btnSnap.data!.docs.isEmpty){
                                       return CustomButton(onPress: ()async{
                                         var auth = FirebaseAuth.instance;
-                                        await FirebaseFirestore.instance.collection("userInfo").where("mobile", isEqualTo: data["userPhone"]).get().then((snap) {
+                                        await FirebaseFirestore.instance.collection("userInfo").where("email", isEqualTo: data["email"]).get().then((snap) {
                                           deviceToken = snap.docs.first["deviceToken"].toString();
                                           print(tToken);
                                         });
-                                        print(data["userPhone"]);
+                                        print(data["email"]);
                                         print("deviceTok: $deviceToken" );
                                         sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
-                                        await CrudDb().addTeacherRequest(auth.currentUser!.phoneNumber.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
+                                        await CrudDb().addTeacherRequest(auth.currentUser!.email.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
                                         await showDialog(context: context, builder: (BuildContext context){
                                           return Dialog(
                                             child: Container(
