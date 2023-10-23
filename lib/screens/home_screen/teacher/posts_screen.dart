@@ -6,9 +6,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:tutor_kit/screens/auth_screens/choose_screen.dart';
-import 'package:tutor_kit/screens/auth_screens/login_screen.dart';
-import 'package:tutor_kit/screens/auth_screens/sign_up_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
 

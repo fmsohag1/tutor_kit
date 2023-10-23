@@ -108,5 +108,15 @@ class CrudDb {
       "timestamp" : timestamp,
     });
   }
+  teacherTransactionStatus(String tEmail, String postId, String transactionId, double amount, FieldValue timestamp){
+    FirebaseFirestore.instance.collection("teacherTransactionStatus").doc().set({
+      "tEmail" : tEmail,
+      "postId" : postId,
+      "transactionId" : transactionId,
+      "amount" : amount,
+      "timestamp" : timestamp,
+      "status" : false,
+    });
+  }
 
 }

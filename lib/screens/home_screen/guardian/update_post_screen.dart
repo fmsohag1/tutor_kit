@@ -95,7 +95,7 @@ class _UpdatePostScreenState extends State<UpdatePostScreen> {
                             ),
                             SizedBox(height: 20,),
                             CustomDropDownButton(hint: "Gender", prefixIcon: Image.asset(icGender25), value: chooseGender="${data["gender"]}", list: genderList,onChange: (newValue){
-                                chooseGender=newValue as String;
+                              chooseGender=newValue as String;
                             },),
                             SizedBox(height: 5,),
                             CustomDropDownButton(hint: 'No of Students', prefixIcon: Image.asset(icStudent25), value: chooseStudent="${data["student"]}", list: studentList,onChange: (newValue){
@@ -159,7 +159,7 @@ class _UpdatePostScreenState extends State<UpdatePostScreen> {
                                   _timeOfDay.format(context).toString(),
                                   docId);
                               // );
-                            }, text: Text("Update",style: TextStyle(color: buttonColor,fontSize: 18,letterSpacing: 1),), color: Colors.white),
+                            }, text: "Update", color: Colors.grey.shade600),
                             SizedBox(height: 20,),
                           ],
                         ),

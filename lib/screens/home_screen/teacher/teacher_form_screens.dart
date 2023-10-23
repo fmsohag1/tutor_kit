@@ -59,29 +59,18 @@ class _TeacherFormScreenState extends State<TeacherFormScreen> {
                       Text(
                         "Create a Profile",
                         style: TextStyle(
-                            fontFamily: roboto_medium,
                             fontSize: 22,
                             letterSpacing: 1),
                       ),
                     ],
                   ),
-                  SizedBox(height: 10,),
-                  Card(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
-                          side: BorderSide(color: Colors.black)
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(15.0),
-                        child: Image.asset(icAddUser,width: 80,color: Colors.grey[600],),
-                      )),
-                  SizedBox(height: 10,),
-                  CustomTextField(preffixIcon: Image.asset(icClass), type: TextInputType.text, controller: nameController, hint: "Enter your name",label: "Name",),
+                  SizedBox(height: 20,),
+                  CustomTextField(preffixIcon: Image.asset(icName25), type: TextInputType.text, controller: nameController, hint: "Enter your name",label: "Name",),
                   SizedBox(height: 5,),
                   CustomDropDownButton(hint: "Gender", prefixIcon: Image.asset(icGender25), value: chooseGender, list: genderList,onChange: (newValue){
-                      chooseGender=newValue as String?;
-                      }
-                    ),
+                    chooseGender=newValue as String?;
+                  }
+                  ),
                   SizedBox(height: 5,),
                   GestureDetector(
                     onTap: _showDatePicker,
@@ -97,7 +86,7 @@ class _TeacherFormScreenState extends State<TeacherFormScreen> {
                             SizedBox(
                               width: 10,
                             ),
-                            Image.asset(icDay),
+                            Image.asset(icTime,width: 25,),
                             SizedBox(
                               width: 12,
                             ),
@@ -107,7 +96,7 @@ class _TeacherFormScreenState extends State<TeacherFormScreen> {
                               style: TextStyle(fontSize: 17,fontFamily: roboto_regular),
                             )
                                 : Text(
-                              "Select Time",
+                              "Date of Birth",
                               style: TextStyle(
                                   fontFamily: roboto_regular,
                                   fontSize: 17,
@@ -121,18 +110,19 @@ class _TeacherFormScreenState extends State<TeacherFormScreen> {
                   SizedBox(height: 5,),
                   CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: classController, hint: "Preferable class",label: "Preferable class",),
                   SizedBox(height: 5,),
-                  CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: subjectController, hint: "Tuition Subjects",label: "Tuition Subjects",),
+                  CustomTextField(preffixIcon: Image.asset(icSubjects25), type: TextInputType.text, controller: subjectController, hint: "Tuition Subjects",label: "Tuition Subjects",),
                   SizedBox(height: 5,),
-                  CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: qualifyController, hint: "Qualification",label: "Qualification",),
+                  CustomTextField(preffixIcon: Image.asset(icQualification25), type: TextInputType.text, controller: qualifyController, hint: "Qualification",label: "Qualification",),
                   SizedBox(height: 5,),
-                  CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: instituteController, hint: "Institute",label: "Institute",),
+                  CustomTextField(preffixIcon: Image.asset(icInstitute25), type: TextInputType.text, controller: instituteController, hint: "Institute",label: "Institute",),
                   SizedBox(height: 5,),
-                  CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: departmentController, hint: "Section/Department",label: "Section/Department",),
+                  CustomTextField(preffixIcon: Image.asset(icDepartment25), type: TextInputType.text, controller: departmentController, hint: "Section/Department",label: "Section/Department",),
                   SizedBox(height: 20,),
                   CustomButton(onPress: (){
                     CrudDb().addTeacherInfo(nameController.text, chooseGender.toString(), _dateTime.year.toString(), addressController.text, classController.text, subjectController.text, qualifyController.text, instituteController.text, departmentController.text, "tt");
                     Get.back();
-                  }, text: Text("Submit",style: TextStyle(color: buttonColor,fontSize: 18,fontWeight:FontWeight.bold,letterSpacing: 1),), color: Colors.white)
+                  }, text: "Submit", color: Colors.grey.shade600),
+                  SizedBox(height: 10,),
 
                 ],
               ),

@@ -1,6 +1,10 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_profile.dart';
 
 import '../../../const/consts.dart';
@@ -18,7 +22,7 @@ class TeacherHome extends StatelessWidget {
     ];
     var navBody=[
       PostsScreen(),
-      TeacherProfile()
+      TeacherProfile(),
     ];
     return Scaffold(
       backgroundColor: Colors.white,

@@ -5,9 +5,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 
 import '../../../const/images.dart';
+import '../../../widgets/custom_button.dart';
 
 class RequestedTeacherDetailsScreen extends StatelessWidget {
    RequestedTeacherDetailsScreen({super.key});
@@ -313,6 +315,24 @@ class RequestedTeacherDetailsScreen extends StatelessWidget {
                         SizedBox(height: 10,),
                         GestureDetector(
                           onTap: (){
+                            showDialog(context: context, builder: (BuildContext context){
+                              return Dialog(
+                                child: Container(
+                                  height: 350,
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
+                                      const Text("Request Sent"),
+                                      CustomButton(onPress: (){
+                                        
+                                        Get.back();
+                                      }, text: "Okay", color: Colors.green)
+                                    ],
+                                  ),
+                                ),
+                              );
+                            });
                             CrudDb().addGuardianResponse(snapshot.data!.docs.first["name"],postId, FieldValue.serverTimestamp(), teacherEmail, FirebaseAuth.instance.currentUser!.email.toString());
                           },
                           child: Container(

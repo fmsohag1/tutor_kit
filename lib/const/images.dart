@@ -1,6 +1,7 @@
 
 //icons
 const icPhone="assets/icons/phone.png";
+const icPhone25="assets/icons/phone25.png";
 const icPassword="assets/icons/password.png";
 const icEye_on="assets/icons/eye_on.png";
 const icEye_off="assets/icons/eye_off.png";
@@ -31,6 +32,24 @@ const icStudent25="assets/icons/student25.png";
 const icStudent="assets/icons/student.png";
 const icTime25="assets/icons/time25.png";
 const icTime="assets/icons/time.png";
+const icName="assets/icons/name.png";
+const icName25="assets/icons/name25.png";
+const icAge="assets/icons/age.png";
+const icAge25="assets/icons/age25.png";
+const icAaddress="assets/icons/address.png";
+const icAaddress25="assets/icons/address25.png";
+const icQualification="assets/icons/qualification.png";
+const icQualification25="assets/icons/qualification25.png";
+const icInstitute="assets/icons/institute.png";
+const icInstitute25="assets/icons/institute25.png";
+const icDepartment="assets/icons/deparment.png";
+const icDepartment25="assets/icons/department25.png";
+const icEmail="assets/icons/email.png";
+const icEmail25="assets/icons/email25.png";
+const icPassword25="assets/icons/password25.png";
+const icGoogle="assets/icons/google.png";
+const icApple="assets/icons/apple.png";
+const icConfirm25="assets/icons/confirm25.png";
 
 //images
 const imgBgImage="assets/images/bgImage.jpg";

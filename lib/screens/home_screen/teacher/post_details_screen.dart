@@ -15,6 +15,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/requested_teacher_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_offer_screen.dart';
+import 'package:tutor_kit/widgets/custom_alert_dialog.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,7 +24,7 @@ import '../../../const/images.dart';
 import '../../../const/styles.dart';
 
 class PostDetailesScreen extends StatefulWidget {
-   PostDetailesScreen({super.key});
+  PostDetailesScreen({super.key});
 
   @override
   State<PostDetailesScreen> createState() => _PostDetailesScreenState();
@@ -73,7 +74,7 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
         htmlFormatContentTitle: true,
       );
       AndroidNotificationDetails androidNotificationDetails = AndroidNotificationDetails('tutor-kit', 'tutor-kit', importance: Importance.high,
-      styleInformation: bigTextStyleInformation, priority: Priority.high, playSound: true);
+          styleInformation: bigTextStyleInformation, priority: Priority.high, playSound: true);
       NotificationDetails notificationDetails = NotificationDetails(android: androidNotificationDetails);
       await flutterLocalNotificationsPlugin.show(0, message.notification?.title, message.notification?.body,notificationDetails,payload: message.data['body']);
     });
@@ -91,13 +92,13 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
   void requestPermission()async{
     FirebaseMessaging messaging = FirebaseMessaging.instance;
     NotificationSettings settings = await messaging.requestPermission(
-      alert: false,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true
+        alert: false,
+        announcement: false,
+        badge: true,
+        carPlay: false,
+        criticalAlert: false,
+        provisional: false,
+        sound: true
 
     );
 
@@ -113,28 +114,28 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
   void sendPushMessage(String token, String body, String title)async{
     try {
       await http.post(
-        Uri.parse('https://fcm.googleapis.com/fcm/send'),
-        headers:  {
-          'Content-Type': 'application/json',
-          'Authorization': 'key=AAAAxNs3MRQ:APA91bGmvCxjjPiL4EryQl_aCAZkvduQYna7Uy-NPTFwwdckWCy1-870TA00xsmrV8qSxvljmczhPB4bEH7wBunO-a3vRQZ0owzhZYMAOIblgMfEtBDfM2owCM0W-DS_LLH7ylRCgGGi'
-        },
-        body: jsonEncode(
-           {
-            "priority": "high",
-            'data': {
-              'click_action': 'FLUTTER_NOTIFICATION_CLICK',
-              'status': 'done',
-              'body': body,
-              'title': title
-            },
-             'notification': {
-              "title": title,
-               "body": body,
-               "android_channel_id": "tutor-kit"
-             },
-             "to": token
-          }
-        )
+          Uri.parse('https://fcm.googleapis.com/fcm/send'),
+          headers:  {
+            'Content-Type': 'application/json',
+            'Authorization': 'key=AAAAxNs3MRQ:APA91bGmvCxjjPiL4EryQl_aCAZkvduQYna7Uy-NPTFwwdckWCy1-870TA00xsmrV8qSxvljmczhPB4bEH7wBunO-a3vRQZ0owzhZYMAOIblgMfEtBDfM2owCM0W-DS_LLH7ylRCgGGi'
+          },
+          body: jsonEncode(
+              {
+                "priority": "high",
+                'data': {
+                  'click_action': 'FLUTTER_NOTIFICATION_CLICK',
+                  'status': 'done',
+                  'body': body,
+                  'title': title
+                },
+                'notification': {
+                  "title": title,
+                  "body": body,
+                  "android_channel_id": "tutor-kit"
+                },
+                "to": token
+              }
+          )
       );
     } catch (e){
       if(kDebugMode){
@@ -147,7 +148,7 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
   Widget build(BuildContext context) {
     CollectionReference posts = FirebaseFirestore.instance.collection("posts");
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor,
       body: SafeArea(
         child: Center(
           child: FutureBuilder<DocumentSnapshot>(
@@ -163,88 +164,16 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                   Map<String, dynamic> data = snapshot.data!.data() as Map<String, dynamic>;
                   Timestamp timestamp = data["timestamp"];
                   return Padding(
-                    padding: const EdgeInsets.only(left: 10,right: 10,top: 8),
-                    child: Card(
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                          //side: BorderSide(color: Colors.black)
-                      ),
-                      color: bgColor,
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icGender,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${data["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icClass,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Class",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                            Text("${data["class"]}",style: TextStyle(fontFamily: roboto_regular),),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 5,),
                             Container(
                               padding: EdgeInsets.all(5),
-                              width: double.infinity,
+                              width: MediaQuery.of(context).size.width*0.410,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white
@@ -258,92 +187,91 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(icSubjects,width: 25,),
+                                        child: Image.asset(icGender,width: 25,),
+                                      )),
+                                  SizedBox(width: 5,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Gender",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                      Text("${data["gender"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              width: MediaQuery.of(context).size.width*0.410,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white
+                              ),
+                              child: Row(
+                                children: [
+                                  Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                          side: BorderSide(color: Colors.black)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(icClass,width: 25,),
                                       )),
                                   SizedBox(width: 5,),
                                   Flexible(
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text("Subjects",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                        Text("${data["subjects"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                        Text("Class",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                        Text("${data["class"]}",style: TextStyle(fontFamily: roboto_regular),),
                                       ],
                                     ),
                                   )
                                 ],
                               ),
                             ),
-                            SizedBox(height: 5,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
+                          ],
+                        ),
+                        SizedBox(height: 5,),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white
+                          ),
+                          child: Row(
+                            children: [
+                              Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                      side: BorderSide(color: Colors.black)
                                   ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icDay,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Day/Week",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${data["dayPerWeek"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                        ],
-                                      )
-                                    ],
-                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(icSubjects,width: 25,),
+                                  )),
+                              SizedBox(width: 5,),
+                              Flexible(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text("Subjects",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                    Text("${data["subjects"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                  ],
                                 ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icSalary,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Salary",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                            Text("${data["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                ),
-
-                              ],
-                            ),
-                            SizedBox(height: 5,),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
                             Container(
                               padding: EdgeInsets.all(5),
-                              width: double.infinity,
+                              width: MediaQuery.of(context).size.width*0.410,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(10),
                                   color: Colors.white
@@ -357,184 +285,244 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(icLocation,width: 25,),
+                                        child: Image.asset(icDay,width: 25,),
                                       )),
                                   SizedBox(width: 5,),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                      Text("${data["location"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                      Text("Day/Week",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                      Text("${data["dayPerWeek"]}",style: TextStyle(fontFamily: roboto_regular)),
                                     ],
                                   )
                                 ],
                               ),
                             ),
-                            SizedBox(height: 5,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icStudent,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${data["student"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                        ],
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              width: MediaQuery.of(context).size.width*0.410,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white
+                              ),
+                              child: Row(
+                                children: [
+                                  Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                          side: BorderSide(color: Colors.black)
                                       ),
-                                      // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icTime,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Flexible(
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                            Text("${data["time"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                          ],
-                                        ),
-                                      ),
-                                      // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
-                                    ],
-                                  ),
-                                ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(icSalary,width: 25,),
+                                      )),
+                                  SizedBox(width: 5,),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Salary",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                        Text("${data["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
 
-                              ],
-                            ),
-                            SizedBox(height: 5,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  padding: EdgeInsets.all(5),
-                                  // width: double.infinity,
-                                  width: MediaQuery.of(context).size.width*0.410,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.circular(100),
-                                              side: BorderSide(color: Colors.black)
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Image.asset(icCurriculum,width: 25,),
-                                          )),
-                                      SizedBox(width: 5,),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                          Text("${data["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                        ],
-                                      ),
-                                      // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 30,),
-                            FutureBuilder<QuerySnapshot>(
-                                future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("email", isEqualTo: auth.currentUser!.email.toString()).get(),
-                                builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
-                                  // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
-                                  if(btnSnap.connectionState == ConnectionState.done){
-                                    if(btnSnap.data!.docs.isNotEmpty){
-                                      return CustomButton(onPress: (){
-                                        Get.snackbar("Attention", "Request sent already, wait for guardian confirmation");
-                                      }, text: Text("Request Sent"), color: Colors.white);
-                                    }
-                                    if(btnSnap.data!.docs.isEmpty){
-                                      return CustomButton(onPress: ()async{
-                                        var auth = FirebaseAuth.instance;
-                                        await FirebaseFirestore.instance.collection("userInfo").where("email", isEqualTo: data["email"]).get().then((snap) {
-                                          deviceToken = snap.docs.first["deviceToken"].toString();
-                                          print(tToken);
-                                        });
-                                        print(data["email"]);
-                                        print("deviceTok: $deviceToken" );
-                                        sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
-                                        await CrudDb().addTeacherRequest(auth.currentUser!.email.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
-                                        await showDialog(context: context, builder: (BuildContext context){
-                                          return Dialog(
-                                            child: Container(
-                                              height: 350,
-                                              child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
-                                                  const Text("Request Sent"),
-                                                  CustomButton(onPress: (){
-                                                    setState(() {
-
-                                                    });
-                                                    Get.back();
-                                                    }, text: const Text("Okay"), color: Colors.green)
-                                                ],
-                                              ),
-                                            ),
-                                          );
-                                        });
-                                      }, text: Text("Send request"), color: Colors.white);
-                                    }
-                                  }
-                                  return Center(child: CircularProgressIndicator());
-                                }
-                            ),
-                            // ElevatedButton(onPressed: (){
-                            //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
-                            //   // await FirebaseFirestore.instance.collection(collectionPath)
-                            //   sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
-                            // }, child: Text("Send"))
                           ],
                         ),
-                      ),),
+                        SizedBox(height: 5,),
+                        Container(
+                          padding: EdgeInsets.all(5),
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.white
+                          ),
+                          child: Row(
+                            children: [
+                              Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(100),
+                                      side: BorderSide(color: Colors.black)
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Image.asset(icLocation,width: 25,),
+                                  )),
+                              SizedBox(width: 5,),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Location",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                  Text("${data["location"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 5,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              width: MediaQuery.of(context).size.width*0.410,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white
+                              ),
+                              child: Row(
+                                children: [
+                                  Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                          side: BorderSide(color: Colors.black)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(icStudent,width: 25,),
+                                      )),
+                                  SizedBox(width: 5,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Students",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                      Text("${data["student"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                    ],
+                                  ),
+                                  // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              width: MediaQuery.of(context).size.width*0.410,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white
+                              ),
+                              child: Row(
+                                children: [
+                                  Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                          side: BorderSide(color: Colors.black)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(icTime,width: 25,),
+                                      )),
+                                  SizedBox(width: 5,),
+                                  Flexible(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Time",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                        Text("${data["time"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                      ],
+                                    ),
+                                  ),
+                                  // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                ],
+                              ),
+                            ),
+
+                          ],
+                        ),
+                        SizedBox(height: 5,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.all(5),
+                              // width: double.infinity,
+                              width: MediaQuery.of(context).size.width*0.410,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white
+                              ),
+                              child: Row(
+                                children: [
+                                  Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(100),
+                                          side: BorderSide(color: Colors.black)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Image.asset(icCurriculum,width: 25,),
+                                      )),
+                                  SizedBox(width: 5,),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text("Curriculum",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
+                                      Text("${data["curriculum"]}",style: TextStyle(fontFamily: roboto_regular)),
+                                    ],
+                                  ),
+                                  // Text("${snapshot.data!.docs[index]["salary"]}",style: TextStyle(fontFamily: roboto_regular,color: Colors.green)),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 30,),
+                        FutureBuilder<QuerySnapshot>(
+                            future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("email", isEqualTo: auth.currentUser!.email.toString()).get(),
+                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
+                              // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
+                              if(btnSnap.connectionState == ConnectionState.done){
+                                if(btnSnap.data!.docs.isNotEmpty){
+                                  return CustomButton(onPress: (){
+                                    Get.snackbar("Attention",
+                                      "Request sent already, wait for guardian confirmation",
+                                      backgroundColor: Colors.orange.shade200,
+                                      icon: Lottie.asset(
+                                        "assets/icons/warning.json",
+                                      ),
+                                      animationDuration: Duration(
+                                        seconds: 0,
+                                      ),
+                                      duration: Duration(seconds: 5),
+                                    );
+                                  }, text: "Wait for guardian...", color: Colors.grey.shade400);
+                                }
+                                if(btnSnap.data!.docs.isEmpty){
+                                  return CustomButton(onPress: ()async{
+                                    var auth = FirebaseAuth.instance;
+                                    await FirebaseFirestore.instance.collection("userInfo").where("email", isEqualTo: data["email"]).get().then((snap) {
+                                      deviceToken = snap.docs.first["deviceToken"].toString();
+                                      print(tToken);
+                                    });
+                                    print(data["email"]);
+                                    print("deviceTok: $deviceToken" );
+                                    sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
+                                    await CrudDb().addTeacherRequest(auth.currentUser!.email.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
+                                    await showDialog(context: context, builder: (BuildContext context){
+                                      return CustomAlertDialog(text: "Request Sent Successfully", assets: "assets/icons/animation_lmej1fs8.json",onTap: (){
+                                        setState(() {
+                                        });
+                                        Get.back();
+                                      },);
+                                    });
+                                  }, text: "Get The Job", color: Colors.grey.shade600);
+                                }
+                              }
+                              return Center(child: CircularProgressIndicator());
+                            }
+                        ),
+                        // ElevatedButton(onPressed: (){
+                        //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
+                        //   // await FirebaseFirestore.instance.collection(collectionPath)
+                        //   sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
+                        // }, child: Text("Send"))
+                      ],
+                    ),
                   );
                 }
                 return CircularProgressIndicator();

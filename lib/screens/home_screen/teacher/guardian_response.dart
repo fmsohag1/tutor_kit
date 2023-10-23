@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/pay_bill.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_status_screen.dart';
 
 class GuardianResponse extends StatelessWidget {
   const GuardianResponse({super.key});
@@ -37,9 +38,31 @@ class GuardianResponse extends StatelessWidget {
                                           Text(detSnapshot.data!["location"]),
                                         ],
                                       ),
-                                      ElevatedButton(onPressed: (){
-                                        Get.to(()=>PayBill());
-                                      }, child: Row(children: [Text("Get this tution"),Icon(Icons.arrow_forward)],))
+                                      SizedBox(width: 50,),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 10,right: 10),
+                                          child: FutureBuilder(
+                                              future: FirebaseFirestore.instance.collection("teacherTransactionStatus").where("tEmail", isEqualTo: FirebaseAuth.instance.currentUser!.email).where("postId", isEqualTo: detSnapshot.data!.id).get(),
+                                              builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> tranSnap){
+                                                if(tranSnap.connectionState == ConnectionState.done){
+                                                  if(tranSnap.data!.docs.isNotEmpty){
+                                                    return ElevatedButton(onPressed: (){
+                                                      Get.to(()=>TeacherStatusScreen(),arguments: detSnapshot.data!.id);
+                                                    }, child: Row(children: [Text("See status"),Icon(Icons.arrow_forward)],));
+                                                  }
+                                                  if(tranSnap.data!.docs.isEmpty){
+                                                    return ElevatedButton(onPressed: (){
+                                                      Get.to(()=>PayBill(),arguments: [detSnapshot.data!["salary"], detSnapshot.data!.id]);
+                                                    }, child: Row(children: [Text("Get this tution"),Icon(Icons.arrow_forward)],));
+                                                  }
+                                                  print(tranSnap.data!.docs.isNotEmpty);
+                                                }
+                                                return LinearProgressIndicator();
+                                              }
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

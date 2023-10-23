@@ -13,13 +13,13 @@ class CustomTextField extends StatelessWidget {
   final AutovalidateMode? autoValidate;
   const CustomTextField(
       {super.key,
-      this.label,
-      required this.preffixIcon,
-      required this.type,
-      required this.controller,
-      required this.hint,
-      this.max,
-      this.validator,
+        this.label,
+        required this.preffixIcon,
+        required this.type,
+        required this.controller,
+        required this.hint,
+        this.max,
+        this.validator,
         this.autoValidate});
 
   @override
@@ -33,7 +33,7 @@ class CustomTextField extends StatelessWidget {
       style: TextStyle(fontSize: 17, fontFamily: roboto_regular),
       decoration: InputDecoration(
           labelText: label,
-          labelStyle: TextStyle(fontFamily: roboto_regular, color: Colors.grey),
+          labelStyle: TextStyle(color: Colors.grey),
           hintText: hint,
           hintStyle: TextStyle(
             fontFamily: roboto_regular,
@@ -43,11 +43,11 @@ class CustomTextField extends StatelessWidget {
           border: InputBorder.none,
           focusedErrorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: BorderSide(color: Colors.red),
           ),
           errorBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderSide: BorderSide(color: Colors.red),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
@@ -63,16 +63,19 @@ class CustomTextField extends StatelessWidget {
 
 //for suffix icon text_field
 class CustomTextField2 extends StatefulWidget {
+  final String? label;
   final String hint;
-  final IconData preffixIcon;
+  final Widget preffixIcon;
   final TextInputType type;
   final TextEditingController controller;
+  final String? Function(String?)? validator;
+  final AutovalidateMode? autoValidate;
   const CustomTextField2({
     super.key,
     required this.hint,
     required this.preffixIcon,
     required this.type,
-    required this.controller,
+    required this.controller, this.label, this.validator, this.autoValidate,
   });
 
   @override
@@ -84,16 +87,16 @@ class _CustomTextField2State extends State<CustomTextField2> {
   bool visible = true;
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: widget.validator,
+      autovalidateMode: widget.autoValidate,
       controller: widget.controller,
       obscureText: visible,
       keyboardType: widget.type,
       decoration: InputDecoration(
+          labelText: widget.label,
+          labelStyle: TextStyle(color: Colors.grey),
           hintText: widget.hint,
-          hintStyle: TextStyle(fontFamily: kalpurush),
-          prefixIcon: Icon(
-            widget.preffixIcon,
-            size: 25,
-          ),
+          prefixIcon: widget.preffixIcon,
           suffixIcon: GestureDetector(
               onTap: () {
                 setState(() {
@@ -107,15 +110,21 @@ class _CustomTextField2State extends State<CustomTextField2> {
                 size: 25,
               )),
           border: InputBorder.none,
-          filled: true,
-          fillColor: textfieldColor,
+          focusedErrorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red),
+          ),
+          errorBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide(color: Colors.red),
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: BorderSide(color: Colors.grey),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: bgColor),
+            borderSide: BorderSide(color: Colors.grey),
           )),
     );
   }
