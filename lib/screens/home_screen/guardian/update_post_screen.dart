@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/widgets/dropdownbutton.dart';
 
@@ -94,33 +95,41 @@ class _UpdatePostScreenState extends State<UpdatePostScreen> {
                               ],
                             ),
                             SizedBox(height: 20,),
-                            CustomDropDownButton(hint: "Gender", prefixIcon: Image.asset(icGender25), value: chooseGender="${data["gender"]}", list: genderList,onChange: (newValue){
-                              chooseGender=newValue as String;
-                            },),
+                            CustomDropDownButton(hint: "Gender", prefixIcon: CircleAvatar(child: SvgPicture.asset(icGender,),backgroundColor: Colors.transparent,),
+                              value: chooseGender="${data["gender"]}", list: genderList,onChange: (newValue){
+                                chooseGender=newValue as String;
+                              },),
                             SizedBox(height: 5,),
-                            CustomDropDownButton(hint: 'No of Students', prefixIcon: Image.asset(icStudent25), value: chooseStudent="${data["student"]}", list: studentList,onChange: (newValue){
-                              chooseStudent=newValue as String;
-                            },),
+                            CustomDropDownButton(hint: 'No of Students', prefixIcon: CircleAvatar(child: SvgPicture.asset(icStudent,),backgroundColor: Colors.transparent,),
+                              value: chooseStudent="${data["student"]}", list: studentList,onChange: (newValue){
+                                chooseStudent=newValue as String;
+                              },),
                             //CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController..text = "${data["gender"]}", hint: "Gender"),
                             SizedBox(height: 5,),
-                            CustomTextField(label: "Class",preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: classController..text = "${data["class"]}", hint: "Class"),
+                            CustomTextField(label: "Class", preffixIcon: CircleAvatar(child: SvgPicture.asset(icClass,),backgroundColor: Colors.transparent,),
+                                type: TextInputType.text, controller: classController..text = "${data["class"]}", hint: "Class"),
                             SizedBox(height: 5,),
-                            CustomTextField(label: "Salary",preffixIcon: Image.asset(icSalary25), type: TextInputType.text, controller: salaryController..text = "${data["salary"]}", hint: "Salary"),
+                            CustomTextField(label: "Salary", preffixIcon: CircleAvatar(child: SvgPicture.asset(icSalary,),backgroundColor: Colors.transparent,),
+                                type: TextInputType.text, controller: salaryController..text = "${data["salary"]}", hint: "Salary"),
                             SizedBox(height: 5,),
-                            CustomDropDownButton(hint: "Day/Week", prefixIcon: Image.asset(icDay25), value: chooseDay="${data["dayPerWeek"]}", list: dayList,onChange: (newValue){
-                              chooseDay=newValue as String;
-                            },),
+                            CustomDropDownButton(hint: "Day/Week", prefixIcon: CircleAvatar(child: SvgPicture.asset(icDay,),backgroundColor: Colors.transparent,),
+                              value: chooseDay="${data["dayPerWeek"]}", list: dayList,onChange: (newValue){
+                                chooseDay=newValue as String;
+                              },),
                             //CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController..text = "${data["dayPerWeek"]}", hint: "Day/Week"),
                             SizedBox(height: 5,),
-                            CustomTextField(label: "Location",preffixIcon: Image.asset(icLocation25), type: TextInputType.text, controller: locationController..text = "${data["location"]}", hint: "Location"),
+                            CustomTextField(label: "Location", preffixIcon: CircleAvatar(child: SvgPicture.asset(icLocation,),backgroundColor: Colors.transparent,),
+                                type: TextInputType.text, controller: locationController..text = "${data["location"]}", hint: "Location"),
                             SizedBox(height: 5,),
-                            CustomDropDownButton(hint: "Curriculum", prefixIcon: Image.asset(icCurriculum25), value: chooseCurriculum="${data["curriculum"]}", list: curriculumList,onChange: (newValue){
-                              chooseCurriculum=newValue as String;
-                            },),
+                            CustomDropDownButton(hint: "Curriculum",prefixIcon: CircleAvatar(child: SvgPicture.asset(icCurriculum,),backgroundColor: Colors.transparent,),
+                              value: chooseCurriculum="${data["curriculum"]}", list: curriculumList,onChange: (newValue){
+                                chooseCurriculum=newValue as String;
+                              },),
 
                             //CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController..text = "${data["curriculum"]}", hint: "Curriculum"),
                             SizedBox(height: 5,),
-                            CustomTextField(label: "Subjects",preffixIcon: Image.asset(icSubjects25), type: TextInputType.text, controller: subjectController..text = "${data["subjects"]}", hint: "Subjects"),
+                            CustomTextField(label: "Subjects",preffixIcon: CircleAvatar(child: SvgPicture.asset(icSubjects,),backgroundColor: Colors.transparent,),
+                                type: TextInputType.text, controller: subjectController..text = "${data["subjects"]}", hint: "Subjects"),
                             SizedBox(height: 5,),
                             GestureDetector(
                               onTap: _showTimePicker,
@@ -135,7 +144,7 @@ class _UpdatePostScreenState extends State<UpdatePostScreen> {
                                   child: Row(
                                     children: [
                                       SizedBox(width: 10,),
-                                      Image.asset(icTime25),
+                                      CircleAvatar(child: SvgPicture.asset(icTime,),),
                                       SizedBox(width: 12,),
                                       isTime?Text(_timeOfDay.format(context).toString(),style: TextStyle(fontSize: 17),):Text("${data['time']}",style: TextStyle(fontFamily: roboto_regular,fontSize: 17),),
 

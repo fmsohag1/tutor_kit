@@ -3,10 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
 import 'package:tutor_kit/const/consts.dart';
-import 'package:tutor_kit/screens/home_screen/teacher/posts_screen.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/PostScreen/screen/posts_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
@@ -117,24 +118,38 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                       CustomDropDownButton(
                         hint: "Gender",
-                        prefixIcon: Image.asset(icGender25),
+                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icGender,color: Colors.black87,),backgroundColor: Colors.transparent,),
                         value: chooseGender,
                         list: genderList,
                         onChange: (newValue) {
                           chooseGender = newValue as String;
                         },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please choose your gender!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       CustomDropDownButton(
                         hint: 'No of Students',
-                        prefixIcon: Image.asset(icStudent25),
+                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icStudent),backgroundColor: Colors.transparent,),
                         value: chooseStudent,
                         list: studentList,
                         onChange: (newValue) {
                           chooseStudent = newValue as String;
                         },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please choose your students!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       //CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: studentController, hint: 'No of Students',label: 'No of Students',),
                       //CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
@@ -146,32 +161,53 @@ class _AddPostScreenState extends State<AddPostScreen> {
                   },),*/
                       CustomTextField(
                         label: "Class",
-                        preffixIcon: Image.asset(icClass25),
+                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icClass),backgroundColor: Colors.transparent,),
                         type: TextInputType.text,
                         controller: classController,
                         hint: "Seven,Ten..etc",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your class';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(
                         height: 7,
                       ),
                       CustomTextField(
                         label: "Salary",
-                        preffixIcon: Image.asset(icSalary25),
-                        type: TextInputType.text,
+                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icSalary,width: 16,color: Colors.black87,),backgroundColor: Colors.transparent,),
+                        type: TextInputType.number,
                         controller: salaryController,
                         hint: "5000,Negotiable",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your salary';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       CustomDropDownButton(
                         hint: "Day/Week",
-                        prefixIcon: Image.asset(icDay25),
+                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icDay,),backgroundColor: Colors.transparent,),
                         value: chooseDay,
                         list: dayList,
                         onChange: (newValue) {
                           chooseDay = newValue as String;
                         },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your days!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       // CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
                       SizedBox(
@@ -179,22 +215,36 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                       CustomTextField(
                         label: "Location",
-                        preffixIcon: Image.asset(icLocation25),
+                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icLocation,),backgroundColor: Colors.transparent,),
                         type: TextInputType.text,
                         controller: locationController,
                         hint: "West Larpara,Bus Terminal,Cox's bazar.",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your location!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(
                         height: 5,
                       ),
                       CustomDropDownButton(
                         hint: "Curriculum",
-                        prefixIcon: Image.asset(icCurriculum25),
+                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icCurriculum,),backgroundColor: Colors.transparent,),
                         value: chooseCurriculum,
                         list: curriculumList,
                         onChange: (newValue) {
                           chooseCurriculum = newValue as String;
                         },
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please choose your curriculum!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       //CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
                       SizedBox(
@@ -202,10 +252,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                       CustomTextField(
                         label: "Subjects",
-                        preffixIcon: Image.asset(icSubjects25),
+                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icSubjects,),backgroundColor: Colors.transparent,),
                         type: TextInputType.text,
                         controller: subjectController,
                         hint: "Math,English,Physics..etc",
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter your subjects!';
+                          }
+                          return null;
+                        },
+                        autoValidate: AutovalidateMode.onUserInteraction,
                       ),
                       SizedBox(
                         height: 5,
@@ -217,14 +274,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                             width: double.infinity,
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: Colors.grey),
+                                border: Border.all(color: Colors.black12),
                                 color: Colors.white),
                             child: Row(
                               children: [
                                 SizedBox(
                                   width: 10,
                                 ),
-                                Image.asset(icTime25),
+                                SvgPicture.asset(icTime,),
                                 SizedBox(
                                   width: 12,
                                 ),
@@ -248,19 +305,21 @@ class _AddPostScreenState extends State<AddPostScreen> {
                       ),
                       CustomButton(
                           onPress: () {
-                            CrudDb().addPost(
-                              chooseGender.toString(),
-                              classController.text,
-                              salaryController.text,
-                              chooseDay.toString(),
-                              locationController.text,
-                              chooseCurriculum.toString(),
-                              subjectController.text,
-                              auth.currentUser!.email.toString(),
-                              FieldValue.serverTimestamp(),
-                              chooseStudent.toString(),
-                              _timeOfDay.format(context).toString(),
-                            );
+                            if (_formKey.currentState!.validate()) {
+                              CrudDb().addPost(
+                                chooseGender.toString(),
+                                classController.text,
+                                salaryController.text,
+                                chooseDay.toString(),
+                                locationController.text,
+                                chooseCurriculum.toString(),
+                                subjectController.text,
+                                auth.currentUser!.email.toString(),
+                                FieldValue.serverTimestamp(),
+                                chooseStudent.toString(),
+                                _timeOfDay.format(context).toString(),
+                              );
+                            }
                           },
                           text: txtPost,
                           color: Colors.grey.shade600)
@@ -273,7 +332,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
       /*floatingActionButton: FloatingActionButton(onPressed: (){
         CrudDb().readPost();
       }),*/
-      floatingActionButton: FloatingActionButton(onPressed: () {
+      /*floatingActionButton: FloatingActionButton(onPressed: () {
         FirebaseFirestore.instance.collection("draft").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap){
           if(!snap.exists){
 
@@ -286,7 +345,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           }
         });
         // Get.to(() => TeacherHome());
-      }),
+      }),*/
     );
   }
 }

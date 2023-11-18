@@ -5,7 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_post_history.dart';
+import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 
 class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -13,9 +15,10 @@ class CrudDb {
   addPost(
       String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userEmail, FieldValue timestamp, String student, String time)async {
     try{
-      posts.doc(_auth.currentUser!.uid).get().then((snap) {
-        if(!snap.exists){
-          posts.doc(_auth.currentUser!.uid).set({
+      //need to be fixed *****************************************
+      posts.where("userEmail",isEqualTo: userEmail).get().then((snap) {
+        if(snap.docs.isEmpty){
+          posts.add({
             'gender' : gender,
             'class' : level,
             'salary' : salary,
@@ -27,14 +30,39 @@ class CrudDb {
             'timestamp' : timestamp,
             'student' : student,
             'time' : time,
+            'isBooked' : false,
           }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
         } else {
-          if (kDebugMode) {
-            print(snap.exists);
-          }
-          Get.snackbar("Attention", "Max post limit 1");
-        }
+              if (kDebugMode) {
+                print(snap.docs.isNotEmpty);
+              }
+              Get.snackbar("Attention", "Max post limit 1");
+            }
       });
+
+      // posts.get().then((snap) {
+      //   if(snap.docs.isEmpty){
+      //     posts.add({
+      //       'gender' : gender,
+      //       'class' : level,
+      //       'salary' : salary,
+      //       'dayPerWeek' : dayPerWeek,
+      //       'location' : location,
+      //       'curriculum' : curriculum,
+      //       'subjects' : subjects,
+      //       'userEmail' : userEmail,
+      //       'timestamp' : timestamp,
+      //       'student' : student,
+      //       'time' : time,
+      //       'isBooked' : false,
+      //     }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
+      //   } else {
+      //     if (kDebugMode) {
+      //       print(snap.docs.isNotEmpty);
+      //     }
+      //     Get.snackbar("Attention", "Max post limit 1");
+      //   }
+      // });
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12,);
     }
@@ -50,6 +78,12 @@ class CrudDb {
   deletePost(String docId){
     try{
       posts.doc(docId).delete().whenComplete(() => Get.snackbar("Attention", "Deleted Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
+      FirebaseFirestore.instance.collection("teacherRequest").where("postID",isEqualTo: docId).get().then((trSnap) {
+        FirebaseFirestore.instance.collection("teacherRequest").doc(trSnap.docs.first.id).delete();
+      });
+      FirebaseFirestore.instance.collection("guardianResponse").where("postId",isEqualTo: docId).get().then((grSnap) {
+        FirebaseFirestore.instance.collection("guardianResponse").doc(grSnap.docs.first.id).delete();
+      });
     } catch (e) {
       Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
     }
@@ -80,13 +114,15 @@ class CrudDb {
       "postID" : postID,
       "gToken" : gToken,
       "tToken" : tToken,
-      "timestamp" : timestamp
+      "timestamp" : timestamp,
+      "isRead" : false
     });
   }
   //TeacherForm
-  addTeacherInfo(String name, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification, String institute, String department, String role){
+  addTeacherInfo(String name,String number, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification, String institute, String department, String role){
     FirebaseFirestore.instance.collection("userInfo").doc(_auth.currentUser!.uid).update({
       "name": name,
+      "number": number,
       "gender": gender,
       "dob": dob,
       "address": address,
@@ -106,6 +142,7 @@ class CrudDb {
       "tEmail" : tEmail,
       "gEmail" : gEmail,
       "timestamp" : timestamp,
+      "isRead" : false,
     });
   }
   teacherTransactionStatus(String tEmail, String postId, String transactionId, double amount, FieldValue timestamp){
@@ -119,4 +156,39 @@ class CrudDb {
     });
   }
 
+  updateTeacherProfile(String name, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification,String institute,String department){
+    try{
+      FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
+        'name' : name,
+        'gender' : gender,
+        'dob' : dob,
+        'address' : address,
+        'prefClass' : prefClass,
+        'prefSubjects' : prefSubjects,
+        'qualification' : qualification,
+        'institute' : institute,
+        'department' : department
+      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.offAll(()=>TeacherHome(currentNavIndex: 1.obs,)));
+    } catch (e) {
+      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+    }
+  }
+
+  updateGuardianProfile(String name, String address, String mobile){
+    try{
+      FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
+        'name' : name,
+        'address' : address,
+        'mobile' : mobile,
+      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.offAll(()=>GuardianHome(currentNavIndex: 2.obs,)));
+    } catch (e) {
+      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+    }
+  }
+
 }
+
+
+// trSnap.docs.forEach((doc) {
+//   FirebaseFirestore.instance.collection("teacherRequest").doc(doc.id).delete();
+// });

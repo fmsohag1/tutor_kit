@@ -17,28 +17,30 @@ class CustomDropDownButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField(
+
       autovalidateMode: autoValidate,
       validator: validator,
       decoration: InputDecoration(
+
           hintText: hint,
-          hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey),
+          hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w400),
           prefixIcon: prefixIcon,
           border: InputBorder.none,
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.red),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.red),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
           )
       ),
       isExpanded: true,

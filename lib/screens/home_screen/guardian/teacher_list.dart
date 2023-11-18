@@ -1,16 +1,30 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/bloc/lite_api.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/drafts/darft1.dart';
+import 'package:tutor_kit/screens/home_screen/guardian/teacher_details_screen.dart';
 
 class TeacherList extends StatelessWidget {
   TeacherList({super.key});
 
   var userphoto = FirebaseAuth.instance.currentUser?.photoURL;
+  var box = GetStorage();
+  List trTotalList = [];
+  List trNewList = [];
+  int trTotal = 0;
+  int trNew = 0;
 
   @override
   Widget build(BuildContext context) {
+    // FirebaseFirestore.instance.collection("posts").where("userEmail",isEqualTo: FirebaseAuth.instance.currentUser!.email).get().then((pSnap) {
+    //   FirebaseFirestore.instance.collection("teacherRequest").where("postID",isEqualTo: pSnap.docs.first.id).where("isRead", isEqualTo: false).get().then((trSnap) {
+    //     LiteApi.trTotal = trSnap.docs.length;
+    //   });
+    // });
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -22,121 +36,63 @@ class TeacherList extends StatelessWidget {
           future: FirebaseFirestore.instance.collection("userInfo").where("role", isEqualTo: "tt").get(),
           builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
             if(snapshot.connectionState == ConnectionState.done){
-              return ListView.builder(
+              if(snapshot.data!.docs.isEmpty){
+                return Center(child: Text("No teachers to show"),);
+              }
+              return GridView.builder(
                   itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (context,index){
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 7,
+                      mainAxisSpacing: 7),
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: (){
+                        Get.to(()=>TeacherDetailsScreen(),arguments: snapshot.data!.docs[index]["email"]);
+                      },
                       child: Container(
-                        height: 220,
                         width: double.infinity,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(color: Colors.brown.shade100)
+                            borderRadius: BorderRadius.circular(10),
+                            color: primary
                         ),
-                        child: Column(
-                          children: [
-                            Container(
-                                height: 80,
-                                width: double.infinity,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(15),topRight: Radius.circular(15)),
-                                    color: Colors.brown.shade100
-                                ),
-                                child: Row(
-                                  children: [
-                                    Card(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100),
-                                          //side: BorderSide(color: Colors.black)
-                                        ),
-                                        child: CircleAvatar(backgroundImage: AssetImage("assets/icons/display-pic.png"),radius: 30,)
-                                    ),
-                                    SizedBox(width: 5,),
-                                    Flexible(
-                                      child: Column(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text("${snapshot.data!.docs[index]["name"]}",style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),maxLines: 2,),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )),
-                            Container(
-                              height: 120,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(bottomLeft: Radius.circular(15),bottomRight: Radius.circular(15)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                  height: 80,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
+                                      color: secondary
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(4.0),
+                                    child: CircleAvatar(child: Image.network("https://cdn-icons-png.flaticon.com/512/9187/9187475.png",width: 50,),backgroundColor: primary,),
+                                  )
                               ),
-                              child: Column(
+                              SizedBox(height: 5,),
+                              Flexible(child: Text("${snapshot.data!.docs[index]["name"]}",style: TextStyle(fontWeight: FontWeight.w800,color: buttonColor),maxLines: 1,overflow: TextOverflow.ellipsis,)),
+                              SizedBox(height: 5,),
+                              Row(
                                 children: [
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Card(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(100),
-                                                side: BorderSide(color: Colors.black)
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Image.asset(icInstitute,width: 25,),
-                                            )),
-                                        SizedBox(width: 5,),
-                                        Flexible(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text("Institute",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["institute"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  Container(
-                                    padding: EdgeInsets.all(5),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: Colors.white
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Card(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.circular(100),
-                                                side: BorderSide(color: Colors.black)
-                                            ),
-                                            child: Padding(
-                                              padding: const EdgeInsets.all(8.0),
-                                              child: Image.asset(icDepartment,width: 25,),
-                                            )),
-                                        SizedBox(width: 5,),
-                                        Flexible(
-                                          child: Column(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              Text("Department",style: TextStyle(fontSize: 16,fontFamily: roboto_bold),),
-                                              Text("${snapshot.data!.docs[index]["department"]}",style: TextStyle(fontFamily: roboto_regular)),
-                                            ],
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
+                                  SvgPicture.asset(icDepartment,width: 20,),
+                                  SizedBox(width: 5,),
+                                  Flexible(child: Text("${snapshot.data!.docs[index]["department"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
                                 ],
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 5,),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(icInstitute,width: 20,),
+                                  SizedBox(width: 5,),
+                                  Flexible(child: Text("${snapshot.data!.docs[index]["institute"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

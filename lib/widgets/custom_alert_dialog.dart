@@ -59,3 +59,27 @@ class CustomAlertDialog extends StatelessWidget {
     );
   }
 }
+
+void showLoaderDialog(BuildContext context){
+  AlertDialog alert=AlertDialog(
+    backgroundColor: Colors.transparent,
+    content: Builder(builder: (context){
+      return SizedBox(
+        width: 100,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircularProgressIndicator(
+              color: Colors.red.shade300,
+            ),
+          ],
+        ),
+      );
+    }),
+  );
+  showDialog(
+      barrierDismissible: false,
+      context: context, builder: (context){
+    return alert;
+  });
+}

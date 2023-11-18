@@ -1,17 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tutor_kit/bloc/firebase_api.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/authentication/Auth_Screen/screen/login_screen.dart';
-import 'package:tutor_kit/screens/home_screen/admin/admin_home.dart';
+import 'package:tutor_kit/screens/authentication/ChooseScreen/choose_screen.dart';
+import 'package:tutor_kit/screens/home_screen/admin/admin_dashboard.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
-import 'package:tutor_kit/screens/home_screen/teacher/post_details_screen.dart';
-import 'package:tutor_kit/screens/home_screen/teacher/teacher_form_screens.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message)async{
@@ -69,7 +66,7 @@ class MyApp extends StatelessWidget {
         )
       ),
 
-      home: FirebaseAuth.instance.currentUser != null ? ((_user == "gd") ? GuardianHome() : (_user == "tt") ? TeacherHome() : (_user == "ad") ? AdminHome() : LoginScreen()) : LoginScreen()
+      home: FirebaseAuth.instance.currentUser != null ? ((_user == "gd") ? GuardianHome(currentNavIndex: 0.obs,) : (_user == "tt") ? TeacherHome(currentNavIndex: 0.obs,) : (_user == "ad") ? AdminDashboard() : (box.read("chooseQ")==true) ? ChooseScreen() : LoginScreen()) : LoginScreen()
 
       // FirebaseAuth.instance.currentUser != null ? (_user == "gd" ? GuardianHome() : TeacherHome()) : LoginScreen(),
       // FirebaseAuth.instance.currentUser != null ? TeacherHome() : LoginScreen(),

@@ -1,13 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/widgets/custom_alert_dialog.dart';
 import 'package:tutor_kit/widgets/custom_button.dart';
 import 'package:tutor_kit/widgets/custom_textfield.dart';
-
-import '../../widget/reset_button.dart';
+import '../widget/reset_button.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({super.key});
@@ -32,13 +34,23 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       showDialog(
           context: context,
           builder: (context) {
-            return CustomAlertDialog(text: "Password reset link sent! Check your email", assets: "assets/icons/animation_lmej1fs8.json",onTap: ()=>Get.back(),);
+            return CustomAlertDialog(text: "Password reset link sent! Check your email", assets: icDone,onTap: (){
+              setState(() {
+
+              });
+              Get.back();
+            },);
           });
     } on FirebaseAuthException catch (e) {
       showDialog(
           context: context,
           builder: (context) {
-            return CustomAlertDialog(text: "${e.message.toString()}", assets: "assets/icons/warning.json",onTap: ()=>Get.back(),);
+            return CustomAlertDialog(text: "${e.message.toString()}", assets: icWarning,onTap: (){
+              setState(() {
+
+              });
+              Get.back();
+            },);
           });
     }
   }
@@ -61,8 +73,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               Navigator.pop(context);
             },
             icon: Icon(
-              Icons.arrow_back_ios_new_rounded,
-              color: Colors.black,
+              CupertinoIcons.arrow_left_circle,
             )),
       ),
       body: Center(
@@ -80,7 +91,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 height: 20,
               ),
               CustomTextField(
-                preffixIcon: Image.asset(icEmail25),
+                preffixIcon: CircleAvatar(child: SvgPicture.asset(icEmail,),backgroundColor: Colors.transparent,),
                 type: TextInputType.emailAddress,
                 controller: emailController,
                 hint: "Enter your email",
@@ -92,6 +103,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                   return null;
                 },
                 autoValidate: AutovalidateMode.onUserInteraction,
+                autofillHints: [AutofillHints.email],
               ),
               SizedBox(
                 height: 10,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/consts.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -11,6 +13,7 @@ class CustomTextField extends StatelessWidget {
   final int? max;
   final String? Function(String?)? validator;
   final AutovalidateMode? autoValidate;
+  final Iterable<String>? autofillHints;
   const CustomTextField(
       {super.key,
         this.label,
@@ -20,11 +23,12 @@ class CustomTextField extends StatelessWidget {
         required this.hint,
         this.max,
         this.validator,
-        this.autoValidate});
+        this.autoValidate, this.autofillHints});
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      autofillHints: autofillHints,
       autovalidateMode: autoValidate,
       validator: validator,
       maxLength: max,
@@ -42,21 +46,22 @@ class CustomTextField extends StatelessWidget {
           prefixIcon: preffixIcon,
           border: InputBorder.none,
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Colors.red),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Colors.red),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
-          )),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
+          )
+      ),
     );
   }
 }
@@ -70,12 +75,13 @@ class CustomTextField2 extends StatefulWidget {
   final TextEditingController controller;
   final String? Function(String?)? validator;
   final AutovalidateMode? autoValidate;
+  final Iterable<String>? autofillHints;
   const CustomTextField2({
     super.key,
     required this.hint,
     required this.preffixIcon,
     required this.type,
-    required this.controller, this.label, this.validator, this.autoValidate,
+    required this.controller, this.label, this.validator, this.autoValidate, this.autofillHints,
   });
 
   @override
@@ -87,6 +93,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
   bool visible = true;
   Widget build(BuildContext context) {
     return TextFormField(
+      autofillHints: widget.autofillHints,
       validator: widget.validator,
       autovalidateMode: widget.autoValidate,
       controller: widget.controller,
@@ -103,28 +110,25 @@ class _CustomTextField2State extends State<CustomTextField2> {
                   visible = !visible;
                 });
               },
-              child: Icon(
-                visible
-                    ? Icons.visibility_outlined
-                    : Icons.visibility_off_outlined,
-                size: 25,
-              )),
+              child: CircleAvatar(child: SvgPicture.asset(visible?icEye_off:icEye_on),backgroundColor: Colors.transparent,),
+          ),
+
           border: InputBorder.none,
           focusedErrorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Colors.red),
           ),
           errorBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(10),
             borderSide: BorderSide(color: Colors.red),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
-            borderSide: BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(10),
+            borderSide: BorderSide(color: Colors.black12),
           )),
     );
   }

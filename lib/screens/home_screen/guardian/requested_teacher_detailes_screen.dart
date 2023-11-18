@@ -3,21 +3,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
+import 'package:tutor_kit/const/consts.dart';
 
 import '../../../const/images.dart';
+import '../../../widgets/custom_alert_dialog.dart';
 import '../../../widgets/custom_button.dart';
+import '../teacher/PostScreen/widget/postdata.dart';
 
-class RequestedTeacherDetailsScreen extends StatelessWidget {
+class RequestedTeacherDetailsScreen extends StatefulWidget {
    RequestedTeacherDetailsScreen({super.key});
 
+  @override
+  State<RequestedTeacherDetailsScreen> createState() => _RequestedTeacherDetailsScreenState();
+}
+
+class _RequestedTeacherDetailsScreenState extends State<RequestedTeacherDetailsScreen> {
   var teacherEmail = Get.arguments[0];
+
   var postId = Get.arguments[1];
+
   @override
   Widget build(BuildContext context) {
+    var resNum;
+    FirebaseFirestore.instance.collection("guardianResponse").where("gEmail",isEqualTo: FirebaseAuth.instance.currentUser!.email).get().then((value) {
+      resNum = value.docs.length;
+    });
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -36,7 +52,7 @@ class RequestedTeacherDetailsScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(color: Colors.black12),
-                      color: Colors.brown.shade50
+                      color: bgColor2
                   ),
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8,right: 8,bottom: 8),
@@ -55,296 +71,149 @@ class RequestedTeacherDetailsScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width*0.410,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white
-                              ),
-                              child: Row(
-                                children: [
-                                  Card(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100),
-                                          side: BorderSide(color: Colors.black)
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(icGender,width: 25,),
-                                      )),
-                                  SizedBox(width: 5,),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Gender",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                        Text(snapshot.data!.docs.first["gender"],),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                            //Text("${DateTime.now().year-int.parse(snapshot.data!.docs.first["dob"])}"),
+                            PostData(
+                              icon: SvgPicture.asset(icGender),
+                              width: MediaQuery.of(context)
+                                  .size
+                                  .width *
+                                  0.410,
+                              title: "Gender",
+                              subtitle: "${snapshot.data!.docs.first["gender"]}",
                             ),
-                            Container(
-                              padding: EdgeInsets.all(5),
-                              width: MediaQuery.of(context).size.width*0.410,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: Colors.white
-                              ),
-                              child: Row(
-                                children: [
-                                  Card(
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(100),
-                                          side: BorderSide(color: Colors.black)
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Image.asset(icHome,width: 25,color: Colors.grey[800],),
-                                      )),
-                                  SizedBox(width: 5,),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Age",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                        Text("${DateTime.now().year-int.parse(snapshot.data!.docs.first["dob"])} yr"),
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
+                            PostData(
+                              icon: SvgPicture.asset(icAge),
+                              width: MediaQuery.of(context)
+                                  .size
+                                  .width *
+                                  0.410,
+                              title: "Age",
+                              subtitle: "${DateTime.now().year-int.parse(snapshot.data!.docs.first["dob"])}",
                             ),
 
                           ],
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icLocation),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icHome,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Address",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["address"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Address",
+                          subtitle: "${snapshot.data!.docs.first["address"]}",
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icClass),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icClass,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Preferable Class",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["prefClass"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Preferable Class",
+                          subtitle: "${snapshot.data!.docs.first["prefClass"]}",
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icSubjects),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icSubjects,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Tuition Subject",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["prefSubjects"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Tuition Subjects",
+                          subtitle: "${snapshot.data!.docs.first["prefSubjects"]}",
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icQualification),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icHome,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Qualification",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["qualification"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Qualification",
+                          subtitle: "${snapshot.data!.docs.first["qualification"]}",
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icInstitute),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icHome,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Institute",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["institute"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Institute",
+                          subtitle: "${snapshot.data!.docs.first["institute"]}",
                         ),
                         SizedBox(height: 5,),
-                        Container(
-                          padding: EdgeInsets.all(5),
+                        PostData(
+                          icon: SvgPicture.asset(icDepartment,width: 25,),
                           width: double.infinity,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white
-                          ),
-                          child: Row(
-                            children: [
-                              Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(100),
-                                      side: BorderSide(color: Colors.black)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Image.asset(icHome,width: 25,),
-                                  )),
-                              SizedBox(width: 5,),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text("Section/Department",style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                                    Text(snapshot.data!.docs.first["department"]),
-                                  ],
-                                ),
-                              )
-                            ],
-                          ),
+                          title: "Section/Department",
+                          subtitle: "${snapshot.data!.docs.first["department"]}",
                         ),
                         SizedBox(height: 10,),
-                        GestureDetector(
-                          onTap: (){
-                            showDialog(context: context, builder: (BuildContext context){
-                              return Dialog(
-                                child: Container(
-                                  height: 350,
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                        FutureBuilder(
+                            future: FirebaseFirestore.instance.collection("guardianResponse").where("gEmail",isEqualTo: FirebaseAuth.instance.currentUser!.email).where("postId",isEqualTo: postId).where("tEmail",isEqualTo: snapshot.data!.docs.first["email"]).get(),
+                            builder: (BuildContext context, grSnap){
+                              if(grSnap.connectionState == ConnectionState.done){
+                                if(grSnap.data!.docs.isEmpty){
+                                  if(resNum == 1){
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: (){
+                                            },
+                                          child: Container(
+                                            padding: EdgeInsets.all(10),
+                                            width: double.infinity,
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(20),
+                                                color: Colors.grey.shade100
+                                            ),
+                                            child: Center(child: Text("Get the Teacher",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.grey),)),
+                                          ),
+                                        ),
+                                        Text("you have selected a teacher already")
+                                      ],
+                                    );
+                                  } else {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        showDialog(barrierDismissible: false,context: context, builder: (BuildContext context){
+                                          return CustomAlertDialog(text: "Request Sent Successfully", assets: "assets/icons/animation_lmej1fs8.json",onTap: (){
+                                            Get.back();
+                                            setState(() {
+                                            });
+                                          },);
+                                        });
+                                        CrudDb().addGuardianResponse(snapshot.data!.docs.first["name"],postId, FieldValue.serverTimestamp(), teacherEmail, FirebaseAuth.instance.currentUser!.email.toString());
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(10),
+                                        width: double.infinity,
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(20),
+                                            color: Colors.green.shade100
+                                        ),
+                                        child: Center(child: Text("Get the Teacher",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                      ),
+                                    );
+                                  }
+                                }
+                                if(grSnap.data!.docs.isNotEmpty){
+                                  return Column(
                                     children: [
-                                      Lottie.asset(height: 200,"assets/icons/animation_lmej1fs8.json"),
-                                      const Text("Request Sent"),
-                                      CustomButton(onPress: (){
-                                        
-                                        Get.back();
-                                      }, text: "Okay", color: Colors.green)
+                                      GestureDetector(
+                                        onTap: (){
+                                          Get.snackbar("Attention", "Response sent already, be patient to get a call from the teacher");
+                                        },
+                                        child: Container(
+                                          padding: EdgeInsets.all(10),
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(20),
+                                              color: Colors.grey.shade100
+                                          ),
+                                          child: Center(child: Text("Response sent",style: TextStyle(fontWeight: FontWeight.bold),)),
+                                        ),
+                                      ),
+                                      IconButton(onPressed: (){
+                                        FirebaseFirestore.instance.collection("guardianResponse").doc(grSnap.data!.docs.first.id).delete();
+                                        setState(() {
+
+                                        });
+                                      }, icon: Icon(Icons.cancel),)
                                     ],
-                                  ),
-                                ),
-                              );
-                            });
-                            CrudDb().addGuardianResponse(snapshot.data!.docs.first["name"],postId, FieldValue.serverTimestamp(), teacherEmail, FirebaseAuth.instance.currentUser!.email.toString());
-                          },
-                          child: Container(
-                            padding: EdgeInsets.all(10),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Colors.green.shade100
-                            ),
-                            child: Center(child: Text("Get the Teacher",style: TextStyle(fontWeight: FontWeight.bold),)),
-                          ),
-                        ),
+                                  );
+                                }
+                              }
+                              return Center(child: CircularProgressIndicator());
+                            }
+                        )
                       ],
                     ),
                   ),

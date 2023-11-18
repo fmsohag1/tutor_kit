@@ -2,12 +2,15 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/bloc/firebase_auth_services.dart';
-import 'package:tutor_kit/screens/home_screen/admin/admin_home.dart';
+import 'package:tutor_kit/screens/home_screen/admin/payment_approvalse.dart';
+import 'package:tutor_kit/screens/home_screen/admin/admin_dashboard.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 
+import '../../../../const/colors.dart';
 import '../../../../const/images.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_textfield.dart';
@@ -55,30 +58,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Image.asset(
                     icTutor,
                     width: 100,
+                    color: inversePrimary,
                   ),
                   SizedBox(
                     height: 30,
                   ),
                   CustomTextField(
-                    preffixIcon: Image.asset(icEmail25),
+                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icEmail,),backgroundColor: Colors.transparent,),
                     type: TextInputType.emailAddress,
                     controller: emailController,
                     hint: 'Enter your email',
                     label: 'Email',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter your email';
+                        return 'Please enter your email!';
                       }
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
+                    autofillHints: [AutofillHints.email],
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   CustomTextField2(
                     hint: 'Enter your password',
-                    preffixIcon: Image.asset(icPassword25),
+                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icPassword,),backgroundColor: Colors.transparent,),
+
                     type: TextInputType.text,
                     controller: passwordController,
                     label: 'Password',
@@ -89,14 +95,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
+                    autofillHints: [AutofillHints.newPassword],
 
                   ),
                   SizedBox(
                     height: 10,
                   ),
-                  CustomTextField(
+                  CustomTextField2(
                     hint: 'Enter your confirm password',
-                    preffixIcon: Image.asset(icConfirm25),
+                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icConfirm,),backgroundColor: Colors.transparent,),
+
                     type: TextInputType.text,
                     controller: ConfirmpasswordController,
                     label: 'Confirm Password',
@@ -110,110 +118,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
+                    autofillHints: [AutofillHints.password],
 
                   ),
                   SizedBox(height: 20,),
                   CustomButton(onPress:()async{
                     if (_formKey.currentState!.validate()) {
-                      User? user = await _firebaseAuthServices.signUpWithEmailAndPassword(emailController.text, passwordController.text);
+                      showDialog(barrierDismissible: false,context: context, builder: (context){
+                        return Dialog(
+                          child: Container(
+                            height: 50,
+                            child: Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                          ),
+                        );
+                      });
+                      User? user = await _firebaseAuthServices.signUpWithEmailAndPassword(emailController.text, passwordController.text, context);
                       if(user != null){
-                        await FirebaseFirestore.instance.collection("admin").where("email",isEqualTo: emailController.text).where("password").get().then((snap){
+                        await FirebaseFirestore.instance.collection("admin").where("email",isEqualTo: emailController.text).where("password",isEqualTo: passwordController.text).get().then((snap){
                           if(snap.docs.isNotEmpty){
-                            Get.to(()=>AdminHome());
+                             Get.off(()=>AdminDashboard());
                             box.write("user", "ad");
                           }else{
-                            Get.to(()=>ChooseScreen());
+                            Get.off(()=>ChooseScreen());
+                            box.write("chooseQ", true);
                           }
                         });
-                        // if(box.read('user')=='gd'){
-                        //   String? deviceToken;
-                        //   await FirebaseMessaging.instance.getToken().then((token) {
-                        //     setState(() {
-                        //       deviceToken = token;
-                        //       print('token : $deviceToken');
-                        //     });
-                        //   });
-                        //
-                        //   FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
-                        //     if(!snap.exists){
-                        //       FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).set({
-                        //         "email": FirebaseAuth.instance.currentUser!.email,
-                        //         "deviceToken": deviceToken,
-                        //         "timestamp": FieldValue.serverTimestamp(),
-                        //         "role" : "gd"
-                        //       });
-                        //     }
-                        //     if(snap.exists){
-                        //       if(snap.data()!["deviceToken"] != deviceToken){
-                        //         FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                        //           "deviceToken": deviceToken,
-                        //           "timestamp": FieldValue.serverTimestamp(),
-                        //         }).then((value) {print("New token detected");});
-                        //       }
-                        //     }
-                        //   });
-                        //   Get.to(()=>GuardianHome());
-                        // }else{
-                        //   String? deviceToken;
-                        //   await FirebaseMessaging.instance.getToken().then((token) {
-                        //     setState(() {
-                        //       deviceToken = token;
-                        //       print('token : $deviceToken');
-                        //     });
-                        //   });
-                        //
-                        //   FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
-                        //     if(!snap.exists){
-                        //       FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).set({
-                        //         "email": FirebaseAuth.instance.currentUser!.email,
-                        //         "deviceToken": deviceToken,
-                        //         "timestamp": FieldValue.serverTimestamp(),
-                        //         "role" : "tt"
-                        //       });
-                        //     }
-                        //     if(snap.exists){
-                        //       if(snap.data()!["deviceToken"] != deviceToken){
-                        //         FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                        //           "deviceToken": deviceToken,
-                        //           "timestamp": FieldValue.serverTimestamp(),
-                        //         }).then((value) {print("New token detected");});
-                        //       }
-                        //     }
-                        //   });
-                        //   Get.to(()=>TeacherHome());
-                        // }
-                        // // print(user.uid);
-                        // // print(user.phoneNumber);
-                        // // box.write("userPhone", user.phoneNumber);
-                        //
-                        //
-                        // //Managing UserInfo
-                        // // String? deviceToken;
-                        // // await FirebaseMessaging.instance.getToken().then((token) {
-                        // //   setState(() {
-                        // //     deviceToken = token;
-                        // //     print('token : $deviceToken');
-                        // //   });
-                        // // });
-                        // //
-                        // // FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
-                        // //   if(!snap.exists){
-                        // //     FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).set({
-                        // //       "email": FirebaseAuth.instance.currentUser!.email,
-                        // //       "deviceToken": deviceToken,
-                        // //       "timestamp": FieldValue.serverTimestamp(),
-                        // //     });
-                        // //   }
-                        // //   if(snap.exists){
-                        // //     if(snap.data()!["deviceToken"] != deviceToken){
-                        // //       FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                        // //         "deviceToken": deviceToken,
-                        // //         "timestamp": FieldValue.serverTimestamp(),
-                        // //       }).then((value) {print("New token detected");});
-                        // //     }
-                        // //   }
-                        // // });
-                        print("User created");
                         // Get.to(()=>TeacherHome());
                       }
                     }
@@ -224,7 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Already have an account? "),
+                      Text("Already have an account? ",style: TextStyle(color: inversePrimary),),
                       GestureDetector(
                         onTap: (){
                           Get.off(()=>LoginScreen());
@@ -334,9 +265,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           )),
         ),
       ),*/
-      floatingActionButton: FloatingActionButton(onPressed: (){
-        print(FirebaseAuth.instance.currentUser!.email);
-      }),
+      // floatingActionButton: FloatingActionButton(onPressed: (){
+      //   print(FirebaseAuth.instance.currentUser!.email);
+      // }),
     );
   }
 }

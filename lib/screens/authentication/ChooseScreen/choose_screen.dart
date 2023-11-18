@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tutor_kit/const/consts.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_form_screen.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
@@ -34,7 +35,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image(image: AssetImage(icTutorGrey),height: 100,),
+              Image(image: AssetImage(icTutor),height: 100,color: inversePrimary,),
               // const Padding(
               //   padding: EdgeInsets.all(8.0),
               //   child: Text(txtChooseText,style: TextStyle(fontFamily: kalpurush,fontSize: 18,),textAlign: TextAlign.justify,),
@@ -92,7 +93,8 @@ class _ChooseScreenState extends State<ChooseScreen> {
                               }
                             }
                           });
-                          Get.to(()=>GuardianFormScreen());
+                          Get.off(()=>GuardianFormScreen());
+                          box.write("chooseQ", false);
                           //end
                         // box.write("user", "gd");
                       }
@@ -123,17 +125,28 @@ class _ChooseScreenState extends State<ChooseScreen> {
                             }
                           }
                         });
-                        Get.to(()=>TeacherHome());
+                        Get.off(()=>TeacherHome(currentNavIndex: 0.obs,));
+                        box.write("chooseQ", false);
                         //end
                         box.write("user", "tt");
                       }
                     }
                     else {
-                      Get.snackbar("সতর্কতা", "অভিবাবক অথবা শিক্ষক বাচাই করুন ।",);
-                    }
+                      Get.snackbar(
+                        "WARNING!",
+                        "Choose Guardian or Teacher.",
+                        backgroundColor: Colors.orange.shade200,
+                        icon: Lottie.asset(
+                          "assets/icons/warning.json",
+                        ),
+                        animationDuration: Duration(
+                          seconds: 0,
+                        ),
+                        duration: Duration(seconds: 5),
+                      );                    }
 
                   });
-                }, child: isLoading?CircularProgressIndicator(color: Colors.purpleAccent,):Text("➜",style: TextStyle(fontSize: 22),),style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(Colors.orange.shade200))),
+                }, child: Text("➜",style: TextStyle(fontSize: 22),),style: ButtonStyle(backgroundColor: MaterialStatePropertyAll(primary),elevation: MaterialStatePropertyAll(0))),
               ),
             ],
           ),
