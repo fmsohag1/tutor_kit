@@ -39,64 +39,67 @@ class TeacherList extends StatelessWidget {
               if(snapshot.data!.docs.isEmpty){
                 return Center(child: Text("No teachers to show"),);
               }
-              return GridView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 7,
-                      mainAxisSpacing: 7),
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: (){
-                        Get.to(()=>TeacherDetailsScreen(),arguments: snapshot.data!.docs[index]["email"]);
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: primary
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                  height: 80,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
-                                      color: secondary
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(4.0),
-                                    child: CircleAvatar(child: Image.network("https://cdn-icons-png.flaticon.com/512/9187/9187475.png",width: 50,),backgroundColor: primary,),
-                                  )
-                              ),
-                              SizedBox(height: 5,),
-                              Flexible(child: Text("${snapshot.data!.docs[index]["name"]}",style: TextStyle(fontWeight: FontWeight.w800,color: buttonColor),maxLines: 1,overflow: TextOverflow.ellipsis,)),
-                              SizedBox(height: 5,),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(icDepartment,width: 20,),
-                                  SizedBox(width: 5,),
-                                  Flexible(child: Text("${snapshot.data!.docs[index]["department"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
-                                ],
-                              ),
-                              SizedBox(height: 5,),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(icInstitute,width: 20,),
-                                  SizedBox(width: 5,),
-                                  Flexible(child: Text("${snapshot.data!.docs[index]["institute"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
-                                ],
-                              ),
-                            ],
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: GridView.builder(
+                    itemCount: snapshot.data!.docs.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 7,
+                        mainAxisSpacing: 7),
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: (){
+                          Get.to(()=>TeacherDetailsScreen(),arguments: snapshot.data!.docs[index]["email"]);
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: primary
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                    height: 80,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(topRight: Radius.circular(10),topLeft: Radius.circular(10)),
+                                        color: secondary
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: CircleAvatar(child: Image.network("https://cdn-icons-png.flaticon.com/512/9187/9187475.png",width: 50,),backgroundColor: primary,),
+                                    )
+                                ),
+                                SizedBox(height: 5,),
+                                Flexible(child: Text("${snapshot.data!.docs[index]["name"]}",style: TextStyle(fontWeight: FontWeight.w800,color: buttonColor),maxLines: 1,overflow: TextOverflow.ellipsis,)),
+                                SizedBox(height: 5,),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(icDepartment,width: 20,),
+                                    SizedBox(width: 5,),
+                                    Flexible(child: Text("${snapshot.data!.docs[index]["department"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(icInstitute,width: 20,),
+                                    SizedBox(width: 5,),
+                                    Flexible(child: Text("${snapshot.data!.docs[index]["institute"]}",style: TextStyle(fontSize: 12),maxLines: 1,overflow: TextOverflow.ellipsis,))
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    }),
+              );
             }
             return Center(child: CircularProgressIndicator());
           }

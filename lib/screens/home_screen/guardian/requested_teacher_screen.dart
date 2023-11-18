@@ -21,6 +21,9 @@ class RequestedTeacherScreen extends StatelessWidget {
               future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId.toString()).get(),
               builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
                 if(snapshot.connectionState == ConnectionState.done){
+                  if(snapshot.data!.docs.isEmpty){
+                    return Center(child: Text("No requests found!"),);
+                  }
                   return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index){
