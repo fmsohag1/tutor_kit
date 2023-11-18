@@ -42,10 +42,10 @@ class PostsSentRequests extends StatelessWidget {
               return ListView.builder(
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (context, index){
-                    Timestamp timestamp = snapshot.data!.docs[index]["timestamp"];
                     return StreamBuilder(
                         stream: FirebaseFirestore.instance.collection("posts").doc(snapshot.data!.docs[index]["postID"]).snapshots(),
                         builder: (context,AsyncSnapshot<DocumentSnapshot> pSnapshot){
+                          // Timestamp timestamp = pSnapshot.data!["timestamp"];
                           if(pSnapshot.hasError){
                             return Center(
                               child: Text(pSnapshot.error.toString()),
@@ -210,7 +210,7 @@ class PostsSentRequests extends StatelessWidget {
 
                                             Column(
                                               children: [
-                                                Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                                                Center(child: Text(timeago.format(DateTime.parse(pSnapshot.data!["timestamp"].toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
                                                 SizedBox(height: 5,),
                                                 pSnapshot.data!["isBooked"] == false ? Container(decoration: BoxDecoration(color: Colors.green.shade100,borderRadius: BorderRadius.circular(5)),child: Padding(
                                                   padding: const EdgeInsets.only(left: 8,right: 8),
