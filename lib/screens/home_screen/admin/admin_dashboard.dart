@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/const/colors.dart';
 
 import '../../../const/images.dart';
 import '../../authentication/Auth_Screen/screen/login_screen.dart';
@@ -14,7 +15,10 @@ class AdminDashboard extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     return Scaffold(
+      backgroundColor: bgColor2,
       appBar: AppBar(
+        backgroundColor: bgColor2,
+        automaticallyImplyLeading: false,
         title: Text("Admin Dashboard"),
         actions: [
           IconButton(onPressed: (){
@@ -30,7 +34,7 @@ class AdminDashboard extends StatelessWidget {
               elevation: 3,
               child: Padding(
                 padding: const EdgeInsets.all(4.0),
-                child: Image.asset(icLogout,width: 25,color: Colors.white,),
+                child: Icon(Icons.logout_outlined),
               )),)
         ],
       ),

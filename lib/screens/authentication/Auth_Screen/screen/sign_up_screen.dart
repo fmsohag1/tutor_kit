@@ -1,21 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:email_otp/email_otp.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tutor_kit/bloc/firebase_auth_services.dart';
-import 'package:tutor_kit/screens/home_screen/admin/payment_approvalse.dart';
+import 'package:tutor_kit/screens/authentication/Auth_Screen/screen/email_verification_screen.dart';
 import 'package:tutor_kit/screens/home_screen/admin/admin_dashboard.dart';
-import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 
 import '../../../../const/colors.dart';
 import '../../../../const/images.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_textfield.dart';
-import '../../../home_screen/guardian/guardian_home.dart';
-import '../../ChooseScreen/choose_screen.dart';
+import '../../otp_screen.dart';
 import 'login_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -33,12 +32,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController ConfirmpasswordController = TextEditingController();
 
 
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
+  Future<void> verifyEmail() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await user.sendEmailVerification();
+    }
   }
+
 
   final FirebaseAuthServices _firebaseAuthServices = FirebaseAuthServices();
   @override
@@ -60,11 +60,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     width: 100,
                     color: inversePrimary,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   CustomTextField(
-                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icEmail,),backgroundColor: Colors.transparent,),
+                    preffixIcon: CircleAvatar(backgroundColor: Colors.transparent,child: SvgPicture.asset(icEmail,),),
                     type: TextInputType.emailAddress,
                     controller: emailController,
                     hint: 'Enter your email',
@@ -76,14 +76,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    autofillHints: [AutofillHints.email],
+                    autofillHints: const [AutofillHints.email],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomTextField2(
                     hint: 'Enter your password',
-                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icPassword,),backgroundColor: Colors.transparent,),
+                    preffixIcon: CircleAvatar(backgroundColor: Colors.transparent,child: SvgPicture.asset(icPassword,),),
 
                     type: TextInputType.text,
                     controller: passwordController,
@@ -95,15 +95,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    autofillHints: [AutofillHints.newPassword],
+                    autofillHints: const [AutofillHints.newPassword],
 
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomTextField2(
                     hint: 'Enter your confirm password',
-                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icConfirm,),backgroundColor: Colors.transparent,),
+                    preffixIcon: CircleAvatar(backgroundColor: Colors.transparent,child: SvgPicture.asset(icConfirm,),),
 
                     type: TextInputType.text,
                     controller: ConfirmpasswordController,
@@ -118,38 +118,52 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    autofillHints: [AutofillHints.password],
+                    autofillHints: const [AutofillHints.password],
 
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 20,),
                   CustomButton(onPress:()async{
                     if (_formKey.currentState!.validate()) {
                       showDialog(barrierDismissible: false,context: context, builder: (context){
                         return Dialog(
                           child: Container(
                             height: 50,
-                            child: Center(
-                              child: CircularProgressIndicator(),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(30),
+                              color: Colors.white,
+                            ),
+                            child: const Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CircularProgressIndicator(color: Colors.black12,),
+                                  SizedBox(width: 10,),
+                                  Text("Loading...",style: TextStyle(fontSize: 18),)
+                                ],
+                              ),
                             ),
                           ),
                         );
                       });
                       User? user = await _firebaseAuthServices.signUpWithEmailAndPassword(emailController.text, passwordController.text, context);
                       if(user != null){
-                        await FirebaseFirestore.instance.collection("admin").where("email",isEqualTo: emailController.text).where("password",isEqualTo: passwordController.text).get().then((snap){
+                        await FirebaseFirestore.instance.collection("admin").where("email",isEqualTo: emailController.text).where("password",isEqualTo: passwordController.text).get().then((snap) async {
                           if(snap.docs.isNotEmpty){
-                             Get.off(()=>AdminDashboard());
+                             Get.off(()=>const AdminDashboard());
                             box.write("user", "ad");
                           }else{
-                            Get.off(()=>ChooseScreen());
-                            box.write("chooseQ", true);
+                            Get.off(()=>EmailVerificationScreen(),arguments: emailController.text);
+                            // sendOtp();
+                            /*Get.off(()=>ChooseScreen());
+                            box.write("chooseQ", true);*/
                           }
                         });
                         // Get.to(()=>TeacherHome());
                       }
+
                     }
                   }, text: "SIGN UP", color: Colors.grey.shade600),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -158,9 +172,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       Text("Already have an account? ",style: TextStyle(color: inversePrimary),),
                       GestureDetector(
                         onTap: (){
-                          Get.off(()=>LoginScreen());
+                          Get.off(()=>const LoginScreen());
                         },
-                        child: Text(
+                        child: const Text(
                           "SIGN IN",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w500),

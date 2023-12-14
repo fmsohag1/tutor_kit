@@ -1,10 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/screens/authentication/Auth_Screen/screen/email_verification_screen.dart';
 import 'package:tutor_kit/screens/authentication/Auth_Screen/screen/sign_up_screen.dart';
 import 'package:tutor_kit/screens/home_screen/admin/admin_dashboard.dart';
 
@@ -13,7 +15,6 @@ import '../../../../const/colors.dart';
 import '../../../../const/images.dart';
 import '../../../../widgets/custom_button.dart';
 import '../../../../widgets/custom_textfield.dart';
-import '../../../home_screen/admin/payment_approvalse.dart';
 import '../../../home_screen/guardian/guardian_form_screen.dart';
 import '../../../home_screen/guardian/guardian_home.dart';
 import '../../../home_screen/teacher/teacher_home.dart';
@@ -67,11 +68,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: 100,
                     color: inversePrimary,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   CustomTextField(
-                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icEmail,),backgroundColor: Colors.transparent,),
+                    preffixIcon: CircleAvatar(backgroundColor: Colors.transparent,child: SvgPicture.asset(icEmail,),),
                     type: TextInputType.emailAddress,
                     controller: emailController,
                     hint: 'Enter your email',
@@ -83,14 +84,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    autofillHints: [AutofillHints.email],
+                    autofillHints: const [AutofillHints.email],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomTextField2(
                     hint: 'Enter your password',
-                    preffixIcon: CircleAvatar(child: SvgPicture.asset(icPassword),backgroundColor: Colors.transparent,),
+                    preffixIcon: CircleAvatar(backgroundColor: Colors.transparent,child: SvgPicture.asset(icPassword),),
                     type: TextInputType.text,
                     controller: passwordController,
                     label: 'Password',
@@ -101,10 +102,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                     autoValidate: AutovalidateMode.onUserInteraction,
-                    autofillHints: [AutofillHints.password],
+                    autofillHints: const [AutofillHints.password],
 
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -112,11 +113,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       GestureDetector(
                           onTap: () {
-                            Get.to(()=>ForgotPassword());
-                          }, child: Text("Forgot Password?",style: TextStyle(color: Colors.blue),))
+                            Get.to(()=>const ForgotPassword());
+                          }, child: const Text("Forgot Password?",style: TextStyle(color: Colors.blue),))
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   CustomButton(
@@ -126,8 +127,19 @@ class _LoginScreenState extends State<LoginScreen> {
                             return Dialog(
                               child: Container(
                                 height: 50,
-                                child: Center(
-                                  child: CircularProgressIndicator(),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(30),
+                                  color: Colors.white,
+                                ),
+                                child: const Center(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      CircularProgressIndicator(color: Colors.black12,),
+                                      SizedBox(width: 10,),
+                                      Text("Loading...",style: TextStyle(fontSize: 18),)
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -136,42 +148,58 @@ class _LoginScreenState extends State<LoginScreen> {
                           if(user != null){
                             await FirebaseFirestore.instance.collection("admin").where("email",isEqualTo: emailController.text).where("password",isEqualTo: passwordController.text).get().then((snap) {
                               if(snap.docs.isNotEmpty){
-                                Get.off(()=>AdminDashboard());
+                                Get.off(()=>const AdminDashboard());
                                 box.write("user", "ad");
                               }else{
-                                String? deviceToken;
-                                FirebaseMessaging.instance.getToken().then((token) {
-                                  setState(() {
-                                    deviceToken = token;
-                                    print('token : $deviceToken');
+                                final user = FirebaseAuth.instance.currentUser;
+                                if(!user!.emailVerified){
+                                  Get.to(()=>EmailVerificationScreen());
+                                }
+                                else {
+                                  String? deviceToken;
+                                  FirebaseMessaging.instance.getToken().then((token) {
+                                    setState(() {
+                                      deviceToken = token;
+                                      print('token : $deviceToken');
+                                    });
                                   });
-                                });
-                                FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
-                                  if(snap.exists){
-                                    if(snap.data()!["deviceToken"] != deviceToken){
-                                      FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
-                                        "deviceToken": deviceToken,
-                                        "timestamp": FieldValue.serverTimestamp(),
-                                      }).then((value) {print("New token detected");});
-                                    }
-                                    if(snap.data()!.keys.contains("name")){
-                                      if(snap.data()!["role"] == "gd"){
-                                        Get.offAll(()=>GuardianHome(currentNavIndex: 0.obs,));
-                                        box.write("user", "gd");
+                                  FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
+                                    if(snap.exists){
+                                      if(snap.data()!["deviceToken"] != deviceToken){
+                                        FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                          "deviceToken": deviceToken,
+                                          "timestamp": FieldValue.serverTimestamp(),
+                                        }).then((value) {print("New token detected");});
                                       }
-                                    }
-                                    if(!snap.data()!.keys.contains("name")){
-                                      if(snap.data()!["role"] == "gd"){
-                                        Get.to(()=>GuardianFormScreen());
+                                      if(snap.data()!.keys.contains("role")) {
+                                        if (snap.data()!["role"] == "gd") {
+                                          if (snap.data()!.keys.contains(
+                                              "name")) {
+                                            Get.offAll(() =>
+                                                GuardianHome(
+                                                  currentNavIndex: 0.obs,));
+                                            box.write("user", "gd");
+                                          }
+                                          if (!snap.data()!.keys.contains(
+                                              "name")) {
+                                            Get.to(() => GuardianFormScreen());
+                                          }
+                                        }
+                                        if(snap.data()!["role"] == "tt"){
+                                          Get.offAll(()=>TeacherHome(currentNavIndex: 0.obs,));
+                                          box.write("user", "tt");
+                                        }
                                       }
-                                    }
-                                    if(snap.data()!["role"] == "tt"){
-                                      Get.offAll(()=>TeacherHome(currentNavIndex: 0.obs,));
-                                      box.write("user", "tt");
-                                    }
-                                  }
-
-                                });
+                                        if (!snap.data()!.keys.contains(
+                                            "role")) {
+                                          Get.off(() => ChooseScreen());
+                                        }
+                                      }
+                                      if(!snap.exists){
+                                        Get.off(()=>ChooseScreen());
+                                      }
+                                  });
+                                }
                               }
                             });
                             print("User exists");
@@ -181,16 +209,75 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                       text: "SIGN IN",
                       color: Colors.grey.shade600),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
-                  ContinueWith(),
-                  SizedBox(
+                  const ContinueWith(),
+                  const SizedBox(
                     height: 30,
                   ),
-                  GoogleApple(onPressGoogle: ()async{
+                  GestureDetector(
+                      onTap: ()async{
+                        showDialog(context: context, builder: (BuildContext context){
+                          return const Center(child: CircularProgressIndicator());
+                        });
+                        UserCredential? credential = await _firebaseAuthServices.signInWithGoogle();
+                        if(credential.user != null){
+                          String? deviceToken;
+                          await FirebaseMessaging.instance.getToken().then((token) {
+                            setState(() {
+                              deviceToken = token;
+                              print('token : $deviceToken');
+                            });
+                          });
+                          FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).get().then((snap) {
+                            if(snap.exists){
+                              if(snap.data()!["role"] == "gd"){
+                                Get.off(()=>GuardianHome(currentNavIndex: 0.obs,));
+                                box.write("user", "gd");
+                              }
+                              if(snap.data()!["role"] == "tt"){
+                                Get.off(()=>TeacherHome(currentNavIndex: 0.obs,));
+                                box.write("user", "tt");
+                              }
+                              if(snap.data()!["deviceToken"] != deviceToken){
+                                FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
+                                  "deviceToken": deviceToken,
+                                  "timestamp": FieldValue.serverTimestamp(),
+                                }).then((value) {print("New token detected");});
+                              }
+                            }
+                            if(!snap.exists){
+                              Get.to(()=>const ChooseScreen());
+                            }
+                          });
+                        }
+                        Get.back();
+                      },
+                      child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30),
+//side: BorderSide(color: Colors.orangeAccent,),
+                        ),
+                        color: primary,
+                        child: Container(
+                          height: 50,
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(icGoogle,width: 30,),
+                              SizedBox(width: 5,),
+                              Text("Signin with Google",style: TextStyle(fontSize: 16),)
+                            ],
+                          ),
+                        ),
+                      )
+                  ),
+                  /*GoogleApple(onPressGoogle: ()async{
                     showDialog(context: context, builder: (BuildContext context){
-                      return Center(child: CircularProgressIndicator());
+                      return const Center(child: CircularProgressIndicator());
                     });
                     UserCredential? credential = await _firebaseAuthServices.signInWithGoogle();
                     if(credential.user != null){
@@ -219,13 +306,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           }
                         }
                         if(!snap.exists){
-                          Get.to(()=>ChooseScreen());
+                          Get.to(()=>const ChooseScreen());
                         }
                       });
                     }
                     Get.back();
-                  }),
-                  SizedBox(
+                  }),*/
+                  const SizedBox(
                     height: 50,
                   ),
                   Row(
@@ -234,9 +321,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Text("Don't have an account? ",style: TextStyle(color: inversePrimary),),
                       GestureDetector(
                         onTap: (){
-                          Get.off(()=>SignUpScreen());
+                          Get.off(()=>const SignUpScreen());
                         },
-                        child: Text(
+                        child: const Text(
                           "SIGN UP",
                           style: TextStyle(
                               color: Colors.blue, fontWeight: FontWeight.w500),

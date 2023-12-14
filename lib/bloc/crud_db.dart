@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:lottie/lottie.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_post_history.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
@@ -13,7 +14,7 @@ class CrudDb {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   CollectionReference posts = FirebaseFirestore.instance.collection("posts");
   addPost(
-      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userEmail, FieldValue timestamp, String student, String time)async {
+      String gender, String level, String salary, String dayPerWeek, String location, String curriculum, String subjects, String userEmail, FieldValue timestamp, String student, String time, String division, String district, String upazila, String union)async {
     try{
       //need to be fixed *****************************************
       posts.where("userEmail",isEqualTo: userEmail).get().then((snap) {
@@ -31,12 +32,38 @@ class CrudDb {
             'student' : student,
             'time' : time,
             'isBooked' : false,
-          }).whenComplete(() => Get.snackbar("Attention", "Added Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.to(()=>GuardianPostHistory()));
+            'division' : division,
+            'district' : district,
+            'upazila' : upazila,
+            'union' : union,
+          }).whenComplete(() => Get.snackbar(
+              "Attention",
+              "Added Successfully",
+              icon: Lottie.asset(
+                "assets/icons/animation_lmej1fs8.json",
+              ),
+              animationDuration: Duration(
+                seconds: 0,
+              ),
+              duration: Duration(seconds: 5),
+              backgroundColor: Colors.green.shade100
+          )).then((value) => Get.to(()=>GuardianPostHistory()));
         } else {
               if (kDebugMode) {
                 print(snap.docs.isNotEmpty);
               }
-              Get.snackbar("Attention", "Max post limit 1");
+              Get.snackbar(
+                "Attention!",
+                "Max post limit 1",
+                backgroundColor: Colors.orange.shade100,
+                icon: Lottie.asset(
+                  "assets/icons/warning.json",
+                ),
+                animationDuration: Duration(
+                  seconds: 0,
+                ),
+                duration: Duration(seconds: 5),
+              );
             }
       });
 
@@ -64,7 +91,18 @@ class CrudDb {
       //   }
       // });
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12,);
+      Get.snackbar(
+        "Attention!",
+        "Error Occurred",
+        backgroundColor: Colors.red.shade100,
+        icon: Lottie.asset(
+          "assets/icons/wrong.json",
+        ),
+        animationDuration: Duration(
+          seconds: 0,
+        ),
+        duration: Duration(seconds: 5),
+      );
     }
 
   }
@@ -77,7 +115,17 @@ class CrudDb {
   }
   deletePost(String docId){
     try{
-      posts.doc(docId).delete().whenComplete(() => Get.snackbar("Attention", "Deleted Successfully",colorText: Colors.black,backgroundColor: Colors.black12));
+      posts.doc(docId).delete().whenComplete(() => Get.snackbar(
+          "Attention",
+          "Deleted Successfully",
+          icon: Lottie.asset(
+            "assets/icons/animation_lmej1fs8.json",
+          ),
+          animationDuration: Duration(
+            seconds: 0,
+          ),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.green.shade100));
       FirebaseFirestore.instance.collection("teacherRequest").where("postID",isEqualTo: docId).get().then((trSnap) {
         FirebaseFirestore.instance.collection("teacherRequest").doc(trSnap.docs.first.id).delete();
       });
@@ -85,7 +133,18 @@ class CrudDb {
         FirebaseFirestore.instance.collection("guardianResponse").doc(grSnap.docs.first.id).delete();
       });
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+      Get.snackbar(
+        "Attention!",
+        "Error Occurred",
+        backgroundColor: Colors.red.shade100,
+        icon: Lottie.asset(
+          "assets/icons/wrong.json",
+        ),
+        animationDuration: Duration(
+          seconds: 0,
+        ),
+        duration: Duration(seconds: 5),
+      );
     }
   }
 
@@ -101,9 +160,30 @@ class CrudDb {
         'subjects' : subjects,
         'student' : student,
         'time' : time
-      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.off(()=>GuardianPostHistory()));
+      }).whenComplete(() => Get.snackbar(
+          "Attention",
+          "Updated Successfully",
+          icon: Lottie.asset(
+            "assets/icons/animation_lmej1fs8.json",
+          ),
+          animationDuration: Duration(
+            seconds: 0,
+          ),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.green.shade100)).then((value) => Get.off(()=>GuardianPostHistory()));
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+      Get.snackbar(
+        "Attention!",
+        "Error Occurred",
+        backgroundColor: Colors.red.shade100,
+        icon: Lottie.asset(
+          "assets/icons/wrong.json",
+        ),
+        animationDuration: Duration(
+          seconds: 0,
+        ),
+        duration: Duration(seconds: 5),
+      );
     }
   }
 
@@ -119,7 +199,7 @@ class CrudDb {
     });
   }
   //TeacherForm
-  addTeacherInfo(String name,String number, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification, String institute, String department, String role){
+  addTeacherInfo(String name,String number, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification, String institute, String department, String role,String division, String district, String upazila, String union){
     FirebaseFirestore.instance.collection("userInfo").doc(_auth.currentUser!.uid).update({
       "name": name,
       "number": number,
@@ -131,7 +211,12 @@ class CrudDb {
       "qualification": qualification,
       "institute": institute,
       "department": department,
-      "role": role
+      "role": role,
+      'division' : division,
+      'district' : district,
+      'upazila' : upazila,
+      'union' : union,
+      "updated" : true
     });
   }
 
@@ -145,22 +230,25 @@ class CrudDb {
       "isRead" : false,
     });
   }
-  teacherTransactionStatus(String tEmail, String postId, String transactionId, double amount, FieldValue timestamp){
+  teacherTransactionStatus(String tEmail, String postId, String invoiceNumber, double amount, String trxId, String payerReference, String paymentId, String customerMsisdn, FieldValue timestamp){
     FirebaseFirestore.instance.collection("teacherTransactionStatus").doc().set({
       "tEmail" : tEmail,
       "postId" : postId,
-      "transactionId" : transactionId,
+      "invoiceNumber" : invoiceNumber,
       "amount" : amount,
       "timestamp" : timestamp,
-      "status" : false,
+      "status" : true,
+      "trxId" : trxId,
+      "payerReference" : payerReference,
+      "paymentId" : paymentId,
+      "customerMsisdn" : customerMsisdn,
     });
   }
 
-  updateTeacherProfile(String name, String gender, String dob, String address, String prefClass, String prefSubjects, String qualification,String institute,String department){
+  updateTeacherProfile(String name, String dob, String address, String prefClass, String prefSubjects, String qualification,String institute,String department){
     try{
       FirebaseFirestore.instance.collection("userInfo").doc(FirebaseAuth.instance.currentUser!.uid).update({
         'name' : name,
-        'gender' : gender,
         'dob' : dob,
         'address' : address,
         'prefClass' : prefClass,
@@ -168,9 +256,30 @@ class CrudDb {
         'qualification' : qualification,
         'institute' : institute,
         'department' : department
-      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.offAll(()=>TeacherHome(currentNavIndex: 1.obs,)));
+      }).whenComplete(() => Get.snackbar(
+          "Attention",
+          "Updated Successfully",
+          icon: Lottie.asset(
+            "assets/icons/animation_lmej1fs8.json",
+          ),
+          animationDuration: Duration(
+            seconds: 0,
+          ),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.green.shade100)).then((value) => Get.offAll(()=>TeacherHome(currentNavIndex: 1.obs,)));
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+      Get.snackbar(
+        "Attention!",
+        "Error Occurred.",
+        backgroundColor: Colors.red.shade100,
+        icon: Lottie.asset(
+          "assets/icons/wrong.json",
+        ),
+        animationDuration: Duration(
+          seconds: 0,
+        ),
+        duration: Duration(seconds: 5),
+      );
     }
   }
 
@@ -180,9 +289,27 @@ class CrudDb {
         'name' : name,
         'address' : address,
         'mobile' : mobile,
-      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",colorText: Colors.black,backgroundColor: Colors.black12)).then((value) => Get.offAll(()=>GuardianHome(currentNavIndex: 2.obs,)));
+      }).whenComplete(() => Get.snackbar("Attention", "Updated Successfully",icon: Lottie.asset(
+        "assets/icons/animation_lmej1fs8.json",
+      ),
+          animationDuration: Duration(
+            seconds: 0,
+          ),
+          duration: Duration(seconds: 5),
+          backgroundColor: Colors.green.shade100)).then((value) => Get.offAll(()=>GuardianHome(currentNavIndex: 2.obs,)));
     } catch (e) {
-      Get.snackbar("Attention", "Error Occurred",colorText: Colors.black,backgroundColor: Colors.black12);
+      Get.snackbar(
+        "Attention!",
+        "Error Occurred.",
+        backgroundColor: Colors.red.shade100,
+        icon: Lottie.asset(
+          "assets/icons/wrong.json",
+        ),
+        animationDuration: Duration(
+          seconds: 0,
+        ),
+        duration: Duration(seconds: 5),
+      );
     }
   }
 

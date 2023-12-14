@@ -6,6 +6,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:tutor_kit/bloc/crud_db.dart';
@@ -197,7 +198,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   // var timestamp = DateTime;
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor2,
       body: SafeArea(
         child: Center(
             child: Padding(
@@ -205,313 +206,448 @@ class _AddPostScreenState extends State<AddPostScreen> {
               child: SingleChildScrollView(
                 child: Form(
                   key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            "Create a Post",
-                            style: TextStyle(
-                                fontSize: 22,
-                                letterSpacing: 1),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CustomDropDownButton(
-                        hint: "Gender",
-                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icGender,color: Colors.black87,),backgroundColor: Colors.transparent,),
-                        value: chooseGender,
-                        list: genderList,
-                        onChange: (newValue) {
-                          chooseGender = newValue as String;
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please choose your gender!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      CustomDropDownButton(
-                        hint: 'No of Students',
-                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icStudent),backgroundColor: Colors.transparent,),
-                        value: chooseStudent,
-                        list: studentList,
-                        onChange: (newValue) {
-                          chooseStudent = newValue as String;
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please choose your students!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      //CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: studentController, hint: 'No of Students',label: 'No of Students',),
-                      //CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      /*CustomDropDownButton(hint: "Class", prefixIcon: Image.asset(icClass25), value: chooseClass, list: classList,onChange: (newValue){
-                    chooseClass=newValue as String;
-                  },),*/
-                      CustomTextField(
-                        label: "Class",
-                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icClass),backgroundColor: Colors.transparent,),
-                        type: TextInputType.text,
-                        controller: classController,
-                        hint: "Seven,Ten..etc",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your class';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      CustomTextField(
-                        label: "Salary",
-                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icSalary,width: 16,color: Colors.black87,),backgroundColor: Colors.transparent,),
-                        type: TextInputType.number,
-                        controller: salaryController,
-                        hint: "5000,Negotiable",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your salary';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      CustomDropDownButton(
-                        hint: "Day/Week",
-                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icDay,),backgroundColor: Colors.transparent,),
-                        value: chooseDay,
-                        list: dayList,
-                        onChange: (newValue) {
-                          chooseDay = newValue as String;
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your days!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      // CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      DropdownButtonFormField<int?>(
-                        decoration: InputDecoration(
-                            hintText: "Select Division"
-                        ),
-                        value: selectedDivisionId,
-                        items: divisions.map((division) {
-                          return DropdownMenuItem<int?>(
-                            value: division.id,
-                            child: Text(division.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedDivisionId = value;
-                            filteredDistricts = districts.where((district) => district.parentId == value).toList();
-                            selectedDistrictId = null;
-                            filteredUpazilas = [];
-                            selectedUpazilaId = null;
-                            filteredUnions = [];
-                            selectedUnionId = null;
-                          });
-                        },
-                      ),
-                      DropdownButtonFormField<int?>(
-                        decoration: InputDecoration(
-                            hintText: "Select District"
-                        ),
-                        value: selectedDistrictId,
-                        items: filteredDistricts.map((district) {
-                          return DropdownMenuItem<int?>(
-                            value: district.id,
-                            child: Text(district.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedDistrictId = value;
-                            filteredUpazilas = upazilas.where((upazila) => upazila.parentId == value).toList();
-                            selectedUpazilaId = null;
-                            filteredUnions = [];
-                            selectedUnionId = null;
-                          });
-                        },
-                      ),
-                      DropdownButtonFormField<int?>(
-                        decoration: InputDecoration(
-                            hintText: "Select Upazila"
-                        ),
-                        value: selectedUpazilaId,
-                        items: filteredUpazilas.map((upazila) {
-                          return DropdownMenuItem<int?>(
-                            value: upazila.id,
-                            child: Text(upazila.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedUpazilaId = value;
-                            filteredUnions = unions.where((union) => union.parentId == value).toList();
-                            selectedUnionId = null;
-                          });
-                        },
-                      ),
-                      DropdownButtonFormField<int?>(
-                        decoration: InputDecoration(
-                            hintText: "Select Union"
-                        ),
-                        value: selectedUnionId,
-                        items: filteredUnions.map((union) {
-                          return DropdownMenuItem<int?>(
-                            value: union.id,
-                            child: Text(union.name),
-                          );
-                        }).toList(),
-                        onChanged: (value) {
-                          setState(() {
-                            selectedUnionId = value;
-                          });
-                        },
-                      ),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      CustomTextField(
-                        label: "Location",
-                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icLocation,),backgroundColor: Colors.transparent,),
-                        type: TextInputType.text,
-                        controller: locationController,
-                        hint: "West Larpara,Bus Terminal,Cox's bazar.",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your location!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      CustomDropDownButton(
-                        hint: "Curriculum",
-                        prefixIcon: CircleAvatar(child: SvgPicture.asset(icCurriculum,),backgroundColor: Colors.transparent,),
-                        value: chooseCurriculum,
-                        list: curriculumList,
-                        onChange: (newValue) {
-                          chooseCurriculum = newValue as String;
-                        },
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please choose your curriculum!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      //CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
-                      SizedBox(
-                        height: 7,
-                      ),
-                      CustomTextField(
-                        label: "Subjects",
-                        preffixIcon: CircleAvatar(child: SvgPicture.asset(icSubjects,),backgroundColor: Colors.transparent,),
-                        type: TextInputType.text,
-                        controller: subjectController,
-                        hint: "Math,English,Physics..etc",
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter your subjects!';
-                          }
-                          return null;
-                        },
-                        autoValidate: AutovalidateMode.onUserInteraction,
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      GestureDetector(
-                        onTap: _showTimePicker,
-                        child: Container(
-                            height: MediaQuery.of(context).size.height * 0.085,
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                border: Border.all(color: Colors.black12),
-                                color: Colors.white),
-                            child: Row(
+                  child: AnimationLimiter(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: AnimationConfiguration.toStaggeredList(
+                        duration: Duration(milliseconds: 200),
+                          childAnimationBuilder: (widget)=>SlideAnimation(
+                            verticalOffset: 50,
+                              child: FadeInAnimation(child: widget)),
+                          children: [
+                            Row(
                               children: [
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                SvgPicture.asset(icTime,),
-                                SizedBox(
-                                  width: 12,
-                                ),
-                                isTime
-                                    ? Text(
-                                  _timeOfDay.format(context).toString(),
-                                  style: TextStyle(fontSize: 17),
-                                )
-                                    : Text(
-                                  "Select Time",
+                                Text(
+                                  "Create a Post",
                                   style: TextStyle(
-                                      fontFamily: roboto_regular,
-                                      fontSize: 17,
-                                      color: Colors.grey),
+                                      fontSize: 22,
+                                      letterSpacing: 1),
                                 ),
                               ],
-                            )),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      CustomButton(
-                          onPress: () {
-                            if (_formKey.currentState!.validate()) {
-                              CrudDb().addPost(
-                                chooseGender.toString(),
-                                classController.text,
-                                salaryController.text,
-                                chooseDay.toString(),
-                                locationController.text,
-                                chooseCurriculum.toString(),
-                                subjectController.text,
-                                auth.currentUser!.email.toString(),
-                                FieldValue.serverTimestamp(),
-                                chooseStudent.toString(),
-                                _timeOfDay.format(context).toString(),
-                              );
-                            }
-                          },
-                          text: txtPost,
-                          color: Colors.grey.shade600)
-                    ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CustomDropDownButton(
+                              hint: "Gender",
+                              prefixIcon: CircleAvatar(child: SvgPicture.asset(icGender,color: Colors.grey[800],),backgroundColor: Colors.transparent,),
+                              value: chooseGender,
+                              list: genderList,
+                              onChange: (newValue) {
+                                chooseGender = newValue as String;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please choose your gender!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomDropDownButton(
+                              hint: 'No of Students',
+                              prefixIcon: CircleAvatar(child: SvgPicture.asset(icStudent),backgroundColor: Colors.transparent,),
+                              value: chooseStudent,
+                              list: studentList,
+                              onChange: (newValue) {
+                                chooseStudent = newValue as String;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please choose your students!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            //CustomTextField(preffixIcon: Image.asset(icClass25), type: TextInputType.text, controller: studentController, hint: 'No of Students',label: 'No of Students',),
+                            //CustomTextField(preffixIcon: Image.asset(icGender25), type: TextInputType.text, controller: genderController, hint: "Gender"),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            /*CustomDropDownButton(hint: "Class", prefixIcon: Image.asset(icClass25), value: chooseClass, list: classList,onChange: (newValue){
+                      chooseClass=newValue as String;
+                    },),*/
+                            CustomTextField(
+                              label: "Class",
+                              preffixIcon: CircleAvatar(child: SvgPicture.asset(icClass),backgroundColor: Colors.transparent,),
+                              type: TextInputType.text,
+                              controller: classController,
+                              hint: "Seven,Ten..etc",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your class';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            CustomTextField(
+                              label: "Salary",
+                              preffixIcon: CircleAvatar(child: SvgPicture.asset(icSalary,width: 16,color: Colors.black87,),backgroundColor: Colors.transparent,),
+                              type: TextInputType.number,
+                              controller: salaryController,
+                              hint: "5000,Negotiable",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your salary';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomDropDownButton(
+                              hint: "Day/Week",
+                              prefixIcon: CircleAvatar(child: SvgPicture.asset(icDay,),backgroundColor: Colors.transparent,),
+                              value: chooseDay,
+                              list: dayList,
+                              onChange: (newValue) {
+                                chooseDay = newValue as String;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your days!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            // CustomTextField(preffixIcon: Image.asset(icDay25), type: TextInputType.text, controller: dayPerWeekController, hint: "Day/Week"),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            DropdownButtonFormField<int?>(
+                              style: TextStyle(color: Colors.black),
+                              isExpanded: true,
+                              icon: Icon(Icons.keyboard_arrow_down_outlined),
+                              borderRadius: BorderRadius.circular(10),
+                              decoration: InputDecoration(
+                                  hintText: "Select Division",
+                                  hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w400),
+                                  prefixIcon: CircleAvatar(child: SvgPicture.asset(icDivision),backgroundColor: Colors.transparent,),
+                                  border: InputBorder.none,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please choose your Division!';
+                                }
+                                return null;
+                              },
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              value: selectedDivisionId,
+                              items: divisions.map((division) {
+                                return DropdownMenuItem<int?>(
+                                  value: division.id,
+                                  child: Text(division.name),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDivisionId = value;
+                                  filteredDistricts = districts.where((district) => district.parentId == value).toList();
+                                  selectedDistrictId = null;
+                                  filteredUpazilas = [];
+                                  selectedUpazilaId = null;
+                                  filteredUnions = [];
+                                  selectedUnionId = null;
+                                });
+                              },
+                            ),
+                            SizedBox(height: 10,),
+                            DropdownButtonFormField<int?>(
+                              style: TextStyle(color: Colors.black),
+                              isExpanded: true,
+                              icon: Icon(Icons.keyboard_arrow_down_outlined),
+                              borderRadius: BorderRadius.circular(10),
+                              decoration: InputDecoration(
+                                  hintText: "Select District",
+                                  hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w400),
+                                  prefixIcon: CircleAvatar(child: SvgPicture.asset(icDistrict),backgroundColor: Colors.transparent,),
+                                  border: InputBorder.none,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please choose your District!';
+                                }
+                                return null;
+                              },
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              value: selectedDistrictId,
+                              items: filteredDistricts.map((district) {
+                                return DropdownMenuItem<int?>(
+                                  value: district.id,
+                                  child: Text(district.name),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedDistrictId = value;
+                                  filteredUpazilas = upazilas.where((upazila) => upazila.parentId == value).toList();
+                                  selectedUpazilaId = null;
+                                  filteredUnions = [];
+                                  selectedUnionId = null;
+                                });
+                              },
+                            ),
+                            SizedBox(height: 10,),
+                            DropdownButtonFormField<int?>(
+                              style: TextStyle(color: Colors.black),
+                              isExpanded: true,
+                              icon: Icon(Icons.keyboard_arrow_down_outlined),
+                              borderRadius: BorderRadius.circular(10),
+                              decoration: InputDecoration(
+                                  hintText: "Select Upazila",
+                                  hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w400),
+                                  prefixIcon: CircleAvatar(child: SvgPicture.asset(icUpazila),backgroundColor: Colors.transparent,),
+                                  border: InputBorder.none,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please choose your Upazila!';
+                                }
+                                return null;
+                              },
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              value: selectedUpazilaId,
+                              items: filteredUpazilas.map((upazila) {
+                                return DropdownMenuItem<int?>(
+                                  value: upazila.id,
+                                  child: Text(upazila.name),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedUpazilaId = value;
+                                  filteredUnions = unions.where((union) => union.parentId == value).toList();
+                                  selectedUnionId = null;
+                                });
+                              },
+                            ),
+                            SizedBox(height: 10,),
+                            DropdownButtonFormField<int?>(
+                              style: TextStyle(color: Colors.black),
+                              isExpanded: true,
+                              icon: Icon(Icons.keyboard_arrow_down_outlined),
+                              borderRadius: BorderRadius.circular(10),
+                              decoration: InputDecoration(
+                                  hintText: "Select Union",
+                                  hintStyle: TextStyle(fontFamily: roboto_regular,color: Colors.grey,fontSize: 15,fontWeight: FontWeight.w400),
+                                  prefixIcon: CircleAvatar(child: SvgPicture.asset(icUnion),backgroundColor: Colors.transparent,),
+                                  border: InputBorder.none,
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.red),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(10),
+                                    borderSide: BorderSide(color: Colors.black12),
+                                  )
+                              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please choose your Union!';
+                                }
+                                return null;
+                              },
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              value: selectedUnionId,
+                              items: filteredUnions.map((union) {
+                                return DropdownMenuItem<int?>(
+                                  value: union.id,
+                                  child: Text(union.name),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  selectedUnionId = value;
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            CustomTextField(
+                              label: "Street Address",
+                              preffixIcon: CircleAvatar(child: SvgPicture.asset(icLocation,),backgroundColor: Colors.transparent,),
+                              type: TextInputType.text,
+                              controller: locationController,
+                              hint: "Street Address",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter street address!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            CustomDropDownButton(
+                              hint: "Curriculum",
+                              prefixIcon: CircleAvatar(child: SvgPicture.asset(icCurriculum,),backgroundColor: Colors.transparent,),
+                              value: chooseCurriculum,
+                              list: curriculumList,
+                              onChange: (newValue) {
+                                chooseCurriculum = newValue as String;
+                              },
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please choose your curriculum!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            //CustomTextField(preffixIcon: Image.asset(icCurriculum25), type: TextInputType.text, controller: curriculumController, hint: "Curriculum"),
+                            SizedBox(
+                              height: 7,
+                            ),
+                            CustomTextField(
+                              label: "Subjects",
+                              preffixIcon: CircleAvatar(child: SvgPicture.asset(icSubjects,),backgroundColor: Colors.transparent,),
+                              type: TextInputType.text,
+                              controller: subjectController,
+                              hint: "Math,English,Physics..etc",
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your subjects!';
+                                }
+                                return null;
+                              },
+                              autoValidate: AutovalidateMode.onUserInteraction,
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            GestureDetector(
+                              onTap: _showTimePicker,
+                              child: Container(
+                                  height: MediaQuery.of(context).size.height * 0.085,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(color: Colors.black12),
+                                      color: bgColor2),
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      SvgPicture.asset(icTime,),
+                                      SizedBox(
+                                        width: 12,
+                                      ),
+                                      isTime
+                                          ? Text(
+                                        _timeOfDay.format(context).toString(),
+                                        style: TextStyle(fontSize: 17),
+                                      )
+                                          : Text(
+                                        "Select Time",
+                                        style: TextStyle(
+                                            fontFamily: roboto_regular,
+                                            fontSize: 17,
+                                            color: Colors.grey),
+                                      ),
+                                    ],
+                                  )),
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            CustomButton(
+                                onPress: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    CrudDb().addPost(
+                                      chooseGender.toString(),
+                                      classController.text,
+                                      salaryController.text,
+                                      chooseDay.toString(),
+                                      locationController.text,
+                                      chooseCurriculum.toString(),
+                                      subjectController.text,
+                                      auth.currentUser!.email.toString(),
+                                      FieldValue.serverTimestamp(),
+                                      chooseStudent.toString(),
+                                      _timeOfDay.format(context).toString(),
+                                      getSelectedDivisionName()!,
+                                      getSelectedDistrictName()!,
+                                      getSelectedUpazilaName()!,
+                                      getSelectedUnionName()!
+                                    );
+                                  }
+                                },
+                                text: txtPost,
+                                color: Colors.grey.shade600)
+                          ],
+                      )
+                    ),
                   ),
                 ),
               ),

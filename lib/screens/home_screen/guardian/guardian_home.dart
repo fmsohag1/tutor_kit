@@ -98,7 +98,7 @@ class GuardianHome extends StatelessWidget {
 
     return SizedBox(
       child: Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: bgColor2,
         body: WillPopScope(child: Column(
           children: [
             Obx(()=>Expanded(child: navBody.elementAt(currentNavIndex.value))),
@@ -112,7 +112,6 @@ class GuardianHome extends StatelessWidget {
                   borderRadius: BorderRadius.only(bottomRight: Radius.circular(30),bottomLeft: Radius.circular(30),topLeft: Radius.circular(10),topRight: Radius.circular(10)),
                   side: BorderSide(color: primary)
               ),
-              color: Colors.white,
               child: BottomNavigationBar(
                 showSelectedLabels: false,
                 showUnselectedLabels: false,

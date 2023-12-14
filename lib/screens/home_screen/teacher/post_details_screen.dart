@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -157,7 +158,7 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
       }
     });
     return Scaffold(
-      backgroundColor: primary,
+      backgroundColor: bgColor2,
       body: SafeArea(
         child: Center(
           child: FutureBuilder<DocumentSnapshot>(
@@ -174,202 +175,211 @@ class _PostDetailesScreenState extends State<PostDetailesScreen> {
                   Timestamp timestamp = data["timestamp"];
                   return Padding(
                     padding: const EdgeInsets.all(15),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PostData(
-                              icon: SvgPicture.asset(icGender),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Gender",
-                              subtitle: "${data["gender"]}",
+                    child: AnimationLimiter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: AnimationConfiguration.toStaggeredList(
+                          duration: Duration(milliseconds: 200),
+                            childAnimationBuilder: (widget)=>SlideAnimation(
+                              horizontalOffset: 50,
+                                child: FadeInAnimation(child: widget)
                             ),
-                            PostData(
-                              icon: SvgPicture.asset(icClass),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Class",
-                              subtitle: "${data["class"]}",
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5,),
-                        PostData(
-                          icon: SvgPicture.asset(icSubjects),
-                          width: double.infinity,
-                          title: "Subjects",
-                          subtitle: "${data["subjects"]}",
-                        ),
-                        SizedBox(height: 5,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PostData(
-                              icon: SvgPicture.asset(icDay),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Day/Week",
-                              subtitle: "${data["dayPerWeek"]}",
-                            ),
-                            PostData(
-                              icon: SvgPicture.asset(icSalary,width: 20,),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Salary",
-                              subtitle: "${data["salary"]} BDT",
-                            ),
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  PostData(
+                                    icon: SvgPicture.asset(icGender),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Gender",
+                                    subtitle: "${data["gender"]}",
+                                  ),
+                                  PostData(
+                                    icon: SvgPicture.asset(icClass),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Class",
+                                    subtitle: "${data["class"]}",
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5,),
+                              PostData(
+                                icon: SvgPicture.asset(icSubjects),
+                                width: double.infinity,
+                                title: "Subjects",
+                                subtitle: "${data["subjects"]}",
+                              ),
+                              SizedBox(height: 5,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  PostData(
+                                    icon: SvgPicture.asset(icDay),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Day/Week",
+                                    subtitle: "${data["dayPerWeek"]}",
+                                  ),
+                                  PostData(
+                                    icon: SvgPicture.asset(icSalary,width: 17,),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Salary",
+                                    subtitle: "${data["salary"]} BDT",
+                                  ),
 
-                          ],
-                        ),
-                        SizedBox(height: 5,),
-                        PostData(
-                          icon: SvgPicture.asset(icLocation),
-                          width: double.infinity,
-                          title: "Location",
-                          subtitle: "${data["location"]}",
-                        ),
-                        SizedBox(height: 5,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PostData(
-                              icon: SvgPicture.asset(icStudent),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Students",
-                              subtitle: "${data["student"]}",
-                            ),
-                            PostData(
-                              icon: SvgPicture.asset(icTime),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Time",
-                              subtitle: "${data["time"]}",
-                            ),
+                                ],
+                              ),
+                              SizedBox(height: 5,),
+                              PostData(
+                                icon: SvgPicture.asset(icLocation),
+                                width: double.infinity,
+                                title: "Location",
+                                subtitle: "${data["union"]}, ${data["upazila"]}, ${data["district"]}",
+                              ),
+                              SizedBox(height: 5,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  PostData(
+                                    icon: SvgPicture.asset(icStudent),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Students",
+                                    subtitle: "${data["student"]}",
+                                  ),
+                                  PostData(
+                                    icon: SvgPicture.asset(icTime),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Time",
+                                    subtitle: "${data["time"]}",
+                                  ),
 
-                          ],
-                        ),
-                        SizedBox(height: 5,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            PostData(
-                              icon: SvgPicture.asset(icCurriculum),
-                              width: MediaQuery.of(context)
-                                  .size
-                                  .width *
-                                  0.410,
-                              title: "Curriculum",
-                              subtitle: "${data["curriculum"]}",
-                            ),
-                            Container(
-                              child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 30,),
-                        data["isBooked"] == false ?
-                        FutureBuilder<QuerySnapshot>(
-                            future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("email", isEqualTo: auth.currentUser!.email.toString()).get(),
-                            builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
-                              // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
-                              if(btnSnap.connectionState == ConnectionState.waiting){
-                                return Center(child: CircularProgressIndicator());
-                              }
-                              if(btnSnap.connectionState == ConnectionState.done){
-                                if(btnSnap.data!.docs.isNotEmpty){
-                                  return Column(
-                                    children: [
-                                      CustomButton(onPress: (){
-                                        Get.snackbar("Attention",
-                                          "Request sent already, wait for guardian response",
-                                          backgroundColor: Colors.orange.shade200,
-                                          icon: Lottie.asset(
-                                            "assets/icons/warning.json",
-                                          ),
-                                          animationDuration: Duration(
-                                            seconds: 0,
-                                          ),
-                                          duration: Duration(seconds: 5),
+                                ],
+                              ),
+                              SizedBox(height: 5,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  PostData(
+                                    icon: SvgPicture.asset(icCurriculum),
+                                    width: MediaQuery.of(context)
+                                        .size
+                                        .width *
+                                        0.410,
+                                    title: "Curriculum",
+                                    subtitle: "${data["curriculum"]}",
+                                  ),
+                                  Container(
+                                    child: Center(child: Text(timeago.format(DateTime.parse(timestamp.toDate().toString())),style: TextStyle(fontFamily: roboto_regular,color: Colors.blueGrey),)),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 30,),
+                              data["isBooked"] == false ?
+                              FutureBuilder<QuerySnapshot>(
+                                  future: FirebaseFirestore.instance.collection("teacherRequest").where("postID", isEqualTo: docId).where("email", isEqualTo: auth.currentUser!.email.toString()).get(),
+                                  builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> btnSnap){
+                                    // Map<String, dynamic> btnData = snapshot.data!.data() as Map<String, dynamic>;
+                                    if(btnSnap.connectionState == ConnectionState.waiting){
+                                      return Center(child: CircularProgressIndicator());
+                                    }
+                                    if(btnSnap.connectionState == ConnectionState.done){
+                                      if(btnSnap.data!.docs.isNotEmpty){
+                                        return Column(
+                                          children: [
+                                            CustomButton(onPress: (){
+                                              Get.snackbar("Attention",
+                                                "Request sent already, wait for guardian response",
+                                                backgroundColor: Colors.orange.shade200,
+                                                icon: Lottie.asset(
+                                                  "assets/icons/warning.json",
+                                                ),
+                                                animationDuration: Duration(
+                                                  seconds: 0,
+                                                ),
+                                                duration: Duration(seconds: 5),
+                                              );
+                                            }, text: "Wait for guardian response...", color: Colors.grey.shade400),
+                                            IconButton(onPressed: (){
+                                              FirebaseFirestore.instance.collection("teacherRequest").doc(btnSnap.data!.docs.first.id).delete();
+                                              setState(() {
+
+                                              });
+                                            }, icon: Icon(Icons.cancel))
+                                          ],
                                         );
-                                      }, text: "Wait for guardian response...", color: Colors.grey.shade400),
-                                      IconButton(onPressed: (){
-                                        FirebaseFirestore.instance.collection("teacherRequest").doc(btnSnap.data!.docs.first.id).delete();
-                                        setState(() {
-                                          
-                                        });
-                                      }, icon: Icon(Icons.cancel))
-                                    ],
-                                  );
-                                }
-                                if(btnSnap.data!.docs.isEmpty){
-                                  if(isGrContain == true){
-                                    return CustomButton(onPress: (){
-                                      Get.to(()=>GuardianResponse());
-                                    }, text: "Check Guardian Response", color: Colors.grey.shade600);
-                                  } else {
-                                    return CustomButton(onPress: ()async{
-                                      var auth = FirebaseAuth.instance;
-                                      await FirebaseFirestore.instance.collection("userInfo").where("email", isEqualTo: data["email"]).get().then((snap) {
-                                        deviceToken = snap.docs.first["deviceToken"].toString();
-                                        print(tToken);
-                                      });
-                                      print(data["email"]);
-                                      print("deviceTok: $deviceToken" );
-                                      sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
-                                      await CrudDb().addTeacherRequest(auth.currentUser!.email.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
-                                      setState(() {
-                                      });
-                                      await showDialog(context: context, builder: (BuildContext context){
-                                        return CustomAlertDialog(text: "Request Sent Successfully", assets: "assets/icons/animation_lmej1fs8.json",onTap: (){
-                                          Get.back();
-                                        },);
-                                      });
-                                    }, text: "Send request", color: Colors.grey.shade600);
+                                      }
+                                      if(btnSnap.data!.docs.isEmpty){
+                                        if(isGrContain == true){
+                                          return CustomButton(onPress: (){
+                                            Get.to(()=>GuardianResponse());
+                                          }, text: "Check Guardian Response", color: Colors.grey.shade600);
+                                        } else {
+                                          return CustomButton(onPress: ()async{
+                                            var auth = FirebaseAuth.instance;
+                                            await FirebaseFirestore.instance.collection("userInfo").where("email", isEqualTo: data["email"]).get().then((snap) {
+                                              deviceToken = snap.docs.first["deviceToken"].toString();
+                                              print(tToken);
+                                            });
+                                            print(data["email"]);
+                                            print("deviceTok: $deviceToken" );
+                                            sendPushMessage(deviceToken.toString(), "A tutor requested for your post", "New Request");
+                                            await CrudDb().addTeacherRequest(auth.currentUser!.email.toString(), docId, tToken.toString(), deviceToken.toString(), FieldValue.serverTimestamp());
+                                            setState(() {
+                                            });
+                                            await showDialog(context: context, builder: (BuildContext context){
+                                              return CustomAlertDialog(text: "Request Sent Successfully", assets: "assets/icons/animation_lmej1fs8.json",onTap: (){
+                                                Get.back();
+                                              },);
+                                            });
+                                          }, text: "Send request", color: Colors.grey.shade600);
+                                        }
+                                      }
+                                    }
+                                    return Center(child: CircularProgressIndicator());
                                   }
-                                }
-                              }
-                              return Center(child: CircularProgressIndicator());
-                            }
-                        ) :CustomButton(onPress: (){
-                          Get.snackbar("Attention",
-                            "This tuition is booked",
-                            backgroundColor: Colors.orange.shade200,
-                            icon: Lottie.asset(
-                              "assets/icons/warning.json",
-                            ),
-                            animationDuration: Duration(
-                              seconds: 0,
-                            ),
-                            duration: Duration(seconds: 5),
-                          );
-                        }, text: "Booked", color: Colors.red.shade200),
+                              ) :CustomButton(onPress: (){
+                                Get.snackbar("Attention",
+                                  "This tuition is booked",
+                                  backgroundColor: Colors.orange.shade200,
+                                  icon: Lottie.asset(
+                                    "assets/icons/warning.json",
+                                  ),
+                                  animationDuration: Duration(
+                                    seconds: 0,
+                                  ),
+                                  duration: Duration(seconds: 5),
+                                );
+                              }, text: "Booked", color: Colors.red.shade200),
 
-                        // ElevatedButton(onPressed: (){
-                        //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
-                        //   // await FirebaseFirestore.instance.collection(collectionPath)
-                        //   sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
-                        // }, child: Text("Send"))
-                      ],
+                              // ElevatedButton(onPressed: (){
+                              //   var token = "dDK1C6pWQP-drmsl377kTM:APA91bFxeD2KPEsL1uBiVxZtPX3tibjCUYt9zsm5QAALXmphzmpa67ud0AbdPxmCF3FBsmuBoLwAwZ9WcF3v0RfMKUr10MbmRI5aytMfrfEsyw0YS59NlYMtJFnAorrscFhG6--0Sego";
+                              //   // await FirebaseFirestore.instance.collection(collectionPath)
+                              //   sendPushMessage(data["deviceToken"].toString(), "A tutor requested for your post", "New Request");
+                              // }, child: Text("Send"))
+                            ],
+                        )
+                      ),
                     ),
                   );
                 }
-                return CircularProgressIndicator();
+                return Center(child: CircularProgressIndicator(color: Colors.black12,strokeAlign: -1,));
               }
           ),
         ),

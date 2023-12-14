@@ -32,7 +32,7 @@ class CustomAlertDialog extends StatelessWidget {
             ),
             SizedBox(height: 20,),
             Text(text,textAlign: TextAlign.center,),
-            SizedBox(height: 5,),
+            SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.all(5.0),
               child: Row(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:icons_plus/icons_plus.dart';
 import 'package:tutor_kit/const/consts.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -34,15 +33,12 @@ class CustomTextField extends StatelessWidget {
       maxLength: max,
       controller: controller,
       keyboardType: type,
-      style: TextStyle(fontSize: 17, fontFamily: roboto_regular),
+      style: TextStyle(fontSize: 17,),
       decoration: InputDecoration(
           labelText: label,
           labelStyle: TextStyle(color: Colors.grey),
           hintText: hint,
-          hintStyle: TextStyle(
-            fontFamily: roboto_regular,
-            color: Colors.grey,
-          ),
+          hintStyle: TextStyle(color: Colors.grey),
           prefixIcon: preffixIcon,
           border: InputBorder.none,
           focusedErrorBorder: OutlineInputBorder(
@@ -103,6 +99,7 @@ class _CustomTextField2State extends State<CustomTextField2> {
           labelText: widget.label,
           labelStyle: TextStyle(color: Colors.grey),
           hintText: widget.hint,
+          hintStyle: TextStyle(color: Colors.grey),
           prefixIcon: widget.preffixIcon,
           suffixIcon: GestureDetector(
               onTap: () {

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/const/colors.dart';
 
 
 class PaymentApprovals extends StatelessWidget {
@@ -10,7 +11,9 @@ class PaymentApprovals extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     return Scaffold(
+      backgroundColor: bgColor2,
       appBar: AppBar(
+        backgroundColor: bgColor2,
         title: Text("Payment Approvals"),
       ),
       body: Center(

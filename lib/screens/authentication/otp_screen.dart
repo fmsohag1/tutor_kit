@@ -1,3 +1,163 @@
+import 'package:email_otp/email_otp.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:tutor_kit/const/consts.dart';
+import 'package:tutor_kit/screens/authentication/ChooseScreen/choose_screen.dart';
+import 'package:tutor_kit/widgets/custom_button.dart';
+
+class Otp extends StatelessWidget {
+  const Otp({
+    Key? key,
+    required this.otpController,
+  }) : super(key: key);
+  final TextEditingController otpController;
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 55,
+      height: 55,
+      child: TextFormField(
+        controller: otpController,
+        keyboardType: TextInputType.number,
+        style: Theme.of(context).textTheme.headline6,
+        textAlign: TextAlign.center,
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(1),
+          FilteringTextInputFormatter.digitsOnly
+        ],
+        onChanged: (value) {
+          if (value.length == 1) {
+            FocusScope.of(context).nextFocus();
+          }
+          if (value.isEmpty) {
+            FocusScope.of(context).previousFocus();
+          }
+        },
+        decoration: InputDecoration(
+          border: InputBorder.none,
+            focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.red),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.black12),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(color: Colors.black12),
+            )
+        ),
+        onSaved: (value) {},
+      ),
+    );
+  }
+}
+
+class OtpScreen extends StatefulWidget {
+  const OtpScreen({Key? key,required this.myauth}) : super(key: key);
+  final EmailOTP myauth ;
+  @override
+  State<OtpScreen> createState() => _OtpScreenState();
+}
+
+class _OtpScreenState extends State<OtpScreen> {
+  TextEditingController otp1Controller = TextEditingController();
+  TextEditingController otp2Controller = TextEditingController();
+  TextEditingController otp3Controller = TextEditingController();
+  TextEditingController otp4Controller = TextEditingController();
+
+  String otpController = "1234";
+  @override
+  Widget build(BuildContext context) {
+    final box = GetStorage();
+    return Scaffold(
+      backgroundColor: bgColor2,
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(icTutor,width: 100,color: inversePrimary,),
+          const SizedBox(
+            height: 20,
+          ),
+
+          const Text(
+            "Enter your PIN",
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 15,),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Otp(
+                otpController: otp1Controller,
+              ),
+              Otp(
+                otpController: otp2Controller,
+              ),
+              Otp(
+                otpController: otp3Controller,
+              ),
+              Otp(
+                otpController: otp4Controller,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          SizedBox(
+            width: 100,
+            child: TextButton(onPressed: ()async{
+              if (await widget.myauth.verifyOTP(otp: otp1Controller.text +
+              otp2Controller.text +
+              otp3Controller.text +
+              otp4Controller.text) == true) {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("OTP is verified",textAlign: TextAlign.center,),
+              ));
+              Get.off(()=>ChooseScreen());
+              box.write("chooseQ", true);
+              } else {
+              ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+              content: Text("Invalid OTP",textAlign: TextAlign.center,),
+              ));
+              }
+            }, child: Text("Verify",style: TextStyle(color: Colors.white),),style: TextButton.styleFrom(backgroundColor: Colors.grey.shade600,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5))),),
+          )
+          /*ElevatedButton(
+            onPressed: () async {
+              if (await widget.myauth.verifyOTP(otp: otp1Controller.text +
+                  otp2Controller.text +
+                  otp3Controller.text +
+                  otp4Controller.text) == true) {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("OTP is verified",textAlign: TextAlign.center,),
+                ));
+                Get.off(()=>ChooseScreen());
+                box.write("chooseQ", true);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                  content: Text("Invalid OTP",textAlign: TextAlign.center,),
+                ));
+              }
+            },
+            child: const Text(
+              "Confirm",
+              style: TextStyle(fontSize: 20),
+            ),
+          )*/
+        ],
+      ),
+    );
+  }
+}
 //
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -10,7 +170,7 @@
 // import 'package:tutor_kit/const/consts.dart';
 // import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
 // import 'package:tutor_kit/widgets/custom_button.dart';
-//
+
 // import '../home_screen/guardian/guardian_home.dart';
 // import '../home_screen/teacher/teacher_form_screens.dart';
 //
@@ -207,3 +367,4 @@
 //   }
 // }
 //
+

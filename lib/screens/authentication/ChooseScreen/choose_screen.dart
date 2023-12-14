@@ -28,7 +28,7 @@ class _ChooseScreenState extends State<ChooseScreen> {
   Widget build(BuildContext context) {
     print(box.read("user"));
     return Scaffold(
-      backgroundColor: bgColor,
+      backgroundColor: bgColor2,
       body: Padding(
         padding: const EdgeInsets.only(right: 15,left: 15),
         child: Center(

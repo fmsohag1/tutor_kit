@@ -7,7 +7,9 @@ class PostData extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final double? width;
-  const PostData({super.key, this.icon, this.title, this.subtitle, this.width});
+  final int? maxline;
+  final TextOverflow? textOverflow;
+  const PostData({super.key, this.icon, this.title, this.subtitle, this.width, this.maxline, this.textOverflow});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class PostData extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(title!,style: TextStyle(fontSize: 16,fontWeight: FontWeight.bold),),
-                Text(subtitle!),
+                Text(subtitle!,maxLines: maxline,overflow: textOverflow),
               ],
             ),
           )

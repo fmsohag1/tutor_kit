@@ -47,11 +47,15 @@ dependencies:
   http: ^1.1.0
   flutter_local_notifications: ^15.1.1
   google_sign_in: ^6.1.5
-  flutter_sslcommerz: ^2.2.2-nullsafety.0
-  icons_plus: ^4.0.0
   url_launcher: ^6.2.1
   flutter_phone_direct_caller: ^2.1.1
   flutter_svg: ^2.0.9
+  email_otp: ^2.1.1
+  smooth_page_indicator: ^1.1.0
+  introduction_screen: ^3.1.8
+  flutter_staggered_animations: ^1.1.1
+  flutter_bkash: ^0.2.0
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

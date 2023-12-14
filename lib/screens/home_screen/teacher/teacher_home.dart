@@ -65,7 +65,7 @@ class TeacherHome extends StatelessWidget {
       TeacherProfileScreen(),
     ];
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: bgColor2,
       body: WillPopScope(child: Column(
         children: [
           Obx(()=>Expanded(child: navBody.elementAt(currentNavIndex.value))),

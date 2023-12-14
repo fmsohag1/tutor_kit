@@ -1,4 +1,4 @@
-import 'package:icons_plus/icons_plus.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../const/consts.dart';
 
@@ -23,7 +23,7 @@ class GoogleApple extends StatelessWidget {
               ),
               child: Padding(
                 padding: const EdgeInsets.all(14.0),
-                child: Logo(Logos.google,),
+                child: SvgPicture.asset(icGoogle),
               )
           ),
         ),
@@ -41,7 +41,7 @@ class GoogleApple extends StatelessWidget {
             ),
             child: Padding(
               padding: const EdgeInsets.all(13.0),
-              child: Logo(Logos.apple),
+              child: SvgPicture.asset(icApple),
             ),
           ),
         )

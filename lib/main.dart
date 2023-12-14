@@ -10,6 +10,12 @@ import 'package:tutor_kit/screens/authentication/ChooseScreen/choose_screen.dart
 import 'package:tutor_kit/screens/home_screen/admin/admin_dashboard.dart';
 import 'package:tutor_kit/screens/home_screen/guardian/guardian_home.dart';
 import 'package:tutor_kit/screens/home_screen/teacher/teacher_home.dart';
+import 'package:tutor_kit/screens/pgw/checkout_screen.dart';
+import 'package:tutor_kit/screens/pgw/payment_status_screen.dart';
+
+import 'package:tutor_kit/screens/view/onboarding_screen.dart';
+import 'package:tutor_kit/screens/view/splash_screen.dart';
+
 
 Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message)async{
   print("Handling a bg message : ${message.messageId}");
@@ -61,11 +67,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: "Kohinoor",
         useMaterial3: true,
-        appBarTheme: AppBarTheme(
-          backgroundColor: bgColor,
-        )
       ),
-
+//home: SplashScreen(),
       home: FirebaseAuth.instance.currentUser != null ? ((_user == "gd") ? GuardianHome(currentNavIndex: 0.obs,) : (_user == "tt") ? TeacherHome(currentNavIndex: 0.obs,) : (_user == "ad") ? AdminDashboard() : (box.read("chooseQ")==true) ? ChooseScreen() : LoginScreen()) : LoginScreen()
 
       // FirebaseAuth.instance.currentUser != null ? (_user == "gd" ? GuardianHome() : TeacherHome()) : LoginScreen(),

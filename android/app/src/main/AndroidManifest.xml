@@ -17,7 +17,7 @@
         </intent>
     </queries>
     <application
-        android:label="tutor_kit"
+        android:label="Tutor Kit"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

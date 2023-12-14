@@ -24,8 +24,8 @@ const icTime="assets/icons/clock.svg";
 const icName="assets/icons/person.svg";
 const icAge="assets/icons/stopwatch.svg";
 const icQualification="assets/icons/project-roadmap.svg";
-const icInstitute="assets/icons/Institute.svg";
-const icDepartment="assets/icons/dot.svg";
+const icInstitute="assets/icons/institute2.svg";
+const icDepartment="assets/icons/department2.svg";
 const icEmail="assets/icons/mail.svg";
 const icGoogle="assets/icons/google.svg";
 const icApple="assets/icons/apple.svg";
@@ -33,6 +33,10 @@ const icConfirm="assets/icons/verified.svg";
 const icDone="assets/icons/animation_lmej1fs8.json";
 const icWarning="assets/icons/warning.json";
 const icAdd="assets/icons/plus-circle.svg";
+const icUnion="assets/icons/union.svg";
+const icUpazila="assets/icons/upazila.svg";
+const icDivision="assets/icons/division.svg";
+const icDistrict="assets/icons/district.svg";
 
 //images
 const imgBgImage="assets/images/bgImage.jpg";
